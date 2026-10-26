@@ -82,10 +82,11 @@ body {
   line-height: 1.6;
   text-align: center;
   border: 1px solid #2a0a0a;
-  padding: 10px 8px;
+  padding: 8px 8px 10px;
   background: rgba(0,0,0,0.4);
-  border-radius: 4px;
+  border-radius: 8px;
   width: 100%;
+  overflow: hidden;
 }
 
 .logo-sub {
@@ -98,12 +99,12 @@ body {
 
 .sidebar-chara {
   width: 100%;
-  max-width: 140px;
+  max-width: 144px;
   display: block;
-  margin: 0 auto 6px;
-  border-radius: 8px;
-  /* 白背景を透過させてサイドバーに馴染ませる */
-  mix-blend-mode: multiply;
+  margin: -8px -8px 6px;
+  width: calc(100% + 16px);
+  border-radius: 8px 8px 0 0;
+  background: #fff;
 }
 
 .next-stream {
