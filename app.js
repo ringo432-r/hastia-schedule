@@ -1,40 +1,84 @@
 /**
  * はすてぃあ 配信スケジュール - app.js
- * data/videos.json を読み込んで番組表・カレンダー・アーカイブを描画する
  */
 
 const DATA_URL = './data/videos.json';
 
-// ===== カテゴリ自動判定 =====
-const CATEGORY_RULES = [
-  { key: 'live',    label: 'LIVE中',   patterns: [] }, // liveBroadcastContentで判定
-  { key: 'upcoming',label: '配信予定', patterns: [] }, // liveBroadcastContentで判定
-  { key: 'sing',    label: '歌枠',     patterns: ['歌','うた','sing','歌枠','歌回','カラオケ','歌ってみた','cover','covered'] },
-  { key: 'game',    label: 'ゲーム',   patterns: ['ゲーム','game','マイクラ','minecraft','apex','valorant','スプラ','splatoon','among','ポケモン','pokemon','ff','ファイナルファンタジー','モンハン','zelda','ゼルダ','スト6','street fighter','パルワールド','fortnite','fall guys','overwatch','原神','genshin','星レイル','大神','バイオ','resident evil','sekiro','elden','ff14','ff16','ff7','龍が如く','yakuza'] },
-  { key: 'horror',  label: 'ホラー',   patterns: ['ホラー','horror','怖','こわ','恐怖','脱出','escape','バイオハザード'] },
-  { key: 'collab',  label: 'コラボ',   patterns: ['コラボ','collab','対談','w/','×','collaboration'] },
-  { key: 'chat',    label: '雑談',     patterns: ['雑談','ざつだん','chat','talk','お話','おはなし','朝活','ゆる','報告','おやすみ','おはよう','新年','誕生日','生放送'] },
-  { key: 'short',   label: 'ショート', patterns: ['#shorts','#short','short'] },
+// ===== カテゴリ定義 =====
+// 優先順位：上から順に判定し、最初にマッチしたカテゴリを使用
+const CATEGORIES = [
+  {
+    key: 'live',
+    label: 'LIVE中',
+    match: (item) => item.liveBroadcastContent === 'live',
+  },
+  {
+    key: 'upcoming',
+    label: '配信予定',
+    match: (item) => item.liveBroadcastContent === 'upcoming' || item.category === 'upcoming',
+  },
+  {
+    key: 'short',
+    label: 'ショート',
+    // ショートはURLパターンまたはタイトルキーワードで判定
+    match: (item) =>
+      item.url?.includes('/shorts/') ||
+      /[#＃]shorts?\b/i.test(item.title),
+  },
+  {
+    key: 'singing',
+    label: '歌ってみた',
+    match: (item) => /歌ってみた|うたってみた|covered|cover(?!コラボ)/i.test(item.title),
+  },
+  {
+    key: 'sing',
+    label: '歌枠',
+    match: (item) => /歌枠|歌回|歌配信|カラオケ|うた枠|うた回/i.test(item.title),
+  },
+  {
+    key: 'asmr',
+    label: 'ASMR',
+    match: (item) => /asmr/i.test(item.title),
+  },
+  {
+    key: 'memorial',
+    label: '記念',
+    match: (item) => /記念|anniversary|バースデー|誕生日|周年/i.test(item.title),
+  },
+  {
+    key: 'collab',
+    label: 'コラボ',
+    match: (item) => /コラボ|collab|対談|collaboration/i.test(item.title),
+  },
+  {
+    key: 'game',
+    label: 'ゲーム',
+    // タイトルに【〜】形式のゲームタイトルがある or ゲームキーワード
+    match: (item) => {
+      const t = item.title;
+      // 【タイトル名】パターン（配信でよく使われる形式）
+      if (/【[^】]+】/.test(t)) return true;
+      // 具体的なゲームキーワード
+      return /ゲーム|マイクラ|minecraft|apex|valorant|スプラ|splatoon|ポケモン|pokemon|ドラクエ|ドラゴンクエスト|ドラゴンボール|ff\d|ファイナルファンタジー|モンハン|zelda|ゼルダ|大神|バイオ|resident evil|sekiro|elden|yakuza|龍が如く|genshin|原神|星レイル|パルワールド|fortnite|overwatch|stardew|animal crossing|あつ森|テトリス|ぷよぷよ|fall guys|among us|カービィ|mario|マリオ|kirby|simulator|シミュレーター|ramen|カカロット|kakarot/i.test(t);
+    },
+  },
+  {
+    key: 'chat',
+    label: '雑談・その他',
+    match: () => true, // デフォルト（どれにも当てはまらない場合）
+  },
 ];
 
 function detectCategory(item) {
-  if (item.liveBroadcastContent === 'live') return 'live';
-  if (item.liveBroadcastContent === 'upcoming') return 'upcoming';
-  if (item.category === 'upcoming') return 'upcoming';
-  if (item.category === 'live') return 'live';
-  const text = (item.title + ' ' + item.description).toLowerCase();
-  for (const rule of CATEGORY_RULES) {
-    if (!rule.patterns.length) continue;
-    if (rule.patterns.some(p => text.includes(p.toLowerCase()))) return rule.key;
+  for (const cat of CATEGORIES) {
+    if (cat.match(item)) return cat.key;
   }
-  return 'default';
+  return 'chat';
 }
 
 function getCatLabel(key) {
-  const rule = CATEGORY_RULES.find(r => r.key === key);
-  if (rule) return rule.label;
-  if (key === 'default') return 'その他';
-  return key;
+  const cat = CATEGORIES.find(c => c.key === key);
+  return cat ? cat.label : 'その他';
 }
 
 // ===== 日時ユーティリティ =====
@@ -45,7 +89,6 @@ function parseDate(iso) {
 }
 
 function toJST(d) {
-  if (!d) return null;
   return new Date(d.getTime() + 9 * 60 * 60 * 1000);
 }
 
@@ -70,16 +113,14 @@ function formatJST(iso, fmt = 'datetime') {
 }
 
 function todayJST() {
-  const now = new Date();
-  const j = toJST(now);
+  const j = toJST(new Date());
   return new Date(Date.UTC(j.getUTCFullYear(), j.getUTCMonth(), j.getUTCDate()));
 }
 
 function getWeekStart(base) {
-  // 月曜始まり
   const d = new Date(base);
-  const day = d.getUTCDay(); // 0=Sun
-  const diff = (day === 0) ? -6 : 1 - day;
+  const day = d.getUTCDay();
+  const diff = day === 0 ? -6 : 1 - day;
   d.setUTCDate(d.getUTCDate() + diff);
   return d;
 }
@@ -91,12 +132,12 @@ function escapeHtml(s) {
 }
 
 // ===== グローバル状態 =====
-let allItems = [];
-let ttWeekStart = null;   // 番組表の週始め
-let calYear = 0;          // カレンダーの年
-let calMonth = 0;         // カレンダーの月（0-indexed）
-let archiveFilter = 'all';
-let archiveSearch = '';
+let allItems    = [];
+let ttWeekStart = null;
+let calYear     = 0;
+let calMonth    = 0;
+let archiveFilter  = 'all';
+let archiveSearch  = '';
 
 // ===== データ読み込み =====
 async function loadData() {
@@ -110,13 +151,11 @@ async function loadData() {
     }
 
     allItems = (Array.isArray(data.items) ? data.items : [])
-      .filter(item => item.id && item.publishedAt)
+      .filter(item => item.id)
       .map(item => ({ ...item, _cat: detectCategory(item) }));
 
-    // 次の配信
     renderNextStream();
 
-    // 初期描画
     const today = todayJST();
     ttWeekStart = getWeekStart(today);
     calYear  = today.getUTCFullYear();
@@ -129,10 +168,6 @@ async function loadData() {
   } catch (err) {
     console.error('データ読み込みエラー:', err);
     document.getElementById('updatedAt').textContent = '読み込みエラー';
-    ['timetable','calendar','archive-list'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.innerHTML = '<div class="empty-msg">データの読み込みに失敗しました。</div>';
-    });
   }
 }
 
@@ -140,7 +175,10 @@ async function loadData() {
 function renderNextStream() {
   const now = new Date();
   const upcoming = allItems
-    .filter(item => (item._cat === 'upcoming' || item._cat === 'live') && parseDate(item.publishedAt) > now)
+    .filter(item => {
+      const d = parseDate(item.publishedAt);
+      return d && d > now && (item._cat === 'upcoming' || item._cat === 'live');
+    })
     .sort((a, b) => parseDate(a.publishedAt) - parseDate(b.publishedAt));
 
   const el = document.getElementById('next-stream-info');
@@ -150,50 +188,53 @@ function renderNextStream() {
   }
   const next = upcoming[0];
   el.innerHTML = `
-    <div style="font-size:0.72rem;color:#446;font-weight:700;">${formatJST(next.publishedAt,'mdow')}</div>
-    <div style="font-size:0.72rem;font-weight:700;">${formatJST(next.publishedAt,'time')}</div>
-    <div style="font-size:0.7rem;margin-top:2px;line-height:1.3;">${escapeHtml(next.title.slice(0,30))}${next.title.length>30?'…':''}</div>
+    <div style="font-size:0.72rem;color:#cc4444;font-weight:700;">${formatJST(next.publishedAt,'mdow')}</div>
+    <div style="font-size:0.8rem;font-weight:700;">${formatJST(next.publishedAt,'time')}</div>
+    <div style="font-size:0.7rem;margin-top:2px;line-height:1.3;color:#bbb;">${escapeHtml(next.title.slice(0,28))}${next.title.length>28?'…':''}</div>
   `;
 }
 
 // ===== 番組表 =====
 const HOUR_START = 6;
-const HOUR_END   = 26; // 翌2時まで
-const SLOT_H_PX  = 36; // 1時間=36px（30分単位=18px）
+const HOUR_END   = 29; // 29時（翌5時）まで
+const ROW_H_PX   = 40; // 1時間=40px
 
 function renderTimetable() {
   const table = document.getElementById('timetable');
   const today = todayJST();
 
-  // 週の7日
   const days = Array.from({length: 7}, (_, i) => {
     const d = new Date(ttWeekStart);
     d.setUTCDate(d.getUTCDate() + i);
     return d;
   });
 
-  // 週ラベル
   const DOW = ['月','火','水','木','金','土','日'];
   const fmt = d => {
     const p = n => String(n).padStart(2,'0');
     return `${p(d.getUTCMonth()+1)}/${p(d.getUTCDate())}`;
   };
+
   document.getElementById('tt-week-range').textContent =
     `${days[0].getUTCFullYear()}年 ${fmt(days[0])}（月）〜${fmt(days[6])}（日）`;
 
-  // このウィークの動画を抽出
   const weekEnd = new Date(days[6]);
   weekEnd.setUTCHours(23, 59, 59);
 
+  // この週のアイテム（29時=翌5時対応のため翌日分も含める）
   const weekItems = allItems.filter(item => {
     const d = parseDate(item.publishedAt);
     if (!d) return false;
-    const jst = toJST(d);
-    const jstDate = new Date(Date.UTC(jst.getUTCFullYear(), jst.getUTCMonth(), jst.getUTCDate()));
-    return jstDate >= ttWeekStart && jstDate <= weekEnd;
+    const j = toJST(d);
+    const jstDate = new Date(Date.UTC(j.getUTCFullYear(), j.getUTCMonth(), j.getUTCDate()));
+    // 29時対応：0〜5時は前日扱い
+    const h = j.getUTCHours();
+    const adjustedDate = (h < HOUR_START) 
+      ? new Date(jstDate.getTime() - 24*60*60*1000)
+      : jstDate;
+    return adjustedDate >= ttWeekStart && adjustedDate <= weekEnd;
   });
 
-  // テーブル構築
   let html = '<thead><tr>';
   html += '<th class="time-col">時刻</th>';
   days.forEach((d, i) => {
@@ -203,54 +244,46 @@ function renderTimetable() {
   });
   html += '</tr></thead><tbody>';
 
-  // 時間スロット（30分単位）
-  const slots = (HOUR_END - HOUR_START) * 2; // 30分単位スロット数
-  for (let s = 0; s < slots; s++) {
-    const hour   = HOUR_START + Math.floor(s / 2);
-    const minute = s % 2 === 0 ? 0 : 30;
-    const isHour = minute === 0;
-
+  // 1時間単位でループ
+  for (let hour = HOUR_START; hour < HOUR_END; hour++) {
+    const displayHour = hour >= 24 ? hour - 24 : hour; // 表示用（24以降は0時台に）
     html += '<tr>';
-    // 時刻列
-    if (isHour) {
-      html += `<td class="time-cell" rowspan="2">${hour}:00</td>`;
-    }
-    // 曜日列
+    html += `<td class="time-cell">${String(hour).padStart(2,'0')}:00</td>`;
+
     days.forEach((day, di) => {
       const isToday = day.getTime() === today.getTime();
-      const cls = [
-        isToday ? 'today-col' : '',
-        !isHour ? 'half-hour' : ''
-      ].filter(Boolean).join(' ');
+      html += `<td class="${isToday ? 'today-col' : ''}" data-day="${di}" data-hour="${hour}">`;
 
-      // この日・このスロットに始まる動画を探す
+      // この日・この時間帯のアイテム
       const slotItems = weekItems.filter(item => {
         const d = parseDate(item.publishedAt);
         if (!d) return false;
         const j = toJST(d);
-        const itemDate = new Date(Date.UTC(j.getUTCFullYear(), j.getUTCMonth(), j.getUTCDate()));
-        if (itemDate.getTime() !== day.getTime()) return false;
-        const itemHour = j.getUTCHours();
-        const itemMin  = j.getUTCMinutes();
-        // 25時以降は翌日扱いのため+24補正
-        const normHour = itemHour < HOUR_START ? itemHour + 24 : itemHour;
-        return normHour === hour && (minute === 0 ? itemMin < 30 : itemMin >= 30);
+        const h = j.getUTCHours();
+        // 29時対応：0〜5時は実際には前日の24〜29時
+        const normHour = h < HOUR_START ? h + 24 : h;
+        const jstDate = new Date(Date.UTC(j.getUTCFullYear(), j.getUTCMonth(), j.getUTCDate()));
+        const adjustedDate = h < HOUR_START
+          ? new Date(jstDate.getTime() - 24*60*60*1000)
+          : jstDate;
+        return adjustedDate.getTime() === day.getTime() && normHour === hour;
       });
 
-      html += `<td class="${cls}" data-day="${di}" data-hour="${hour}" data-min="${minute}">`;
       slotItems.forEach(item => {
         const j = toJST(parseDate(item.publishedAt));
-        const hh = String(j.getUTCHours()).padStart(2,'0');
-        const mi = String(j.getUTCMinutes()).padStart(2,'0');
-        const thumb = item.thumbnail || item.thumbnailHigh || '';
+        const h = j.getUTCHours();
+        const normHour = h < HOUR_START ? h + 24 : h;
+        const hh = String(normHour).padStart(2, '0');
+        const mi = String(j.getUTCMinutes()).padStart(2, '0');
+        const thumb = item.thumbnail || '';
         html += `
           <a class="tt-event cat-${item._cat}" href="${escapeHtml(item.url)}" target="_blank" rel="noopener" title="${escapeHtml(item.title)}">
             ${thumb ? `<img class="ev-thumb" src="${escapeHtml(thumb)}" alt="" loading="lazy">` : ''}
             <div class="ev-time">${hh}:${mi}</div>
             <div class="ev-title">${escapeHtml(item.title)}</div>
-          </a>
-        `;
+          </a>`;
       });
+
       html += '</td>';
     });
     html += '</tr>';
@@ -258,25 +291,85 @@ function renderTimetable() {
 
   html += '</tbody>';
   table.innerHTML = html;
+
+  // 直近イベントか現在時刻にスクロール
+  scrollTimetableToEvent();
+}
+
+function scrollTimetableToEvent() {
+  const scroll = document.querySelector('.timetable-scroll');
+  if (!scroll) return;
+
+  const now = new Date();
+  const jNow = toJST(now);
+  const currentHour = jNow.getUTCHours();
+  const normNow = currentHour < HOUR_START ? currentHour + 24 : currentHour;
+
+  // 今週の直近イベントを探す
+  const today = todayJST();
+  const weekEnd = new Date(ttWeekStart);
+  weekEnd.setUTCDate(weekEnd.getUTCDate() + 7);
+
+  const thisWeekItems = allItems
+    .filter(item => {
+      const d = parseDate(item.publishedAt);
+      if (!d) return false;
+      const j = toJST(d);
+      const jstDate = new Date(Date.UTC(j.getUTCFullYear(), j.getUTCMonth(), j.getUTCDate()));
+      const h = j.getUTCHours();
+      const adjustedDate = h < HOUR_START ? new Date(jstDate.getTime() - 86400000) : jstDate;
+      return adjustedDate >= ttWeekStart && adjustedDate < weekEnd;
+    })
+    .map(item => {
+      const j = toJST(parseDate(item.publishedAt));
+      const h = j.getUTCHours();
+      return { ...item, _normHour: h < HOUR_START ? h + 24 : h, _jst: j };
+    })
+    .sort((a, b) => parseDate(a.publishedAt) - parseDate(b.publishedAt));
+
+  let targetHour = null;
+
+  // 今週表示中なら：現在時刻以降で最初のイベント
+  if (ttWeekStart.getTime() === getWeekStart(today).getTime()) {
+    const future = thisWeekItems.find(item => parseDate(item.publishedAt) >= now);
+    if (future) {
+      targetHour = future._normHour;
+    } else {
+      // イベントなければ現在時刻
+      targetHour = normNow;
+    }
+  } else {
+    // 他の週：その週の最初のイベント
+    if (thisWeekItems.length > 0) {
+      targetHour = thisWeekItems[0]._normHour;
+    } else {
+      targetHour = HOUR_START;
+    }
+  }
+
+  if (targetHour === null) targetHour = 20; // デフォルト20時
+
+  // スクロール位置計算（ヘッダー分を引いて少し上に余白）
+  const headerHeight = 36;
+  const rowIndex = Math.max(0, targetHour - HOUR_START);
+  const scrollTop = rowIndex * ROW_H_PX - 60; // 少し上に余白
+  scroll.scrollTop = Math.max(0, scrollTop);
 }
 
 // ===== カレンダー =====
 function renderCalendar() {
   const table = document.getElementById('calendar');
   const today = todayJST();
-  document.getElementById('cal-month-label').textContent = `${calYear}年${String(calMonth+1).padStart(2,'0')}月`;
+  document.getElementById('cal-month-label').textContent =
+    `${calYear}年${String(calMonth+1).padStart(2,'0')}月`;
 
   const DOW_LABELS = ['月','火','水','木','金','土','日'];
-
-  // 月の1日・末日
   const firstDay = new Date(Date.UTC(calYear, calMonth, 1));
   const lastDay  = new Date(Date.UTC(calYear, calMonth + 1, 0));
 
-  // 月初の曜日（月曜始まり: 0=月 ... 6=日）
-  let startDow = firstDay.getUTCDay(); // 0=Sun
-  startDow = startDow === 0 ? 6 : startDow - 1; // 月曜始まりに変換
+  let startDow = firstDay.getUTCDay();
+  startDow = startDow === 0 ? 6 : startDow - 1;
 
-  // この月の動画
   const monthItems = allItems.filter(item => {
     const d = parseDate(item.publishedAt);
     if (!d) return false;
@@ -284,7 +377,6 @@ function renderCalendar() {
     return j.getUTCFullYear() === calYear && j.getUTCMonth() === calMonth;
   });
 
-  // 日付ごとに動画をグルーピング
   const byDate = {};
   monthItems.forEach(item => {
     const j = toJST(parseDate(item.publishedAt));
@@ -300,9 +392,8 @@ function renderCalendar() {
   });
   html += '</tr></thead><tbody>';
 
-  let date = 1 - startDow; // グリッド左上の日付（前月末の日も含む）
+  let date = 1 - startDow;
   for (let row = 0; row < 6; row++) {
-    // 最後の行が全部来月ならスキップ
     if (date > lastDay.getUTCDate()) break;
     html += '<tr>';
     for (let col = 0; col < 7; col++, date++) {
@@ -321,10 +412,10 @@ function renderCalendar() {
       if (actualDate !== null) {
         const numCls = ['cal-day-num', isSat?'sat':'', isSun?'sun':'', isToday?'today-num':''].filter(Boolean).join(' ');
         html += `<div style="text-align:right;"><span class="${numCls}">${actualDate}</span></div>`;
-        const items = byDate[actualDate] || [];
+        const items = (byDate[actualDate] || []).sort((a,b)=>parseDate(a.publishedAt)-parseDate(b.publishedAt));
         html += '<div class="cal-events">';
-        const SHOW_MAX = 3;
-        items.slice(0, SHOW_MAX).forEach(item => {
+        const MAX = 3;
+        items.slice(0, MAX).forEach(item => {
           const j = toJST(parseDate(item.publishedAt));
           const hh = String(j.getUTCHours()).padStart(2,'0');
           const mi = String(j.getUTCMinutes()).padStart(2,'0');
@@ -334,11 +425,10 @@ function renderCalendar() {
               ${thumb ? `<img class="cal-ev-thumb" src="${escapeHtml(thumb)}" alt="" loading="lazy">` : ''}
               <span class="cal-ev-time">${hh}:${mi}</span>
               <span class="cal-ev-title"> ${escapeHtml(item.title)}</span>
-            </a>
-          `;
+            </a>`;
         });
-        if (items.length > SHOW_MAX) {
-          html += `<div class="cal-more">他 ${items.length - SHOW_MAX} 件</div>`;
+        if (items.length > MAX) {
+          html += `<div class="cal-more">他 ${items.length - MAX} 件</div>`;
         }
         html += '</div>';
       }
@@ -346,45 +436,37 @@ function renderCalendar() {
     }
     html += '</tr>';
   }
-
   html += '</tbody>';
   table.innerHTML = html;
 }
 
 // ===== アーカイブ =====
 function renderArchive() {
-  // アーカイブ対象：live/upcomingでないもの
   const archiveItems = allItems
     .filter(item => item._cat !== 'upcoming' && item._cat !== 'live')
     .sort((a, b) => (parseDate(b.publishedAt)||0) - (parseDate(a.publishedAt)||0));
 
-  // カテゴリ集計
+  // カテゴリ集計（CATEGORIES順を維持）
+  const catOrder = CATEGORIES.map(c => c.key).filter(k => k !== 'live' && k !== 'upcoming');
   const cats = {};
-  archiveItems.forEach(item => {
-    cats[item._cat] = (cats[item._cat] || 0) + 1;
-  });
+  archiveItems.forEach(item => { cats[item._cat] = (cats[item._cat]||0) + 1; });
 
-  // フィルターボタン
   const filterEl = document.getElementById('archive-filter');
   let filterHtml = `<button class="filter-btn ${archiveFilter==='all'?'active':''}" data-cat="all">すべて ${archiveItems.length}</button>`;
-  Object.entries(cats).sort((a,b)=>b[1]-a[1]).forEach(([cat, count]) => {
-    filterHtml += `<button class="filter-btn ${archiveFilter===cat?'active':''}" data-cat="${cat}">${getCatLabel(cat)} ${count}</button>`;
+  catOrder.filter(k => cats[k]).forEach(cat => {
+    filterHtml += `<button class="filter-btn ${archiveFilter===cat?'active':''}" data-cat="${cat}">${getCatLabel(cat)} ${cats[cat]}</button>`;
   });
   filterEl.innerHTML = filterHtml;
 
-  // フィルター・検索を適用
   let filtered = archiveItems;
-  if (archiveFilter !== 'all') {
-    filtered = filtered.filter(item => item._cat === archiveFilter);
-  }
+  if (archiveFilter !== 'all') filtered = filtered.filter(i => i._cat === archiveFilter);
   if (archiveSearch) {
     const q = archiveSearch.toLowerCase();
-    filtered = filtered.filter(item => item.title.toLowerCase().includes(q));
+    filtered = filtered.filter(i => i.title.toLowerCase().includes(q));
   }
 
   document.getElementById('archive-count').textContent = `${filtered.length}件`;
 
-  // 月ごとにグループ化
   const byMonth = {};
   filtered.forEach(item => {
     const j = toJST(parseDate(item.publishedAt));
@@ -416,8 +498,7 @@ function renderArchive() {
             <div class="archive-item-title" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</div>
           </div>
           <a class="archive-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener">アーカイブを見る</a>
-        </div>
-      `;
+        </div>`;
     });
   });
   listEl.innerHTML = html;
@@ -425,17 +506,19 @@ function renderArchive() {
 
 // ===== イベントバインド =====
 function initEvents() {
-  // タブ切り替え
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+      // 番組表タブに切り替えたらスクロール位置を再設定
+      if (btn.dataset.tab === 'timetable') {
+        setTimeout(scrollTimetableToEvent, 50);
+      }
     });
   });
 
-  // 番組表ナビ
   document.getElementById('tt-prev').addEventListener('click', () => {
     ttWeekStart.setUTCDate(ttWeekStart.getUTCDate() - 7);
     renderTimetable();
@@ -449,7 +532,6 @@ function initEvents() {
     renderTimetable();
   });
 
-  // カレンダーナビ
   document.getElementById('cal-prev').addEventListener('click', () => {
     calMonth--;
     if (calMonth < 0) { calMonth = 11; calYear--; }
@@ -461,7 +543,6 @@ function initEvents() {
     renderCalendar();
   });
 
-  // アーカイブフィルター（動的要素なのでdelegation）
   document.getElementById('archive-filter').addEventListener('click', e => {
     const btn = e.target.closest('.filter-btn');
     if (!btn) return;
@@ -469,7 +550,6 @@ function initEvents() {
     renderArchive();
   });
 
-  // アーカイブ検索
   document.getElementById('archive-search').addEventListener('input', e => {
     archiveSearch = e.target.value.trim();
     renderArchive();
