@@ -18,12 +18,15 @@ const CATEGORIES = [
     match: (item) => item.liveBroadcastContent === 'upcoming' || item.category === 'upcoming',
   },
   {
+    // ショートは live/upcoming より後だが isShort フラグを最優先
+    // ※ live/upcoming のショートは存在しないので実質問題なし
     key: 'short',
     label: 'ショート',
-    // ショートはURLパターンまたはタイトルキーワードで判定
     match: (item) =>
+      item.isShort === true ||
       item.url?.includes('/shorts/') ||
-      /[#＃]shorts?\b/i.test(item.title),
+      /[#＃]shorts?\b/i.test(item.title) ||
+      /\/shorts\//i.test(item.url),
   },
   {
     key: 'singing',
