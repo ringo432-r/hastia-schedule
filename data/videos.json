@@ -1,18 +1,17 @@
 {
-  "updatedAt": "2026-10-26T18:05:50.071900+00:00",
+  "updatedAt": "2026-10-26T22:59:25.400625+00:00",
   "items": [
     {
-      "id": "gFBE_3Yuy74",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ ※ネタバレ注意 ＃２【 #はすてぃあ / #新人Vtuber 】",
+      "id": "su9Ty8sdod0",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　フリーザ編後半 ※ネタバレ注意 ＃３【 #はすてぃあ / #新人Vtuber 】",
       "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ エルティア～♡ エルノア ...",
-      "publishedAt": "2026-10-26T14:07:04Z",
-      "scheduledStartTime": "2026-10-26T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/gFBE_3Yuy74/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/gFBE_3Yuy74/hqdefault.jpg",
-      "liveBroadcastContent": "live",
-      "category": "live",
-      "url": "https://www.youtube.com/watch?v=gFBE_3Yuy74",
-      "actualStartTime": "2026-10-26T14:07:04Z",
+      "publishedAt": "2026-10-28T14:00:00Z",
+      "scheduledStartTime": "2026-10-28T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/su9Ty8sdod0/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/su9Ty8sdod0/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=su9Ty8sdod0",
       "isShort": false
     },
     {
@@ -52,6 +51,20 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
+      "id": "gFBE_3Yuy74",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ ※ネタバレ注意 ＃２【 #はすてぃあ / #新人Vtuber 】",
+      "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ エルティア～♡ エルノア ...",
+      "publishedAt": "2026-10-26T14:07:04Z",
+      "scheduledStartTime": "2026-10-26T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/gFBE_3Yuy74/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/gFBE_3Yuy74/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=gFBE_3Yuy74",
+      "actualStartTime": "2026-10-26T14:07:04Z",
       "isShort": false
     },
     {
@@ -681,20 +694,6 @@
       "liveBroadcastContent": "none",
       "category": "video",
       "url": "https://www.youtube.com/watch?v=iMzvyGNdfEY",
-      "actualStartTime": "",
-      "isShort": true
-    },
-    {
-      "id": "7s12TFR9obs",
-      "title": "分かっちゃいないね  #vtuber #はすてぃあ #手描き #meme",
-      "description": "人気の手書き系ってなにがあるかなあ～？？ほかにも描いてみたい！",
-      "publishedAt": "2026-07-10T09:00:31Z",
-      "scheduledStartTime": "",
-      "thumbnail": "https://i.ytimg.com/vi/7s12TFR9obs/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/7s12TFR9obs/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "video",
-      "url": "https://www.youtube.com/watch?v=7s12TFR9obs",
       "actualStartTime": "",
       "isShort": true
     }
