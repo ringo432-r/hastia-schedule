@@ -295,9 +295,16 @@ function renderTimetable() {
   const table = document.getElementById('timetable');
   const today = todayJST();
 
-  const days = Array.from({length: 7}, (_, i) => {
+  const days = Array.from({length: ttDisplayDays}, (_, i) => {
     const d = new Date(ttWeekStart);
-    d.setUTCDate(d.getUTCDate() + i);
+    // スマホ3日表示の場合：今日起点
+    if (ttDisplayDays === 3) {
+      const base = todayJST();
+      d.setTime(base.getTime());
+      d.setUTCDate(d.getUTCDate() + i);
+    } else {
+      d.setUTCDate(d.getUTCDate() + i);
+    }
     return d;
   });
 
@@ -623,6 +630,68 @@ function renderArchive() {
   listEl.innerHTML = html;
 }
 
+// ===== テーマ切り替え =====
+function initTheme() {
+  const saved = localStorage.getItem('theme') || 'dark';
+  applyTheme(saved);
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  const isDark = theme === 'dark';
+  const icon  = isDark ? '☀️' : '🌙';
+  const label = isDark ? 'ライトモード' : 'ダークモード';
+  document.querySelectorAll('.theme-toggle-icon').forEach(el => el.textContent = icon);
+  const lbl = document.getElementById('theme-toggle-label');
+  if (lbl) lbl.textContent = label;
+  const mobileBtn = document.getElementById('theme-toggle-mobile');
+  if (mobileBtn) mobileBtn.textContent = icon;
+  const drawerBtn = document.getElementById('theme-toggle-drawer');
+  if (drawerBtn) drawerBtn.textContent = `${icon} テーマ切り替え`;
+}
+
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(cur === 'dark' ? 'light' : 'dark');
+}
+
+// ===== ドロワーメニュー（スマホ）=====
+function initDrawer() {
+  const overlay = document.getElementById('drawer-overlay');
+  const drawer  = document.getElementById('drawer');
+  const openBtn = document.getElementById('drawer-open');
+  const closeBtn = document.getElementById('drawer-close');
+  if (!overlay || !drawer) return;
+
+  function open()  { drawer.classList.add('open'); overlay.classList.add('open'); }
+  function close() { drawer.classList.remove('open'); overlay.classList.remove('open'); }
+
+  openBtn?.addEventListener('click', open);
+  closeBtn?.addEventListener('click', close);
+  overlay.addEventListener('click', close);
+}
+
+// ===== スマホ番組表：表示日数 =====
+let ttDisplayDays = 7;
+
+function initDayToggle() {
+  document.getElementById('tt-day-toggle')?.addEventListener('click', e => {
+    const btn = e.target.closest('.tt-day-btn');
+    if (!btn) return;
+    ttDisplayDays = parseInt(btn.dataset.days);
+    document.querySelectorAll('.tt-day-btn').forEach(b => b.classList.toggle('active', b === btn));
+    renderTimetable();
+  });
+}
+
+// ===== テーマ・ドロワーのボタンバインド =====
+function initThemeButtons() {
+  document.getElementById('theme-toggle-pc')?.addEventListener('click', toggleTheme);
+  document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme);
+  document.getElementById('theme-toggle-drawer')?.addEventListener('click', toggleTheme);
+}
+
 // ===== イベントバインド =====
 function initEvents() {
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -677,6 +746,10 @@ function initEvents() {
 
 // ===== 初期化 =====
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initThemeButtons();
+  initDrawer();
+  initDayToggle();
   initEvents();
   loadData();
 });
