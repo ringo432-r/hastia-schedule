@@ -134,11 +134,17 @@ function escapeHtml(s) {
     .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
 
-// ===== 表示用日時取得（配信予定・ライブ・アーカイブはscheduledStartTime優先）=====
+// ===== 表示用日時取得（配信予定・ライブ・アーカイブは配信開始時刻優先）=====
 function getDisplayTime(item) {
-  // 配信予定・ライブ中：scheduledStartTime（配信予定時間）を優先
-  if ((item._cat === 'upcoming' || item._cat === 'live') && item.scheduledStartTime) {
+  const lbc = item.liveBroadcastContent;
+  // 配信予定：scheduledStartTime（配信予定時間）
+  if (item._cat === 'upcoming' && item.scheduledStartTime) {
     return item.scheduledStartTime;
+  }
+  // ライブ中・アーカイブ：actualStartTime > scheduledStartTime > publishedAt の優先順位
+  if (lbc === 'live' || lbc === 'completed' || item._cat === 'live' || item.category === 'archive') {
+    if (item.actualStartTime)    return item.actualStartTime;
+    if (item.scheduledStartTime) return item.scheduledStartTime;
   }
   return item.publishedAt;
 }

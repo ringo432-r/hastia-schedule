@@ -77,8 +77,9 @@ jobs:
                   all_items.append(item)
 
           # ===== videos API で liveStreamingDetails を取得（配信開始予定時刻）=====
-          # ライブ系（upcoming/live/archive）のIDをまとめて取得
-          live_ids = [i['id'] for i in all_items if i['liveBroadcastContent'] in ('upcoming','live','completed') and i['id']]
+          # ライブ系（upcoming/live/archive/none）のIDをまとめて取得
+          # noneはliveStreamingDetailsを持つ場合があるので全動画対象にする
+          live_ids = [i['id'] for i in all_items if i['id']]
 
           # 50件ずつバッチ処理
           details_map = {}
@@ -111,16 +112,18 @@ jobs:
                   item['scheduledStartTime'] = d.get('scheduledStartTime', '')
                   if item['scheduledStartTime']:
                       item['publishedAt'] = item['scheduledStartTime']
-              elif lbc in ('live', 'completed'):
-                  # ライブ中・アーカイブ：実際の開始時刻 or 予定時刻
+              elif lbc in ('live', 'completed', 'none'):
+                  # ライブ中・アーカイブ・通常ライブ：実際の開始時刻 > 予定時刻 の優先順位
                   actual = d.get('actualStartTime', '')
                   sched  = d.get('scheduledStartTime', '')
                   item['scheduledStartTime'] = sched
                   item['actualStartTime']    = actual
+                  # publishedAt を配信開始時刻で上書き（actualStartTime優先、なければsched）
                   if actual:
                       item['publishedAt'] = actual
                   elif sched:
                       item['publishedAt'] = sched
+                  # どちらもなければ publishedAt のまま（元の公開日時）
 
           # ショートURL判定（/shorts/ を含むものはショートとして記録）
           # さらに contentDetails で duration が60秒以下のものもショートとして記録
