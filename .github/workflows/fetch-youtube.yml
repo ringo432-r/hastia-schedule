@@ -1,0 +1,97 @@
+name: Fetch YouTube Data
+
+on:
+  schedule:
+    # 1時間ごとに実行（UTC基準）
+    - cron: '0 * * * *'
+  workflow_dispatch: # 手動実行も可能
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch YouTube videos
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: |
+          CHANNEL_ID=$(curl -s "https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=god_hastia&key=${YOUTUBE_API_KEY}" | python3 -c "import sys,json; data=json.load(sys.stdin); print(data['items'][0]['id'])")
+          echo "Channel ID: $CHANNEL_ID"
+
+          # 配信予定・ライブ中・アーカイブ（ライブ配信）を取得
+          curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=upcoming&type=video&maxResults=50&order=date&key=${YOUTUBE_API_KEY}" -o /tmp/upcoming.json
+          curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&maxResults=10&order=date&key=${YOUTUBE_API_KEY}" -o /tmp/live.json
+          curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=completed&type=video&maxResults=50&order=date&key=${YOUTUBE_API_KEY}" -o /tmp/completed.json
+          # 通常動画・ショートを取得
+          curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&maxResults=50&order=date&key=${YOUTUBE_API_KEY}" -o /tmp/videos.json
+
+          python3 << 'EOF'
+          import json
+          from datetime import datetime, timezone
+
+          def load(path):
+              with open(path) as f:
+                  data = json.load(f)
+              return data.get('items', [])
+
+          def parse_item(item, category):
+              snippet = item.get('snippet', {})
+              vid_id = item.get('id', {})
+              if isinstance(vid_id, dict):
+                  video_id = vid_id.get('videoId', '')
+              else:
+                  video_id = vid_id
+              return {
+                  'id': video_id,
+                  'title': snippet.get('title', ''),
+                  'description': snippet.get('description', ''),
+                  'publishedAt': snippet.get('publishedAt', ''),
+                  'scheduledStartTime': snippet.get('liveBroadcastContent', ''),
+                  'thumbnail': snippet.get('thumbnails', {}).get('medium', {}).get('url', ''),
+                  'thumbnailHigh': snippet.get('thumbnails', {}).get('high', {}).get('url', ''),
+                  'liveBroadcastContent': snippet.get('liveBroadcastContent', 'none'),
+                  'category': category,
+                  'url': f'https://www.youtube.com/watch?v={video_id}'
+              }
+
+          upcoming = [parse_item(i, 'upcoming') for i in load('/tmp/upcoming.json')]
+          live = [parse_item(i, 'live') for i in load('/tmp/live.json')]
+          completed = [parse_item(i, 'archive') for i in load('/tmp/completed.json')]
+          videos = [parse_item(i, 'video') for i in load('/tmp/videos.json')]
+
+          # 重複排除（IDベース）
+          seen = set()
+          all_items = []
+          for item in live + upcoming + completed + videos:
+              if item['id'] and item['id'] not in seen:
+                  seen.add(item['id'])
+                  all_items.append(item)
+
+          # ショート判定（1分未満は別途取得できないのでタイトルで簡易判定）
+          for item in all_items:
+              if '#shorts' in item['title'].lower() or '#short' in item['title'].lower():
+                  item['category'] = 'short'
+
+          result = {
+              'updatedAt': datetime.now(timezone.utc).isoformat(),
+              'items': all_items
+          }
+
+          with open('data/videos.json', 'w', encoding='utf-8') as f:
+              json.dump(result, f, ensure_ascii=False, indent=2)
+
+          print(f"Total: {len(all_items)} videos saved.")
+          EOF
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/videos.json
+          git diff --staged --quiet || git commit -m "chore: update YouTube data [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          git push
