@@ -1,0 +1,35 @@
+{
+  "comment": "記念日データ。毎年繰り返すものはyearly:true、毎月繰り返すものはmonthly:true",
+  "items": [
+    {
+      "id": "birthday",
+      "label": "🎂 誕生日",
+      "month": 4,
+      "day": 20,
+      "yearly": true,
+      "color": "#3a1a3a",
+      "textColor": "#ee88ee"
+    },
+    {
+      "id": "debut",
+      "label": "🎉 デビュー記念日",
+      "month": 10,
+      "day": 18,
+      "year": 2026,
+      "yearly": false,
+      "monthly": false,
+      "color": "#2a1a0a",
+      "textColor": "#ffaa44"
+    },
+    {
+      "id": "debut-monthly",
+      "label": "🎊 デビュー{n}か月記念日",
+      "baseYear": 2026,
+      "baseMonth": 10,
+      "baseDay": 18,
+      "monthly": true,
+      "color": "#1a2a1a",
+      "textColor": "#88cc88"
+    }
+  ]
+}
