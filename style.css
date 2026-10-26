@@ -63,8 +63,8 @@ body {
 .sidebar {
   width: var(--sidebar-w);
   min-height: 100vh;
-  background: var(--color-sidebar);
-  border-right: 2px solid var(--color-border);
+  background: #111111;
+  border-right: 2px solid #2a0a0a;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,27 +74,26 @@ body {
 }
 
 .sidebar-logo {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  font-size: 1.3rem;
+  writing-mode: horizontal-tb;
+  font-size: 0.88rem;
   font-weight: 700;
-  color: var(--color-accent);
-  letter-spacing: 0.1em;
+  color: #e0d0d0;
+  letter-spacing: 0.02em;
   line-height: 1.6;
   text-align: center;
-  border: 2px solid var(--color-border);
-  padding: 12px 6px;
-  background: rgba(204,34,34,0.05);
+  border: 1px solid #2a0a0a;
+  padding: 10px 8px;
+  background: rgba(0,0,0,0.4);
   border-radius: 4px;
-  text-shadow: 0 0 12px var(--color-accent-glow);
+  width: 100%;
 }
 
 .logo-sub {
-  font-size: 0.7rem;
-  color: var(--color-text-sub);
-  writing-mode: horizontal-tb;
+  font-size: 0.68rem;
+  color: #664444;
   text-align: center;
   margin-top: 4px;
+  font-weight: 400;
 }
 
 .next-stream {

@@ -131,7 +131,14 @@ function escapeHtml(s) {
     .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
 
-// ===== グローバル状態 =====
+// ===== 表示用日時取得（配信予定・ライブ・アーカイブはscheduledStartTime優先）=====
+function getDisplayTime(item) {
+  // 配信予定・ライブ中：scheduledStartTime（配信予定時間）を優先
+  if ((item._cat === 'upcoming' || item._cat === 'live') && item.scheduledStartTime) {
+    return item.scheduledStartTime;
+  }
+  return item.publishedAt;
+}
 let allItems    = [];
 let ttWeekStart = null;
 let calYear     = 0;
@@ -269,7 +276,7 @@ function renderTimetable() {
       });
 
       slotItems.forEach(item => {
-        const j = toJST(parseDate(item.publishedAt));
+        const j = toJST(parseDate(getDisplayTime(item)));
         const h = j.getUTCHours();
         const normHour = h < HOUR_START ? h + 24 : h;
         const hh = String(normHour).padStart(2, '0');
@@ -320,7 +327,7 @@ function scrollTimetableToEvent() {
       return adjustedDate >= ttWeekStart && adjustedDate < weekEnd;
     })
     .map(item => {
-      const j = toJST(parseDate(item.publishedAt));
+      const j = toJST(parseDate(getDisplayTime(item)));
       const h = j.getUTCHours();
       return { ...item, _normHour: h < HOUR_START ? h + 24 : h, _jst: j };
     })
@@ -415,7 +422,7 @@ function renderCalendar() {
         html += '<div class="cal-events">';
         const MAX = 3;
         items.slice(0, MAX).forEach(item => {
-          const j = toJST(parseDate(item.publishedAt));
+          const j = toJST(parseDate(getDisplayTime(item)));
           const hh = String(j.getUTCHours()).padStart(2,'0');
           const mi = String(j.getUTCMinutes()).padStart(2,'0');
           const thumb = item.thumbnail || '';
@@ -485,7 +492,7 @@ function renderArchive() {
     html += `<div class="archive-month-header">${month}</div>`;
     items.forEach(item => {
       const thumb = item.thumbnailHigh || item.thumbnail || '';
-      const date  = formatJST(item.publishedAt, 'datetime');
+      const date  = formatJST(getDisplayTime(item), 'datetime');
       html += `
         <div class="archive-item">
           ${thumb ? `<img class="archive-item-thumb" src="${escapeHtml(thumb)}" alt="" loading="lazy">` : ''}
