@@ -19,7 +19,9 @@ const CATEGORY_RULES = [
 
 function detectCategory(item) {
   if (item.liveBroadcastContent === 'live') return 'live';
-  if (item.liveBroadcastContent === 'upcoming' || item.category === 'upcoming') return 'upcoming';
+  if (item.liveBroadcastContent === 'upcoming') return 'upcoming';
+  if (item.category === 'upcoming') return 'upcoming';
+  if (item.category === 'live') return 'live';
   const text = (item.title + ' ' + item.description).toLowerCase();
   for (const rule of CATEGORY_RULES) {
     if (!rule.patterns.length) continue;
