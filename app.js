@@ -148,19 +148,97 @@ function getDisplayTime(item) {
   }
   return item.publishedAt;
 }
-let allItems    = [];
-let ttWeekStart = null;
-let calYear     = 0;
-let calMonth    = 0;
+
+// ===== グローバル状態 =====
+let allItems       = [];
+let allAnniversaries = [];
+let ttWeekStart    = null;
+let calYear        = 0;
+let calMonth       = 0;
 let archiveFilter  = 'all';
 let archiveSearch  = '';
+
+// ===== 記念日計算 =====
+// 指定年月に該当する記念日を返す（JST年月で渡す）
+function getAnniversariesForMonth(jstYear, jstMonth) {
+  const result = [];
+  for (const ann of allAnniversaries) {
+    // 毎年繰り返し（誕生日など）
+    if (ann.yearly) {
+      if (ann.month === jstMonth + 1) {
+        result.push({ day: ann.day, label: ann.label, color: ann.color, textColor: ann.textColor });
+      }
+    }
+    // 毎月繰り返し（デビューnか月記念日）
+    else if (ann.monthly) {
+      const base = new Date(Date.UTC(ann.baseYear, ann.baseMonth - 1, ann.baseDay));
+      const target = new Date(Date.UTC(jstYear, jstMonth, ann.baseDay));
+      if (target > base) {
+        // 経過月数を計算
+        const months = (jstYear - ann.baseYear) * 12 + (jstMonth - (ann.baseMonth - 1));
+        if (months > 0) {
+          const label = ann.label.replace('{n}', months);
+          result.push({ day: ann.baseDay, label, color: ann.color, textColor: ann.textColor });
+        }
+      }
+    }
+    // 単発記念日
+    else if (!ann.yearly && !ann.monthly) {
+      if (ann.year === jstYear && ann.month === jstMonth + 1) {
+        result.push({ day: ann.day, label: ann.label, color: ann.color, textColor: ann.textColor });
+      }
+    }
+  }
+  return result;
+}
+
+// 指定週（7日分）に該当する記念日を返す { 'YYYY-MM-DD': [...] }
+function getAnniversariesForWeek(days) {
+  const result = {};
+  for (const day of days) {
+    const jstYear  = day.getUTCFullYear();
+    const jstMonth = day.getUTCMonth(); // 0-indexed
+    const jstDay   = day.getUTCDate();
+    const key = `${jstYear}-${String(jstMonth+1).padStart(2,'0')}-${String(jstDay).padStart(2,'0')}`;
+    const anns = [];
+    for (const ann of allAnniversaries) {
+      if (ann.yearly && ann.month === jstMonth + 1 && ann.day === jstDay) {
+        anns.push(ann);
+      } else if (ann.monthly) {
+        const base = new Date(Date.UTC(ann.baseYear, ann.baseMonth - 1, ann.baseDay));
+        const target = new Date(Date.UTC(jstYear, jstMonth, ann.baseDay));
+        if (target > base && ann.baseDay === jstDay) {
+          const months = (jstYear - ann.baseYear) * 12 + (jstMonth - (ann.baseMonth - 1));
+          if (months > 0) {
+            anns.push({ ...ann, label: ann.label.replace('{n}', months) });
+          }
+        }
+      } else if (!ann.yearly && !ann.monthly) {
+        if (ann.year === jstYear && ann.month === jstMonth + 1 && ann.day === jstDay) {
+          anns.push(ann);
+        }
+      }
+    }
+    if (anns.length > 0) result[key] = anns;
+  }
+  return result;
+}
 
 // ===== データ読み込み =====
 async function loadData() {
   try {
-    const res = await fetch(`${DATA_URL}?t=${Date.now()}`);
+    // 動画データと記念日データを並行取得
+    const [res, annRes] = await Promise.all([
+      fetch(`${DATA_URL}?t=${Date.now()}`),
+      fetch(`./data/anniversaries.json?t=${Date.now()}`)
+    ]);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
+
+    if (annRes.ok) {
+      const annData = await annRes.json();
+      allAnniversaries = annData.items || [];
+    }
 
     if (data.updatedAt) {
       document.getElementById('updatedAt').textContent = formatJST(data.updatedAt);
@@ -257,7 +335,27 @@ function renderTimetable() {
     const cls = i === 0 ? 'sun' : i === 6 ? 'sat' : '';
     html += `<th class="${cls}${isToday?' today-col':''}">${DOW[i]} ${fmt(d)}</th>`;
   });
-  html += '</tr></thead><tbody>';
+  html += '</tr>';
+
+  // 記念日行
+  const weekAnns = getAnniversariesForWeek(days);
+  const hasAnns = Object.keys(weekAnns).length > 0;
+  if (hasAnns) {
+    html += '<tr>';
+    html += '<td class="time-cell" style="font-size:0.68rem;color:#886666;">記念日</td>';
+    days.forEach(d => {
+      const key = `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;
+      const anns = weekAnns[key] || [];
+      html += '<td style="padding:2px;vertical-align:top;">';
+      anns.forEach(ann => {
+        html += `<div style="background:${ann.color};color:${ann.textColor};border-radius:3px;padding:2px 4px;font-size:0.68rem;font-weight:700;margin-bottom:2px;line-height:1.3;">${escapeHtml(ann.label)}</div>`;
+      });
+      html += '</td>';
+    });
+    html += '</tr>';
+  }
+
+  html += '</thead><tbody>';
 
   // 1時間単位でループ
   for (let hour = HOUR_START; hour < HOUR_END; hour++) {
@@ -428,7 +526,13 @@ function renderCalendar() {
         const numCls = ['cal-day-num', isSat?'sat':'', isSun?'sun':'', isToday?'today-num':''].filter(Boolean).join(' ');
         html += `<div style="text-align:right;"><span class="${numCls}">${actualDate}</span></div>`;
         const items = (byDate[actualDate] || []).sort((a,b)=>parseDate(a.publishedAt)-parseDate(b.publishedAt));
+        // 記念日
+        const monthAnns = getAnniversariesForMonth(calYear, calMonth);
+        const dayAnns = monthAnns.filter(a => a.day === actualDate);
         html += '<div class="cal-events">';
+        dayAnns.forEach(ann => {
+          html += `<div style="background:${ann.color};color:${ann.textColor};border-radius:3px;padding:2px 5px;font-size:0.68rem;font-weight:700;margin-bottom:2px;line-height:1.3;">${escapeHtml(ann.label)}</div>`;
+        });
         const MAX = 3;
         items.slice(0, MAX).forEach(item => {
           const j = toJST(parseDate(getDisplayTime(item)));
