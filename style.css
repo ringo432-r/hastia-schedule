@@ -96,6 +96,16 @@ body {
   font-weight: 400;
 }
 
+.sidebar-chara {
+  width: 100%;
+  max-width: 140px;
+  display: block;
+  margin: 0 auto 6px;
+  border-radius: 8px;
+  /* 白背景を透過させてサイドバーに馴染ませる */
+  mix-blend-mode: multiply;
+}
+
 .next-stream {
   background: rgba(204,34,34,0.06);
   border: 1px solid var(--color-border);
