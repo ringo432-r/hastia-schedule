@@ -1,605 +1,655 @@
 {
-  "updatedAt": "2026-10-26T11:55:51.057556+00:00",
+  "updatedAt": "2026-10-26T13:07:04.687911+00:00",
   "items": [
     {
       "id": "i0hFC9RegD8",
       "title": "【Japanese Ramen Simulator】コッテコテのドロドロスープが大好き！どこまで再現できますか？ 【 #はすてぃあ / #新人Vtuber 】",
       "description": "Japanese Ramen Simulator https://store.steampowered.com/app/4968640/Japanese_Ramen_Simulator/ エルティア～♡ ...",
-      "publishedAt": "2026-10-25T17:26:23Z",
-      "scheduledStartTime": "upcoming",
+      "publishedAt": "2026-10-27T14:00:00Z",
+      "scheduledStartTime": "2026-10-27T14:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/i0hFC9RegD8/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/i0hFC9RegD8/hqdefault.jpg",
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=i0hFC9RegD8"
+      "url": "https://www.youtube.com/watch?v=i0hFC9RegD8",
+      "isShort": false
     },
     {
       "id": "gFBE_3Yuy74",
       "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ ※ネタバレ注意 ＃２【 #はすてぃあ / #新人Vtuber 】",
       "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ エルティア～♡ エルノア ...",
-      "publishedAt": "2026-10-25T16:38:00Z",
-      "scheduledStartTime": "upcoming",
+      "publishedAt": "2026-10-26T14:00:00Z",
+      "scheduledStartTime": "2026-10-26T14:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/gFBE_3Yuy74/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/gFBE_3Yuy74/hqdefault.jpg",
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=gFBE_3Yuy74"
+      "url": "https://www.youtube.com/watch?v=gFBE_3Yuy74",
+      "isShort": false
     },
     {
       "id": "iEQ6w2uy9zs",
       "title": "デビューグッズ発売中　～2026/11/1",
       "description": "ご購入はこちらから…！ とってもこだわったグッズなのでぜひ見ていただきたいですっ ...",
-      "publishedAt": "2026-10-18T17:54:08Z",
-      "scheduledStartTime": "upcoming",
+      "publishedAt": "2026-12-02T17:55:00Z",
+      "scheduledStartTime": "2026-12-02T17:55:00Z",
       "thumbnail": "https://i.ytimg.com/vi/iEQ6w2uy9zs/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/iEQ6w2uy9zs/hqdefault.jpg",
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=iEQ6w2uy9zs"
+      "url": "https://www.youtube.com/watch?v=iEQ6w2uy9zs",
+      "isShort": false
     },
     {
       "id": "u23sPngSFmw",
       "title": "Weekly Schedule",
       "description": "",
-      "publishedAt": "2026-10-18T17:51:10Z",
-      "scheduledStartTime": "upcoming",
+      "publishedAt": "2027-06-16T17:50:00Z",
+      "scheduledStartTime": "2027-06-16T17:50:00Z",
       "thumbnail": "https://i.ytimg.com/vi/u23sPngSFmw/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/u23sPngSFmw/hqdefault.jpg",
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=u23sPngSFmw"
+      "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
     },
     {
       "id": "Up2TUMrJSfw",
       "title": "【メンバーシップ解禁 #歌枠】初めての歌枠！神様に魅了させちゃいますっ【#はすてぃあ / #新人vtuber 】",
       "description": "メンバーはこちらから！ https://www.youtube.com/channel/UCDc9mKVWl40jQsZjFDVKXRw/join エルティア～♡ エルノア教の ...",
       "publishedAt": "2026-10-25T19:47:06Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/Up2TUMrJSfw/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/Up2TUMrJSfw/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=Up2TUMrJSfw"
+      "url": "https://www.youtube.com/watch?v=Up2TUMrJSfw",
+      "isShort": false
     },
     {
       "id": "UcRaC9ckiCE",
       "title": "【デビュー1週間記念】好きになって…にじさんじ健屋花那さんの｢これって浮気？判定シート｣でわたくしのことを知ってほしい…【 #はすてぃあ / #新人vtuber 】",
       "description": "健屋花那さん「これって浮気？判定シート」 https://x.com/sukosuko_sukoya/status/2107121927278166034?s=20 エルティア～♡ ...",
       "publishedAt": "2026-10-24T21:12:43Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/UcRaC9ckiCE/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/UcRaC9ckiCE/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=UcRaC9ckiCE"
+      "url": "https://www.youtube.com/watch?v=UcRaC9ckiCE",
+      "isShort": false
     },
     {
       "id": "9jd6dYp2aIU",
       "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ ※ネタバレ注意 ＃１ 【 #はすてぃあ / #新人Vtuber 】",
       "description": "エルティア～♡ エルノア教の教祖で神様！はすてぃあと申しますっ ASMRを中心にゲームや雑談・歌などあなたの居場所に ...",
       "publishedAt": "2026-10-23T22:06:52Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/9jd6dYp2aIU/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/9jd6dYp2aIU/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=9jd6dYp2aIU"
+      "url": "https://www.youtube.com/watch?v=9jd6dYp2aIU",
+      "isShort": false
     },
     {
       "id": "eOGe99i-E54",
       "title": "【ASMR/黒3dio】とってもここちいいオイルマッサージで身も心もリラックスさせちゃいます【はすてぃあ】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
       "publishedAt": "2026-10-23T06:08:48Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/eOGe99i-E54/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/eOGe99i-E54/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=eOGe99i-E54"
+      "url": "https://www.youtube.com/watch?v=eOGe99i-E54",
+      "isShort": false
     },
     {
       "id": "lp8HJLfZ0KQ",
       "title": "【 #妹に運転を教える 】神であるわたくしが直々になんにも知らん運転を教えちゃいます！【#はすてぃあ / #新人vtuber 】",
       "description": "みなさまはドライブデートだと思って楽しんでくださいませ♡ エルティア～♡ エルノア教の教祖で神様！はすてぃあと申しますっ ...",
       "publishedAt": "2026-10-21T16:56:04Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/lp8HJLfZ0KQ/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/lp8HJLfZ0KQ/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=lp8HJLfZ0KQ"
+      "url": "https://www.youtube.com/watch?v=lp8HJLfZ0KQ",
+      "isShort": false
     },
     {
       "id": "cAE84GdwRFI",
       "title": "【日本事故物件監視協会3 -JSP-】かなり怖がりな神様ですが、飲酒してなんとか挑みます…【 #はすてぃあ / #新人Vtuber 】",
       "description": "エルティア～♡ エルノア教の教祖で神様！はすてぃあと申しますっ ASMRを中心にゲームや雑談・歌などあなたの居場所に ...",
       "publishedAt": "2026-10-20T18:15:36Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/cAE84GdwRFI/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/cAE84GdwRFI/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=cAE84GdwRFI"
+      "url": "https://www.youtube.com/watch?v=cAE84GdwRFI",
+      "isShort": false
     },
     {
       "id": "b0WckNz_szM",
       "title": "【初配信振り返り】はずかしいけど振り返りながらお話がしたいですっ【はすてぃあ/新人Vtuber】",
       "description": "エルティア～♡ エルノア教の教祖で神様！はすてぃあと申しますっ ASMRを中心にゲームや雑談・歌などあなたの居場所に ...",
       "publishedAt": "2026-10-19T18:31:08Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/b0WckNz_szM/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/b0WckNz_szM/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=b0WckNz_szM"
+      "url": "https://www.youtube.com/watch?v=b0WckNz_szM",
+      "isShort": false
     },
     {
       "id": "rprB1tkvrdY",
       "title": "【 初配信 】神・はすてぃあが降臨いたします！【 #はすてぃあ初配信 / #新人vtuber  】",
       "description": "挨拶「エルティア」 エルノア教の教祖で神様のはすてぃあです。 あなたが安らかに健やかに暮らせる世界を創っています。",
       "publishedAt": "2026-10-18T15:19:02Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/rprB1tkvrdY/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/rprB1tkvrdY/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=rprB1tkvrdY"
+      "url": "https://www.youtube.com/watch?v=rprB1tkvrdY",
+      "isShort": false
     },
     {
       "id": "EoMyVWP_pzg",
       "title": "【ASMR/黒3dio】とってもここちいいオイルマッサージで身も心もリラックスさせちゃいます【はすてぃあ】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
       "publishedAt": "2026-10-18T04:20:35Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/EoMyVWP_pzg/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/EoMyVWP_pzg/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=EoMyVWP_pzg"
+      "url": "https://www.youtube.com/watch?v=EoMyVWP_pzg",
+      "isShort": false
     },
     {
       "id": "wArz0hSDSEc",
       "title": "【ASMR/黒3dio】肩たたきであなたを癒しちゃいます♡Shoulder tapper / Towel 【はすてぃあ】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
       "publishedAt": "2026-10-16T17:21:06Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/wArz0hSDSEc/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/wArz0hSDSEc/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=wArz0hSDSEc"
+      "url": "https://www.youtube.com/watch?v=wArz0hSDSEc",
+      "isShort": false
     },
     {
       "id": "hn-xxloc8Fg",
       "title": "【ASMR/黒3dio】脳にまでクるオイルで朝までしっかり眠れちゃいます♡オイルマッサージ/Oil massage【はすてぃあ】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
       "publishedAt": "2026-10-15T03:49:40Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/hn-xxloc8Fg/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/hn-xxloc8Fg/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=hn-xxloc8Fg"
+      "url": "https://www.youtube.com/watch?v=hn-xxloc8Fg",
+      "isShort": false
     },
     {
       "id": "tnvLAScBrb8",
       "title": "【ASMR/黒3dio】癒しの美容室でたっぷり眠らせちゃいます♡シャンプー/カット/肩たたき【はすてぃあ】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
       "publishedAt": "2026-10-12T16:14:13Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/tnvLAScBrb8/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/tnvLAScBrb8/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=tnvLAScBrb8"
+      "url": "https://www.youtube.com/watch?v=tnvLAScBrb8",
+      "isShort": false
     },
     {
       "id": "dG93FPt7lCE",
       "title": "【収益化記念】信徒参加型！あなたのお名前から煩悩をセクシーに焼き払います♡ASMRマイク使用♡【はすてぃあ】",
       "description": "108人のリスナーがいないと成り立たないんですけど大丈夫そう…？ 黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申し ...",
       "publishedAt": "2026-10-09T16:47:18Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/dG93FPt7lCE/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/dG93FPt7lCE/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=dG93FPt7lCE"
+      "url": "https://www.youtube.com/watch?v=dG93FPt7lCE",
+      "isShort": false
     },
     {
       "id": "LL2y9gb7uLQ",
       "title": "【ASMR/黒3dio】耳ふぅ多めに…♡ドキドキしちゃうASMR♡オイルマッサージ/耳ふさぎ/タオル【はすてぃあ】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
       "publishedAt": "2026-10-09T03:53:51Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/LL2y9gb7uLQ/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/LL2y9gb7uLQ/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=LL2y9gb7uLQ"
+      "url": "https://www.youtube.com/watch?v=LL2y9gb7uLQ",
+      "isShort": false
     },
     {
       "id": "4LSNZiOBx4s",
       "title": "【ASMR/黒3dio】とってもここちいいオイルマッサージで身も心もリラックスさせちゃいます【はすてぃあ】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
       "publishedAt": "2026-10-06T16:47:08Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/4LSNZiOBx4s/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/4LSNZiOBx4s/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=4LSNZiOBx4s"
+      "url": "https://www.youtube.com/watch?v=4LSNZiOBx4s",
+      "isShort": false
     },
     {
       "id": "K0rvobNMVuc",
       "title": "【ASMR/黒3dio】2000人耐久♡お話しながら肩たたきであなたを癒しちゃいます【はすてぃあ】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
       "publishedAt": "2026-10-04T16:35:23Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/K0rvobNMVuc/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/K0rvobNMVuc/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=K0rvobNMVuc"
+      "url": "https://www.youtube.com/watch?v=K0rvobNMVuc",
+      "isShort": false
     },
     {
       "id": "S29vHtIqEkw",
       "title": "【ASMR/黒3dio】癒しの美容室でたっぷり眠らせちゃいます♡シャンプー/カット/肩たたき【はすてぃあ】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
       "publishedAt": "2026-10-03T16:26:50Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/S29vHtIqEkw/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/S29vHtIqEkw/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=S29vHtIqEkw"
+      "url": "https://www.youtube.com/watch?v=S29vHtIqEkw",
+      "isShort": false
     },
     {
       "id": "6GvbAcwP9YI",
       "title": "【ASMR/黒3dio】とってもここちいいオイルマッサージで身も心もリラックスさせちゃいます【はすてぃあ】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
       "publishedAt": "2026-10-01T17:25:52Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/6GvbAcwP9YI/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/6GvbAcwP9YI/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=6GvbAcwP9YI"
+      "url": "https://www.youtube.com/watch?v=6GvbAcwP9YI",
+      "isShort": false
     },
     {
       "id": "ZCrRE8KwVE8",
       "title": "【初配信】はじめてでどきどきだけど、いっぱい眠らせちゃいます【ASMR/黒3dio/はすてぃあ】",
       "description": "みなさまにお願いしたいこと わたくしのチャンネルはまだおすすめに載っておらず、ASMRをするにも厳しい状態です。 少しでも ...",
       "publishedAt": "2026-09-29T17:56:35Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/ZCrRE8KwVE8/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/ZCrRE8KwVE8/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
-      "url": "https://www.youtube.com/watch?v=ZCrRE8KwVE8"
+      "url": "https://www.youtube.com/watch?v=ZCrRE8KwVE8",
+      "isShort": false
     },
     {
       "id": "NnvScJuLjjU",
       "title": "いきなり口説き始めたVtuberの末路【妹に運転を教える】#shorts  #vtuber",
       "description": "vtuber #新人VTuber #shorts #はすてぃあ 元配信 https://youtube.com/live/lp8HJLfZ0KQ.",
       "publishedAt": "2026-10-26T10:00:20Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/NnvScJuLjjU/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/NnvScJuLjjU/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=NnvScJuLjjU"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=NnvScJuLjjU",
+      "isShort": false
     },
     {
       "id": "rP7hP-Pq9qo",
       "title": "ホラーゲームが怖すぎたVtuberの末路…。#vtuber   #新人VTuber #shorts #はすてぃあ",
       "description": "JSP3の切り抜きです ホラゲは禊の時のみ #vtuber #新人VTuber #shorts #はすてぃあ.",
       "publishedAt": "2026-10-23T10:11:22Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/rP7hP-Pq9qo/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/rP7hP-Pq9qo/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=rP7hP-Pq9qo"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=rP7hP-Pq9qo",
+      "isShort": false
     },
     {
       "id": "oGLY58uYcfc",
       "title": "妹に運転を教えるはずがフラグばかり立ててくる…。デュエルスタンバイ!!　#vtuber  #新人VTuber #shorts #はすてぃあ",
       "description": "元配信 【 #妹に運転を教える 】神であるわたくしが直々になんにも知らん運転を教えちゃいます！【#はすてぃあ / #新人vtuber 】 ...",
       "publishedAt": "2026-10-22T10:00:04Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/oGLY58uYcfc/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/oGLY58uYcfc/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=oGLY58uYcfc"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=oGLY58uYcfc",
+      "isShort": false
     },
     {
       "id": "zrFeuR2-Bjg",
       "title": "初配信後、思ってたんと違う…　#vtuber  #新人VTuber #shorts #はすてぃあ",
       "description": "vtuber #新人VTuber #shorts #はすてぃあ.",
       "publishedAt": "2026-10-21T10:00:25Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/zrFeuR2-Bjg/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/zrFeuR2-Bjg/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=zrFeuR2-Bjg"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=zrFeuR2-Bjg",
+      "isShort": false
     },
     {
       "id": "bK1jLB4mWVY",
       "title": "なんでも変な方向に考えてしまう神様の末路…。　#vtuber  #新人VTuber #shorts #はすてぃあ",
       "description": "vtuber #新人VTuber #shorts #はすてぃあ.",
       "publishedAt": "2026-10-20T10:00:09Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/bK1jLB4mWVY/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/bK1jLB4mWVY/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=bK1jLB4mWVY"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=bK1jLB4mWVY",
+      "isShort": false
     },
     {
       "id": "vv7L_Q4xhcM",
       "title": "初配信でロシアンたこ焼きをした結果…。　#vtuber  #新人VTuber #shorts #はすてぃあ",
       "description": "",
       "publishedAt": "2026-10-19T10:00:29Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/vv7L_Q4xhcM/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/vv7L_Q4xhcM/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=vv7L_Q4xhcM"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=vv7L_Q4xhcM",
+      "isShort": false
     },
     {
       "id": "EMRBPmDTTNc",
       "title": "【歌ってみた】旧支配者のキャロル -The Carol of the Old Ones- 【はすてぃあ】",
       "description": "原曲：The Carol of the Old Ones 原曲の原曲：Carol of the Bells 編曲＆意訳：水月やまと様 ...",
       "publishedAt": "2026-10-18T15:12:11Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/EMRBPmDTTNc/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/EMRBPmDTTNc/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=EMRBPmDTTNc"
+      "url": "https://www.youtube.com/watch?v=EMRBPmDTTNc",
+      "isShort": false
     },
     {
       "id": "aag2ji6SpDo",
       "title": "最速で達成…！？#vtuber  #新人VTuber #shorts #はすてぃあ",
       "description": "質問 #Shorts #VTuber #はすてぃあ.",
       "publishedAt": "2026-10-08T10:00:01Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/aag2ji6SpDo/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/aag2ji6SpDo/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=aag2ji6SpDo"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=aag2ji6SpDo",
+      "isShort": false
     },
     {
       "id": "lSWH7QE7i0k",
       "title": "Q.ボイチェン使ってる？　#vtuber  #新人VTuber #shorts #はすてぃあ",
       "description": "質問 #Shorts #VTuber #はすてぃあ.",
       "publishedAt": "2026-10-07T10:00:07Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/lSWH7QE7i0k/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/lSWH7QE7i0k/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=lSWH7QE7i0k"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=lSWH7QE7i0k",
+      "isShort": false
     },
     {
       "id": "zO2ALqKrMsw",
       "title": "神様ですけど…？　神っぽいな 歌ってみた　#vtuber #新人VTuber #shorts #はすてぃあ",
       "description": "vtuber #新人VTuber #shorts #はすてぃあ.",
       "publishedAt": "2026-10-01T10:00:31Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/zO2ALqKrMsw/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/zO2ALqKrMsw/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=zO2ALqKrMsw"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=zO2ALqKrMsw",
+      "isShort": false
     },
     {
       "id": "HagvIO3PAsY",
       "title": "初配信どうだった？　#VTuber #新人VTuber #shorts #はすてぃあ",
       "description": "vtuber #新人VTuber #shorts #はすてぃあ みんな本当にありがとう…",
       "publishedAt": "2026-09-30T10:00:16Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/HagvIO3PAsY/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/HagvIO3PAsY/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=HagvIO3PAsY"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=HagvIO3PAsY",
+      "isShort": false
     },
     {
       "id": "LoYTrnKBB8Y",
       "title": "初配信！本日23時より♡#VTuber #新人VTuber #shorts #はすてぃあ",
       "description": "めーっちゃ緊張する。。。 #vtuber #新人VTuber #shorts #はすてぃあ.",
       "publishedAt": "2026-09-29T10:00:05Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/LoYTrnKBB8Y/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/LoYTrnKBB8Y/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=LoYTrnKBB8Y"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=LoYTrnKBB8Y",
+      "isShort": false
     },
     {
       "id": "UkZT4cMHJNA",
       "title": "ついに…！！動きます…！！",
       "description": "質問 #Shorts #VTuber #はすてぃあ.",
       "publishedAt": "2026-09-28T09:00:05Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/UkZT4cMHJNA/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/UkZT4cMHJNA/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=UkZT4cMHJNA"
+      "url": "https://www.youtube.com/watch?v=UkZT4cMHJNA",
+      "isShort": false
     },
     {
       "id": "5tR-nuKcJwo",
       "title": "【触手耳かきASMR】神様の触手でじっくり耳かき｜癒しの睡眠ASMR【はすてぃあ】",
       "description": "堕ちる準備はできましたか…？ 黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚 ...",
       "publishedAt": "2026-09-27T14:00:03Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/5tR-nuKcJwo/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/5tR-nuKcJwo/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=5tR-nuKcJwo"
+      "url": "https://www.youtube.com/watch?v=5tR-nuKcJwo",
+      "isShort": false
     },
     {
       "id": "NwFfmp9noxw",
       "title": "Q.もしもーし？ mosi mosi ? 歌ってみた",
       "description": "質問 #Shorts #VTuber #はすてぃあ □ 本家様 mosi mosi? https://youtu.be/OmLdvsZAqq4?si=IljJJtwVpMwvi5WP □ MIX ...",
       "publishedAt": "2026-09-24T10:00:12Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/NwFfmp9noxw/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/NwFfmp9noxw/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=NwFfmp9noxw"
+      "url": "https://www.youtube.com/watch?v=NwFfmp9noxw",
+      "isShort": false
     },
     {
       "id": "NMP8ZEWdcos",
       "title": "Q.友情と恋愛どっち取るの？ 少女レイ 歌ってみた",
       "description": "質問 #Shorts #VTuber #はすてぃあ □ 本家様 少女レイ https://youtu.be/JW3N-HvU0MA?si=rum-klCA6WTSY5eI □ MIX ...",
       "publishedAt": "2026-09-12T10:11:55Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/NMP8ZEWdcos/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/NMP8ZEWdcos/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=NMP8ZEWdcos"
+      "url": "https://www.youtube.com/watch?v=NMP8ZEWdcos",
+      "isShort": false
     },
     {
       "id": "gubXixXm_Ms",
       "title": "Q.コミュ障なの？",
       "description": "質問 #Shorts #VTuber #はすてぃあ.",
       "publishedAt": "2026-09-10T10:00:09Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/gubXixXm_Ms/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/gubXixXm_Ms/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=gubXixXm_Ms"
+      "url": "https://www.youtube.com/watch?v=gubXixXm_Ms",
+      "isShort": false
     },
     {
       "id": "3-6P3jZUKek",
       "title": "Q.ホロライブ入らないの？",
       "description": "質問 #Shorts #VTuber #はすてぃあ.",
       "publishedAt": "2026-09-09T09:00:18Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/3-6P3jZUKek/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/3-6P3jZUKek/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=3-6P3jZUKek"
+      "url": "https://www.youtube.com/watch?v=3-6P3jZUKek",
+      "isShort": false
     },
     {
       "id": "zssjmTE31ro",
       "title": "Q.浮気はどこから？",
       "description": "質問 #Shorts #VTuber #はすてぃあ.",
       "publishedAt": "2026-09-08T09:00:17Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/zssjmTE31ro/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/zssjmTE31ro/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=zssjmTE31ro"
+      "url": "https://www.youtube.com/watch?v=zssjmTE31ro",
+      "isShort": false
     },
     {
       "id": "SW90nVY_ueM",
       "title": "個人勢？企業勢？",
       "description": "質問 #Shorts #VTuber #はすてぃあ.",
       "publishedAt": "2026-09-05T08:59:39Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/SW90nVY_ueM/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/SW90nVY_ueM/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=SW90nVY_ueM"
+      "url": "https://www.youtube.com/watch?v=SW90nVY_ueM",
+      "isShort": false
     },
     {
       "id": "IAdwOs8lI9g",
       "title": "ヤラララ歌ってみた",
       "description": "質問 #Shorts #VTuber #はすてぃあ □ 本家様 [MV] ABM - 'ヤラララ' (YARARARA) feat. 重音テト ...",
       "publishedAt": "2026-09-03T10:59:29Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/IAdwOs8lI9g/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/IAdwOs8lI9g/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=IAdwOs8lI9g"
+      "url": "https://www.youtube.com/watch?v=IAdwOs8lI9g",
+      "isShort": false
     },
     {
       "id": "HiV4qT08FF8",
       "title": "ちいかわのセイレーンに似てるってホントですか？",
       "description": "質問 #Shorts #VTuber #はすてぃあ.",
       "publishedAt": "2026-09-02T09:00:59Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/HiV4qT08FF8/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/HiV4qT08FF8/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=HiV4qT08FF8"
+      "url": "https://www.youtube.com/watch?v=HiV4qT08FF8",
+      "isShort": false
     },
     {
       "id": "gyOxvZmp1lw",
       "title": "突然ですがLive2Dお披露目です！ #VTuber #VTuber準備中 #新人VTuber #shorts #はすてぃあ",
       "description": "",
       "publishedAt": "2026-09-01T09:00:14Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/gyOxvZmp1lw/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/gyOxvZmp1lw/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=gyOxvZmp1lw"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=gyOxvZmp1lw",
+      "isShort": false
     },
     {
       "id": "5quqg2GgO24",
       "title": "何歳？　#VTuber #VTuber準備中 #新人VTuber #shorts #はすてぃあ",
       "description": "実際なん歳でしょうね.",
       "publishedAt": "2026-07-14T09:00:10Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/5quqg2GgO24/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/5quqg2GgO24/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=5quqg2GgO24"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=5quqg2GgO24",
+      "isShort": false
     },
     {
       "id": "2vBg48WSwwI",
       "title": "このマーク覚えてください♥　#VTuber #VTuber準備中 #新人VTuber #shorts #はすてぃあ",
       "description": "",
       "publishedAt": "2026-07-12T09:00:07Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/2vBg48WSwwI/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/2vBg48WSwwI/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=2vBg48WSwwI"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=2vBg48WSwwI",
+      "isShort": false
     },
     {
       "id": "iMzvyGNdfEY",
       "title": "イラストにチャレンジしました💞　#VTuber #VTuber準備中 #新人VTuber #shorts #はすてぃあ",
       "description": "",
       "publishedAt": "2026-07-11T09:00:30Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/iMzvyGNdfEY/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/iMzvyGNdfEY/hqdefault.jpg",
       "liveBroadcastContent": "none",
-      "category": "short",
-      "url": "https://www.youtube.com/watch?v=iMzvyGNdfEY"
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=iMzvyGNdfEY",
+      "isShort": false
     },
     {
       "id": "7s12TFR9obs",
       "title": "分かっちゃいないね  #vtuber #はすてぃあ #手描き #meme",
       "description": "人気の手書き系ってなにがあるかなあ～？？ほかにも描いてみたい！",
       "publishedAt": "2026-07-10T09:00:31Z",
-      "scheduledStartTime": "none",
+      "scheduledStartTime": "",
       "thumbnail": "https://i.ytimg.com/vi/7s12TFR9obs/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/7s12TFR9obs/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "video",
-      "url": "https://www.youtube.com/watch?v=7s12TFR9obs"
+      "url": "https://www.youtube.com/watch?v=7s12TFR9obs",
+      "isShort": false
     }
   ]
 }
