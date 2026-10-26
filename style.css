@@ -142,7 +142,9 @@ body {
   border-color: var(--color-accent);
 }
 
-.sidebar-btn.yt { color: #ff4444; }
+.sidebar-btn.yt  { color: #ff4444; }
+.sidebar-btn.x   { color: #aaaaaa; }
+.sidebar-btn.lit { color: #cc88ff; }
 
 .sidebar-note {
   font-size: 0.68rem;

@@ -118,10 +118,10 @@ function todayJST() {
 }
 
 function getWeekStart(base) {
+  // 日曜始まり
   const d = new Date(base);
-  const day = d.getUTCDay();
-  const diff = day === 0 ? -6 : 1 - day;
-  d.setUTCDate(d.getUTCDate() + diff);
+  const day = d.getUTCDay(); // 0=Sun
+  d.setUTCDate(d.getUTCDate() - day);
   return d;
 }
 
@@ -153,8 +153,6 @@ async function loadData() {
     allItems = (Array.isArray(data.items) ? data.items : [])
       .filter(item => item.id)
       .map(item => ({ ...item, _cat: detectCategory(item) }));
-
-    renderNextStream();
 
     const today = todayJST();
     ttWeekStart = getWeekStart(today);
@@ -209,14 +207,14 @@ function renderTimetable() {
     return d;
   });
 
-  const DOW = ['月','火','水','木','金','土','日'];
+  const DOW = ['日','月','火','水','木','金','土'];
   const fmt = d => {
     const p = n => String(n).padStart(2,'0');
     return `${p(d.getUTCMonth()+1)}/${p(d.getUTCDate())}`;
   };
 
   document.getElementById('tt-week-range').textContent =
-    `${days[0].getUTCFullYear()}年 ${fmt(days[0])}（月）〜${fmt(days[6])}（日）`;
+    `${days[0].getUTCFullYear()}年 ${fmt(days[0])}（日）〜${fmt(days[6])}（土）`;
 
   const weekEnd = new Date(days[6]);
   weekEnd.setUTCHours(23, 59, 59);
@@ -239,7 +237,8 @@ function renderTimetable() {
   html += '<th class="time-col">時刻</th>';
   days.forEach((d, i) => {
     const isToday = d.getTime() === today.getTime();
-    const cls = i === 5 ? 'sat' : i === 6 ? 'sun' : '';
+    // 日始まり: 0=日, 6=土
+    const cls = i === 0 ? 'sun' : i === 6 ? 'sat' : '';
     html += `<th class="${cls}${isToday?' today-col':''}">${DOW[i]} ${fmt(d)}</th>`;
   });
   html += '</tr></thead><tbody>';
@@ -363,12 +362,12 @@ function renderCalendar() {
   document.getElementById('cal-month-label').textContent =
     `${calYear}年${String(calMonth+1).padStart(2,'0')}月`;
 
-  const DOW_LABELS = ['月','火','水','木','金','土','日'];
+  const DOW_LABELS = ['日','月','火','水','木','金','土'];
   const firstDay = new Date(Date.UTC(calYear, calMonth, 1));
   const lastDay  = new Date(Date.UTC(calYear, calMonth + 1, 0));
 
+  // 日始まり：firstDayのUTCDay()がそのままオフセット (0=日)
   let startDow = firstDay.getUTCDay();
-  startDow = startDow === 0 ? 6 : startDow - 1;
 
   const monthItems = allItems.filter(item => {
     const d = parseDate(item.publishedAt);
@@ -387,7 +386,7 @@ function renderCalendar() {
 
   let html = '<thead><tr>';
   DOW_LABELS.forEach((d, i) => {
-    const cls = i === 5 ? 'sat' : i === 6 ? 'sun' : '';
+    const cls = i === 0 ? 'sun' : i === 6 ? 'sat' : '';
     html += `<th class="${cls}">${d}</th>`;
   });
   html += '</tr></thead><tbody>';
@@ -401,8 +400,8 @@ function renderCalendar() {
       const actualDate = isOther ? null : date;
       const cellDate = isOther ? null : new Date(Date.UTC(calYear, calMonth, date));
       const isToday = cellDate && cellDate.getTime() === today.getTime();
-      const isSat = col === 5;
-      const isSun = col === 6;
+      const isSat = col === 6;
+      const isSun = col === 0;
       const cls = [
         isOther ? 'other-month' : '',
         isToday ? 'today-cell' : ''
