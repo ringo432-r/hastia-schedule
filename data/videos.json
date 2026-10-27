@@ -1,6 +1,19 @@
 {
-  "updatedAt": "2026-10-27T01:57:00.571750+00:00",
+  "updatedAt": "2026-10-27T07:21:41.501682+00:00",
   "items": [
+    {
+      "id": "f0C5Za5F9cg",
+      "title": "【ASMR/黒3dio】癒しの美容室でたっぷり眠らせちゃいます♡シャンプー/カット/肩たたき【はすてぃあ】",
+      "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
+      "publishedAt": "2026-10-29T14:00:00Z",
+      "scheduledStartTime": "2026-10-29T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/f0C5Za5F9cg/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/f0C5Za5F9cg/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=f0C5Za5F9cg",
+      "isShort": false
+    },
     {
       "id": "su9Ty8sdod0",
       "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　フリーザ編後半 ※ネタバレ注意 ＃３【 #はすてぃあ / #新人Vtuber 】",
@@ -680,20 +693,6 @@
       "liveBroadcastContent": "none",
       "category": "video",
       "url": "https://www.youtube.com/watch?v=2vBg48WSwwI",
-      "actualStartTime": "",
-      "isShort": true
-    },
-    {
-      "id": "iMzvyGNdfEY",
-      "title": "イラストにチャレンジしました💞　#VTuber #VTuber準備中 #新人VTuber #shorts #はすてぃあ",
-      "description": "",
-      "publishedAt": "2026-07-11T09:00:30Z",
-      "scheduledStartTime": "",
-      "thumbnail": "https://i.ytimg.com/vi/iMzvyGNdfEY/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/iMzvyGNdfEY/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "video",
-      "url": "https://www.youtube.com/watch?v=iMzvyGNdfEY",
       "actualStartTime": "",
       "isShort": true
     }
