@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-10-27T07:21:41.501682+00:00",
+  "updatedAt": "2026-10-27T13:52:30.377339+00:00",
   "items": [
     {
       "id": "f0C5Za5F9cg",
-      "title": "【ASMR/黒3dio】癒しの美容室でたっぷり眠らせちゃいます♡シャンプー/カット/肩たたき【はすてぃあ】",
+      "title": "【ASMR/黒3dio】癒しの美容室でたっぷり眠らせちゃいます♡シャンプー/カット/肩たたき【はすてぃあ /新人Vtuber】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
       "publishedAt": "2026-10-29T14:00:00Z",
       "scheduledStartTime": "2026-10-29T14:00:00Z",
@@ -16,7 +16,7 @@
     },
     {
       "id": "su9Ty8sdod0",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　フリーザ編後半 ※ネタバレ注意 ＃３【 #はすてぃあ / #新人Vtuber 】",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　フリーザ編後半 ※ネタバレ注意 ＃３【 はすてぃあ / 新人Vtuber 】",
       "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ エルティア～♡ エルノア ...",
       "publishedAt": "2026-10-28T14:00:00Z",
       "scheduledStartTime": "2026-10-28T14:00:00Z",
@@ -29,8 +29,8 @@
     },
     {
       "id": "i0hFC9RegD8",
-      "title": "【Japanese Ramen Simulator】コッテコテのドロドロスープが大好き！どこまで再現できますか？ 【 #はすてぃあ / #新人Vtuber 】",
-      "description": "Japanese Ramen Simulator https://store.steampowered.com/app/4968640/Japanese_Ramen_Simulator/ エルティア～♡ ...",
+      "title": "【Japanese Ramen Simulator】コッテコテのドロドロスープが大好き！どこまで再現できますか？ 【 はすてぃあ / 新人Vtuber 】",
+      "description": "Japanese Ramen Simulator https://store.steampowered.com/app/4968640/Japanese_Ramen_Simulator/ エルティア～ エルノア ...",
       "publishedAt": "2026-10-27T14:00:00Z",
       "scheduledStartTime": "2026-10-27T14:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/i0hFC9RegD8/mqdefault.jpg",
@@ -345,6 +345,20 @@
       "url": "https://www.youtube.com/watch?v=ZCrRE8KwVE8",
       "actualStartTime": "2026-09-29T14:00:20Z",
       "isShort": false
+    },
+    {
+      "id": "1enZwuJpJYY",
+      "title": "月を破壊するピッコロ 初見反応【ドラゴンボールZ KAKAROT】 #shorts  #vtuber",
+      "description": "vtuber #新人VTuber #shorts https://www.youtube.com/live/9jd6dYp2aIU?si=ZP26Rbly2mKhExB4.",
+      "publishedAt": "2026-10-27T10:00:01Z",
+      "scheduledStartTime": "",
+      "thumbnail": "https://i.ytimg.com/vi/1enZwuJpJYY/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/1enZwuJpJYY/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=1enZwuJpJYY",
+      "actualStartTime": "",
+      "isShort": true
     },
     {
       "id": "NnvScJuLjjU",
@@ -679,20 +693,6 @@
       "liveBroadcastContent": "none",
       "category": "video",
       "url": "https://www.youtube.com/watch?v=5quqg2GgO24",
-      "actualStartTime": "",
-      "isShort": true
-    },
-    {
-      "id": "2vBg48WSwwI",
-      "title": "このマーク覚えてください♥　#VTuber #VTuber準備中 #新人VTuber #shorts #はすてぃあ",
-      "description": "",
-      "publishedAt": "2026-07-12T09:00:07Z",
-      "scheduledStartTime": "",
-      "thumbnail": "https://i.ytimg.com/vi/2vBg48WSwwI/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/2vBg48WSwwI/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "video",
-      "url": "https://www.youtube.com/watch?v=2vBg48WSwwI",
       "actualStartTime": "",
       "isShort": true
     }
