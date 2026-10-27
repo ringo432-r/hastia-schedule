@@ -1,6 +1,20 @@
 {
-  "updatedAt": "2026-10-27T13:52:30.377339+00:00",
+  "updatedAt": "2026-10-27T19:11:44.142538+00:00",
   "items": [
+    {
+      "id": "i0hFC9RegD8",
+      "title": "【Japanese Ramen Simulator】コッテコテのドロドロスープが大好き！どこまで再現できますか？ 【 はすてぃあ / 新人Vtuber 】",
+      "description": "Japanese Ramen Simulator https://store.steampowered.com/app/4968640/Japanese_Ramen_Simulator/ エルティア～ エルノア ...",
+      "publishedAt": "2026-10-27T14:01:08Z",
+      "scheduledStartTime": "2026-10-27T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/i0hFC9RegD8/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/i0hFC9RegD8/hqdefault.jpg",
+      "liveBroadcastContent": "live",
+      "category": "live",
+      "url": "https://www.youtube.com/watch?v=i0hFC9RegD8",
+      "actualStartTime": "2026-10-27T14:01:08Z",
+      "isShort": false
+    },
     {
       "id": "f0C5Za5F9cg",
       "title": "【ASMR/黒3dio】癒しの美容室でたっぷり眠らせちゃいます♡シャンプー/カット/肩たたき【はすてぃあ /新人Vtuber】",
@@ -25,19 +39,6 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=su9Ty8sdod0",
-      "isShort": false
-    },
-    {
-      "id": "i0hFC9RegD8",
-      "title": "【Japanese Ramen Simulator】コッテコテのドロドロスープが大好き！どこまで再現できますか？ 【 はすてぃあ / 新人Vtuber 】",
-      "description": "Japanese Ramen Simulator https://store.steampowered.com/app/4968640/Japanese_Ramen_Simulator/ エルティア～ エルノア ...",
-      "publishedAt": "2026-10-27T14:00:00Z",
-      "scheduledStartTime": "2026-10-27T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/i0hFC9RegD8/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/i0hFC9RegD8/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=i0hFC9RegD8",
       "isShort": false
     },
     {
