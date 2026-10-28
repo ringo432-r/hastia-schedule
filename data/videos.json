@@ -1,18 +1,17 @@
 {
-  "updatedAt": "2026-10-28T16:56:31.396481+00:00",
+  "updatedAt": "2026-10-28T21:30:06.414831+00:00",
   "items": [
     {
-      "id": "su9Ty8sdod0",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　フリーザ編後半 ※ネタバレ注意 ＃３【 はすてぃあ / 新人Vtuber 】",
-      "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ エルティア～♡ エルノア ...",
-      "publishedAt": "2026-10-28T14:02:06Z",
-      "scheduledStartTime": "2026-10-28T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/su9Ty8sdod0/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/su9Ty8sdod0/hqdefault.jpg",
-      "liveBroadcastContent": "live",
-      "category": "live",
-      "url": "https://www.youtube.com/watch?v=su9Ty8sdod0",
-      "actualStartTime": "2026-10-28T14:02:06Z",
+      "id": "fYqqLvoJEmU",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
+      "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ 再生リストはこちら！",
+      "publishedAt": "2026-10-30T14:00:00Z",
+      "scheduledStartTime": "2026-10-30T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/fYqqLvoJEmU/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/fYqqLvoJEmU/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=fYqqLvoJEmU",
       "isShort": false
     },
     {
@@ -39,6 +38,20 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=f0C5Za5F9cg",
+      "isShort": false
+    },
+    {
+      "id": "su9Ty8sdod0",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　フリーザ編後半 ※ネタバレ注意 ＃３【 はすてぃあ / 新人Vtuber 】",
+      "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ エルティア～♡ エルノア ...",
+      "publishedAt": "2026-10-28T14:02:06Z",
+      "scheduledStartTime": "2026-10-28T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/su9Ty8sdod0/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/su9Ty8sdod0/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=su9Ty8sdod0",
+      "actualStartTime": "2026-10-28T14:02:06Z",
       "isShort": false
     },
     {
@@ -680,20 +693,6 @@
       "liveBroadcastContent": "none",
       "category": "video",
       "url": "https://www.youtube.com/watch?v=IAdwOs8lI9g",
-      "actualStartTime": "",
-      "isShort": true
-    },
-    {
-      "id": "HiV4qT08FF8",
-      "title": "ちいかわのセイレーンに似てるってホントですか？",
-      "description": "質問 #Shorts #VTuber #はすてぃあ.",
-      "publishedAt": "2026-09-02T09:00:59Z",
-      "scheduledStartTime": "",
-      "thumbnail": "https://i.ytimg.com/vi/HiV4qT08FF8/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/HiV4qT08FF8/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "video",
-      "url": "https://www.youtube.com/watch?v=HiV4qT08FF8",
       "actualStartTime": "",
       "isShort": true
     }
