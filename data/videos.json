@@ -1,6 +1,20 @@
 {
-  "updatedAt": "2026-10-28T10:16:24.375274+00:00",
+  "updatedAt": "2026-10-28T16:56:31.396481+00:00",
   "items": [
+    {
+      "id": "su9Ty8sdod0",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　フリーザ編後半 ※ネタバレ注意 ＃３【 はすてぃあ / 新人Vtuber 】",
+      "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ エルティア～♡ エルノア ...",
+      "publishedAt": "2026-10-28T14:02:06Z",
+      "scheduledStartTime": "2026-10-28T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/su9Ty8sdod0/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/su9Ty8sdod0/hqdefault.jpg",
+      "liveBroadcastContent": "live",
+      "category": "live",
+      "url": "https://www.youtube.com/watch?v=su9Ty8sdod0",
+      "actualStartTime": "2026-10-28T14:02:06Z",
+      "isShort": false
+    },
     {
       "id": "orvph8vVt9w",
       "title": "【タンポポは耐える。】ハロウィンなので、タンポポの仮装しました。【 #はすてぃあ / #新人Vtuber 】",
@@ -25,19 +39,6 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=f0C5Za5F9cg",
-      "isShort": false
-    },
-    {
-      "id": "su9Ty8sdod0",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　フリーザ編後半 ※ネタバレ注意 ＃３【 はすてぃあ / 新人Vtuber 】",
-      "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ エルティア～♡ エルノア ...",
-      "publishedAt": "2026-10-28T14:00:00Z",
-      "scheduledStartTime": "2026-10-28T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/su9Ty8sdod0/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/su9Ty8sdod0/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=su9Ty8sdod0",
       "isShort": false
     },
     {
