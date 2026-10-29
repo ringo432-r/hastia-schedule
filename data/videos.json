@@ -1,20 +1,6 @@
 {
-  "updatedAt": "2026-10-29T14:53:51.440243+00:00",
+  "updatedAt": "2026-10-29T20:01:30.398722+00:00",
   "items": [
-    {
-      "id": "f0C5Za5F9cg",
-      "title": "【ASMR/黒3dio】癒しの美容室でたっぷり眠らせちゃいます♡シャンプー/カット/肩たたき【はすてぃあ /新人Vtuber】",
-      "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
-      "publishedAt": "2026-10-29T14:01:51Z",
-      "scheduledStartTime": "2026-10-29T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/f0C5Za5F9cg/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/f0C5Za5F9cg/hqdefault.jpg",
-      "liveBroadcastContent": "live",
-      "category": "live",
-      "url": "https://www.youtube.com/watch?v=f0C5Za5F9cg",
-      "actualStartTime": "2026-10-29T14:01:51Z",
-      "isShort": false
-    },
     {
       "id": "RtUi8vLigWU",
       "title": "【マクドナルド新作】5年かけた超大作！？新作を深夜に食べ比べ！！【 はすてぃあ / 新人Vtuber 】",
@@ -106,6 +92,20 @@
       "category": "archive",
       "url": "https://www.youtube.com/watch?v=i0hFC9RegD8",
       "actualStartTime": "2026-10-27T14:01:08Z",
+      "isShort": false
+    },
+    {
+      "id": "f0C5Za5F9cg",
+      "title": "【ASMR/黒3dio】癒しの美容室でたっぷり眠らせちゃいます♡シャンプー/カット/肩たたき【はすてぃあ /新人Vtuber】",
+      "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
+      "publishedAt": "2026-10-29T14:01:51Z",
+      "scheduledStartTime": "2026-10-29T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/f0C5Za5F9cg/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/f0C5Za5F9cg/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=f0C5Za5F9cg",
+      "actualStartTime": "2026-10-29T14:01:51Z",
       "isShort": false
     },
     {
