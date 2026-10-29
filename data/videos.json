@@ -1,6 +1,19 @@
 {
-  "updatedAt": "2026-10-29T01:28:58.553216+00:00",
+  "updatedAt": "2026-10-29T07:55:24.309123+00:00",
   "items": [
+    {
+      "id": "RtUi8vLigWU",
+      "title": "【マクドナルド新作】5年かけた超大作！？新作を深夜に食べ比べ！！【 はすてぃあ / 新人Vtuber 】",
+      "description": "マクドナルド ザクザクジュージーマック https://www.mcdonalds.co.jp/campaign/juicy-mc/ エルティア～♡ エルノア教の教祖で ...",
+      "publishedAt": "2026-11-01T14:00:00Z",
+      "scheduledStartTime": "2026-11-01T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/RtUi8vLigWU/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/RtUi8vLigWU/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=RtUi8vLigWU",
+      "isShort": false
+    },
     {
       "id": "fYqqLvoJEmU",
       "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
@@ -679,20 +692,6 @@
       "liveBroadcastContent": "none",
       "category": "video",
       "url": "https://www.youtube.com/watch?v=SW90nVY_ueM",
-      "actualStartTime": "",
-      "isShort": true
-    },
-    {
-      "id": "IAdwOs8lI9g",
-      "title": "ヤラララ歌ってみた",
-      "description": "質問 #Shorts #VTuber #はすてぃあ □ 本家様 [MV] ABM - 'ヤラララ' (YARARARA) feat. 重音テト ...",
-      "publishedAt": "2026-09-03T10:59:29Z",
-      "scheduledStartTime": "",
-      "thumbnail": "https://i.ytimg.com/vi/IAdwOs8lI9g/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/IAdwOs8lI9g/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "video",
-      "url": "https://www.youtube.com/watch?v=IAdwOs8lI9g",
       "actualStartTime": "",
       "isShort": true
     }
