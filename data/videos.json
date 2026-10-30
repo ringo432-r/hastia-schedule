@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30T00:33:03.783059+00:00",
+  "updatedAt": "2026-10-30T06:42:57.522096+00:00",
   "items": [
     {
       "id": "RtUi8vLigWU",
@@ -67,6 +67,20 @@
       "isShort": false
     },
     {
+      "id": "f0C5Za5F9cg",
+      "title": "【ASMR/黒3dio】癒しの美容室でたっぷり眠らせちゃいます♡シャンプー/カット/肩たたき【はすてぃあ /新人Vtuber】",
+      "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
+      "publishedAt": "2026-10-29T14:01:51Z",
+      "scheduledStartTime": "2026-10-29T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/f0C5Za5F9cg/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/f0C5Za5F9cg/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=f0C5Za5F9cg",
+      "actualStartTime": "2026-10-29T14:01:51Z",
+      "isShort": false
+    },
+    {
       "id": "su9Ty8sdod0",
       "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　フリーザ編後半 ※ネタバレ注意 ＃３【 はすてぃあ / 新人Vtuber 】",
       "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ エルティア～♡ エルノア ...",
@@ -92,20 +106,6 @@
       "category": "archive",
       "url": "https://www.youtube.com/watch?v=i0hFC9RegD8",
       "actualStartTime": "2026-10-27T14:01:08Z",
-      "isShort": false
-    },
-    {
-      "id": "f0C5Za5F9cg",
-      "title": "【ASMR/黒3dio】癒しの美容室でたっぷり眠らせちゃいます♡シャンプー/カット/肩たたき【はすてぃあ /新人Vtuber】",
-      "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
-      "publishedAt": "2026-10-29T14:01:51Z",
-      "scheduledStartTime": "2026-10-29T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/f0C5Za5F9cg/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/f0C5Za5F9cg/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=f0C5Za5F9cg",
-      "actualStartTime": "2026-10-29T14:01:51Z",
       "isShort": false
     },
     {
