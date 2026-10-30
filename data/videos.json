@@ -1,6 +1,20 @@
 {
-  "updatedAt": "2026-10-30T13:46:40.394490+00:00",
+  "updatedAt": "2026-10-30T18:56:45.903199+00:00",
   "items": [
+    {
+      "id": "fYqqLvoJEmU",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
+      "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ 再生リストはこちら！",
+      "publishedAt": "2026-10-30T14:00:21Z",
+      "scheduledStartTime": "2026-10-30T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/fYqqLvoJEmU/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/fYqqLvoJEmU/hqdefault.jpg",
+      "liveBroadcastContent": "live",
+      "category": "live",
+      "url": "https://www.youtube.com/watch?v=fYqqLvoJEmU",
+      "actualStartTime": "2026-10-30T14:00:21Z",
+      "isShort": false
+    },
     {
       "id": "RtUi8vLigWU",
       "title": "【マクドナルド新作】5年かけた超大作！？新作を深夜に食べ比べ！！【 はすてぃあ / 新人Vtuber 】",
@@ -12,19 +26,6 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=RtUi8vLigWU",
-      "isShort": false
-    },
-    {
-      "id": "fYqqLvoJEmU",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
-      "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ 再生リストはこちら！",
-      "publishedAt": "2026-10-30T14:00:00Z",
-      "scheduledStartTime": "2026-10-30T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/fYqqLvoJEmU/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/fYqqLvoJEmU/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=fYqqLvoJEmU",
       "isShort": false
     },
     {
