@@ -1,6 +1,20 @@
 {
-  "updatedAt": "2026-10-31T08:04:18.169442+00:00",
+  "updatedAt": "2026-10-31T14:57:18.541583+00:00",
   "items": [
+    {
+      "id": "orvph8vVt9w",
+      "title": "【タンポポは耐える。】ハロウィンなので、タンポポの仮装しました。【 はすてぃあ / 新人Vtuber 】",
+      "description": "タンポポは耐える。 https://store.steampowered.com/app/4368560/タンポポは耐える/?l=japanese&cc=jp エルティア～♡ ...",
+      "publishedAt": "2026-10-31T14:06:03Z",
+      "scheduledStartTime": "2026-10-31T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/orvph8vVt9w/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/orvph8vVt9w/hqdefault.jpg",
+      "liveBroadcastContent": "live",
+      "category": "live",
+      "url": "https://www.youtube.com/watch?v=orvph8vVt9w",
+      "actualStartTime": "2026-10-31T14:06:03Z",
+      "isShort": false
+    },
     {
       "id": "RtUi8vLigWU",
       "title": "【マクドナルド新作】5年かけた超大作！？新作を深夜に食べ比べ！！【 はすてぃあ / 新人Vtuber 】",
@@ -12,19 +26,6 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=RtUi8vLigWU",
-      "isShort": false
-    },
-    {
-      "id": "orvph8vVt9w",
-      "title": "【タンポポは耐える。】ハロウィンなので、タンポポの仮装しました。【 はすてぃあ / 新人Vtuber 】",
-      "description": "タンポポは耐える。 https://store.steampowered.com/app/4368560/タンポポは耐える/?l=japanese&cc=jp エルティア～♡ ...",
-      "publishedAt": "2026-10-31T14:00:00Z",
-      "scheduledStartTime": "2026-10-31T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/orvph8vVt9w/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/orvph8vVt9w/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=orvph8vVt9w",
       "isShort": false
     },
     {
