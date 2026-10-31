@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30T22:48:24.566147+00:00",
+  "updatedAt": "2026-10-31T01:57:30.878169+00:00",
   "items": [
     {
       "id": "RtUi8vLigWU",
@@ -54,6 +54,20 @@
       "isShort": false
     },
     {
+      "id": "fYqqLvoJEmU",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
+      "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ 再生リストはこちら！",
+      "publishedAt": "2026-10-30T14:00:21Z",
+      "scheduledStartTime": "2026-10-30T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/fYqqLvoJEmU/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/fYqqLvoJEmU/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=fYqqLvoJEmU",
+      "actualStartTime": "2026-10-30T14:00:21Z",
+      "isShort": false
+    },
+    {
       "id": "f0C5Za5F9cg",
       "title": "【ASMR/黒3dio】癒しの美容室でたっぷり眠らせちゃいます♡シャンプー/カット/肩たたき【はすてぃあ /新人Vtuber】",
       "description": "黒3dio×防音室 ASMR大好きな新人Vtuber はすてぃあ と申します。 ゆっくり脳を支配される感覚に浸りながら堕ちてくださいませ ...",
@@ -79,20 +93,6 @@
       "category": "archive",
       "url": "https://www.youtube.com/watch?v=su9Ty8sdod0",
       "actualStartTime": "2026-10-28T14:02:06Z",
-      "isShort": false
-    },
-    {
-      "id": "fYqqLvoJEmU",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
-      "description": "ドラゴンボールZ KAKAROT https://store.steampowered.com/app/851850/ドラゴンボールZ_KAKAROT/ 再生リストはこちら！",
-      "publishedAt": "2026-10-30T14:00:21Z",
-      "scheduledStartTime": "2026-10-30T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/fYqqLvoJEmU/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/fYqqLvoJEmU/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=fYqqLvoJEmU",
-      "actualStartTime": "2026-10-30T14:00:21Z",
       "isShort": false
     },
     {
