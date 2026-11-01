@@ -160,6 +160,14 @@ body {
 .sidebar-btn.gipt   { color: #66ccaa; }
 .sidebar-btn.booth  { color: #e67acc; }
 
+/* 各サービスの公式アイコン画像 */
+.link-icon {
+  flex-shrink: 0;
+  object-fit: contain;
+  border-radius: 3px;
+  display: block;
+}
+
 /* テーマ切り替えボタン */
 .theme-toggle {
   display: flex;
