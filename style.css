@@ -1185,22 +1185,41 @@ body {
   .drawer         { display: none !important; }
 }
 
-/* ===== スクロールしても上部に固定（PC）=====
-   タブ → 各タブの上部（見出し・切り替えボタン・凡例・注記・絞り込み）の順に固定する
-   --tabnav-h / --panel-sticky-h は app.js が実際の高さを測って設定する
+/* ===== スクロールしても上部に固定（PC・スマホ共通）=====
+   （スマホのヘッダー →）タブ → 各タブの上部（見出し・切り替えボタン・凡例・注記・絞り込み）の順に固定する
+   --mh（スマホのヘッダーの高さ。PC は 0）/ --tabnav-h / --panel-sticky-h は app.js が実際の高さを測って設定する
    （元の指定を上書きするため、ファイルの最後に置く）*/
+.tab-nav {
+  position: sticky;
+  top: var(--mh, 0px);
+  z-index: 60;
+  background: var(--color-bg);
+}
+.panel-sticky {
+  position: sticky;
+  top: calc(var(--mh, 0px) + var(--tabnav-h, 36px));
+  z-index: 50;
+}
+
+/* 表が横スクロールになる幅では、日付・曜日の行を画面の上に固定できない（横スクロール枠の中にあるため）。
+   代わりに見出し行の複製（.sticky-head）を各タブの上部のすぐ下に重ねて表示し、横スクロールを合わせる。
+   表示・非表示と横位置は app.js（updateStickyHead）が切り替える */
+.sticky-head {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background: var(--color-panel);
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  pointer-events: none;
+}
+.sticky-head table { table-layout: fixed; }
+.sticky-head[hidden] { display: none; }
+
 @media (min-width: 701px) {
-  .tab-nav {
-    position: sticky;
-    top: 0;
-    z-index: 60;
-    background: var(--color-bg);
-  }
-  .panel-sticky {
-    position: sticky;
-    top: var(--tabnav-h, 36px);
-    z-index: 50;
-  }
   /* 週間：番組表の枠を画面の残りの高さに収める。日付の行は枠の上端に固定（枠内でスクロール）*/
   .timetable-scroll {
     max-height: calc(100vh - var(--tabnav-h, 36px) - var(--panel-sticky-h, 150px) - 24px);
@@ -1227,4 +1246,7 @@ body {
     top: calc(var(--tabnav-h, 36px) + var(--panel-sticky-h, 150px));
     z-index: 40;
   }
+
+  /* この幅では元の見出し行が画面の上に固定されるので、複製は使わない */
+  .sticky-head { display: none !important; }
 }

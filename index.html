@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>はすてぃあ様のスケジュール</title>
   <meta name="description" content="VTuber はすてぃあ様の配信予定をまとめ、過去の動画も検索できる非公式スケジュールサイト" />
-  <link rel="stylesheet" href="style.css?v=31" />
+  <link rel="stylesheet" href="style.css?v=32" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -116,7 +116,7 @@
 
         <!-- 週間スケジュール -->
         <div id="tab-timetable" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-timetable">
-          <!-- スクロールしても上部に固定する部分（PC）-->
+          <!-- スクロールしても上部に固定する部分 -->
           <div class="panel-sticky">
             <div class="panel-header">週間スケジュール</div>
             <div class="timetable-controls">
@@ -129,6 +129,8 @@
             </div>
             <div class="legend-bar" id="tt-legend"></div>
             <div class="schedule-note">※ メンバーシップ限定配信は表示されません</div>
+            <!-- 日付の行の複製（表が横スクロールになる幅で、スクロール中に上部へ表示。app.js が作る）-->
+            <div class="sticky-head" id="tt-sticky-head" aria-hidden="true" hidden></div>
           </div>
           <div class="timetable-scroll">
             <table class="timetable" id="timetable"></table>
@@ -137,7 +139,7 @@
 
         <!-- 月間スケジュール -->
         <div id="tab-calendar" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-calendar" hidden>
-          <!-- スクロールしても上部に固定する部分（PC）-->
+          <!-- スクロールしても上部に固定する部分 -->
           <div class="panel-sticky">
             <div class="panel-header">月間スケジュール</div>
             <div class="calendar-controls">
@@ -147,6 +149,8 @@
             </div>
             <div class="legend-bar" id="cal-legend"></div>
             <div class="schedule-note">※ メンバーシップ限定配信は表示されません</div>
+            <!-- 曜日の行の複製（表が横スクロールになる幅で、スクロール中に上部へ表示。app.js が作る）-->
+            <div class="sticky-head" id="cal-sticky-head" aria-hidden="true" hidden></div>
           </div>
           <div class="calendar-grid-wrap">
             <table class="calendar-table" id="calendar"></table>
@@ -155,7 +159,7 @@
 
         <!-- 検索（動画一覧。id・class は旧名 archive のまま）-->
         <div id="tab-archive" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-archive" hidden>
-          <!-- スクロールしても上部に固定する部分（PC）-->
+          <!-- スクロールしても上部に固定する部分 -->
           <div class="panel-sticky">
             <div class="panel-header">検索</div>
             <div class="archive-filter" id="archive-filter"></div>
@@ -169,7 +173,7 @@
 
         <!-- プロフィール -->
         <div id="tab-profile" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-profile" hidden>
-          <!-- スクロールしても上部に固定する部分（PC）-->
+          <!-- スクロールしても上部に固定する部分 -->
           <div class="panel-sticky">
             <div class="panel-header">👤 プロフィール(wiki)</div>
           </div>
@@ -263,6 +267,6 @@
 
   </div><!-- /layout -->
 
-  <script src="app.js?v=23"></script>
+  <script src="app.js?v=24"></script>
 </body>
 </html>

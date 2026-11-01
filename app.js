@@ -407,6 +407,8 @@ function renderTimetable() {
   // 凡例を更新（常に全カテゴリ）
   renderLegend('tt-legend');
 
+  rebuildStickyHead('timetable');
+
   // 直近イベントか現在時刻にスクロール
   scrollTimetableToEvent();
 }
@@ -481,8 +483,8 @@ function scrollTimetableToEvent() {
   let covered = 0;
   [document.querySelector('.mobile-header'), document.querySelector('.tab-nav'), panel.querySelector('.panel-sticky')]
     .forEach(el => { if (isStuck(el)) covered += el.offsetHeight; });
-  // 日付の行が画面の上に固定されるのは、枠がスクロール枠でないとき（PC 幅760px以上）だけ
-  if (getComputedStyle(scroll).overflowY === 'visible' && table.tHead) covered += table.tHead.offsetHeight;
+  // 日付の行も画面の上に残る（PC は元の行、スマホなどは複製）ので、その分も差し引く
+  if (table.tHead) covered += table.tHead.offsetHeight;
   const top = row.getBoundingClientRect().top + window.scrollY - covered - 40;
   window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
 }
@@ -565,6 +567,8 @@ function renderCalendar() {
 
   // 凡例を更新（常に全カテゴリ）
   renderLegend('cal-legend');
+
+  rebuildStickyHead('calendar');
 }
 
 // ===== 検索タブ（動画一覧。関数名・id は旧名 archive のまま）=====
@@ -811,19 +815,72 @@ function initEvents() {
 // 凡例の折り返し・タブ切り替え・画面サイズの変更で高さが変わるため、そのたびに測り直す
 function updateStickyHeights() {
   const root = document.documentElement;
+  const mh = document.querySelector('.mobile-header'); // スマホのヘッダー（PC では非表示で高さ 0）
   const nav = document.querySelector('.tab-nav');
   const active = document.querySelector('.tab-panel.active .panel-sticky');
+  root.style.setProperty('--mh', `${mh ? mh.offsetHeight : 0}px`);
   root.style.setProperty('--tabnav-h', `${nav ? nav.offsetHeight : 0}px`);
   root.style.setProperty('--panel-sticky-h', `${active ? active.offsetHeight : 0}px`);
+  updateStickyHeads();
 }
 
 function initStickyHeights() {
   updateStickyHeights();
   window.addEventListener('resize', updateStickyHeights);
+  window.addEventListener('scroll', updateStickyHeads, { passive: true });
+  STICKY_HEADS.forEach(cfg => {
+    const scroll = document.querySelector(cfg.scroll);
+    if (scroll) scroll.addEventListener('scroll', () => updateStickyHead(cfg), { passive: true });
+  });
   if ('ResizeObserver' in window) {
     const ro = new ResizeObserver(updateStickyHeights);
-    document.querySelectorAll('.tab-nav, .panel-sticky').forEach(el => ro.observe(el));
+    document.querySelectorAll('.mobile-header, .tab-nav, .panel-sticky').forEach(el => ro.observe(el));
   }
+}
+
+// ===== 見出し行の複製（日付・曜日の行を画面の上に残す）=====
+// 表が横スクロールになる幅（スマホなど）では、横スクロール枠の中にある見出し行を画面の上に固定できない。
+// そこで見出し行を複製して各タブの上部（.panel-sticky）のすぐ下に重ね、元の見出し行が上に隠れたときだけ表示する。
+// 横スクロールの位置は元の表に合わせる。幅760px以上では元の見出し行が固定されるので使わない（style.css で非表示）
+const STICKY_HEADS = [
+  { table: 'timetable', scroll: '.timetable-scroll',   head: 'tt-sticky-head' },
+  { table: 'calendar',  scroll: '.calendar-grid-wrap', head: 'cal-sticky-head' },
+];
+
+// 表を描き直したら複製も作り直す
+function rebuildStickyHead(tableId) {
+  const cfg = STICKY_HEADS.find(c => c.table === tableId);
+  const table = document.getElementById(tableId);
+  const head = cfg && document.getElementById(cfg.head);
+  if (!head || !table || !table.tHead) return;
+  head.innerHTML = `<table class="${table.className}">${table.tHead.outerHTML}</table>`;
+  updateStickyHead(cfg);
+}
+
+function updateStickyHead(cfg) {
+  const table = document.getElementById(cfg.table);
+  const head = document.getElementById(cfg.head);
+  const scroll = document.querySelector(cfg.scroll);
+  if (!table || !head || !scroll || !table.tHead || !head.firstElementChild) return;
+  const panel = head.closest('.tab-panel');
+  const sticky = head.closest('.panel-sticky');
+  if (!panel || !sticky || !panel.classList.contains('active') || window.matchMedia('(min-width: 760px)').matches) {
+    head.hidden = true;
+    return;
+  }
+  // 複製は .panel-sticky の下端の外側に重ねている（レイアウトは動かない）
+  const stickyBottom = sticky.getBoundingClientRect().bottom;
+  const theadRect = table.tHead.getBoundingClientRect();
+  const tableRect = table.getBoundingClientRect();
+  // 元の見出し行が上部の固定部分の下に隠れ、表の残りがまだ画面に出ているときだけ表示する
+  head.hidden = !(theadRect.top < stickyBottom - 1 && tableRect.bottom > stickyBottom + theadRect.height);
+  if (head.hidden) return;
+  head.firstElementChild.style.width = `${table.offsetWidth}px`;
+  head.scrollLeft = scroll.scrollLeft;
+}
+
+function updateStickyHeads() {
+  STICKY_HEADS.forEach(updateStickyHead);
 }
 
 // ===== 初期化 =====
