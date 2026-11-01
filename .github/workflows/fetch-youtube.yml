@@ -215,6 +215,19 @@ jobs:
                   item['isMembersOnly'] = False
 
 
+          # 予定時刻から24時間以上過ぎた「配信予定」は、開始されなかった古い枠として除外
+          from datetime import timedelta
+          _now = datetime.now(timezone.utc)
+          def _is_stale_upcoming(item):
+              if item.get('liveBroadcastContent') != 'upcoming':
+                  return False
+              t = item.get('scheduledStartTime') or item.get('publishedAt')
+              try:
+                  return datetime.fromisoformat(t.replace('Z', '+00:00')) < _now - timedelta(hours=24)
+              except Exception:
+                  return False
+          all_items = [i for i in all_items if not _is_stale_upcoming(i)]
+
           # ショートURL判定（/shorts/ を含むものはショートとして記録）
           # さらに contentDetails で duration が60秒以下のものもショートとして記録
           short_ids_from_url = set()
