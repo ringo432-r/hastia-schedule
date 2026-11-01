@@ -689,6 +689,8 @@ function activateTab(btn, moveFocus) {
     p.hidden = !on;
   });
   if (moveFocus) btn.focus();
+  // 表示中のタブが変わると上部固定の高さも変わる（initStickyHeights より前に呼ばれても問題ない）
+  updateStickyHeights();
   // 番組表タブに切り替えたらスクロール位置を再設定
   if (btn.dataset.tab === 'timetable') setTimeout(scrollTimetableToEvent, 50);
 }
@@ -752,11 +754,33 @@ function initEvents() {
   });
 }
 
+// ===== 上部固定の高さ =====
+// タブと、表示中のタブの上部（.panel-sticky）の高さを CSS 変数に入れる。
+// style.css で固定位置（top）や番組表の枠の高さの計算に使う。
+// 凡例の折り返し・タブ切り替え・画面サイズの変更で高さが変わるため、そのたびに測り直す
+function updateStickyHeights() {
+  const root = document.documentElement;
+  const nav = document.querySelector('.tab-nav');
+  const active = document.querySelector('.tab-panel.active .panel-sticky');
+  root.style.setProperty('--tabnav-h', `${nav ? nav.offsetHeight : 0}px`);
+  root.style.setProperty('--panel-sticky-h', `${active ? active.offsetHeight : 0}px`);
+}
+
+function initStickyHeights() {
+  updateStickyHeights();
+  window.addEventListener('resize', updateStickyHeights);
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(updateStickyHeights);
+    document.querySelectorAll('.tab-nav, .panel-sticky').forEach(el => ro.observe(el));
+  }
+}
+
 // ===== 初期化 =====
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initThemeButtons();
   initDrawer();
   initEvents();
+  initStickyHeights();
   loadData();
 });

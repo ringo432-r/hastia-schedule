@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>はすてぃあ様のスケジュール</title>
   <meta name="description" content="VTuber はすてぃあ様の配信予定をまとめ、過去の動画も検索できる非公式スケジュールサイト" />
-  <link rel="stylesheet" href="style.css?v=28" />
+  <link rel="stylesheet" href="style.css?v=29" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -116,17 +116,20 @@
 
         <!-- 週間スケジュール -->
         <div id="tab-timetable" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-timetable">
-          <div class="panel-header">週間スケジュール</div>
-          <div class="timetable-controls">
-            <button id="tt-prev" class="nav-btn">◀ 前の週</button>
-            <div class="tt-week-label">
-              <span id="tt-week-range"></span>
-              <button id="tt-today" class="today-btn">今週へ戻る</button>
+          <!-- スクロールしても上部に固定する部分（PC）-->
+          <div class="panel-sticky">
+            <div class="panel-header">週間スケジュール</div>
+            <div class="timetable-controls">
+              <button id="tt-prev" class="nav-btn">◀ 前の週</button>
+              <div class="tt-week-label">
+                <span id="tt-week-range"></span>
+                <button id="tt-today" class="today-btn">今週へ戻る</button>
+              </div>
+              <button id="tt-next" class="nav-btn">次の週 ▶</button>
             </div>
-            <button id="tt-next" class="nav-btn">次の週 ▶</button>
+            <div class="legend-bar" id="tt-legend"></div>
+            <div class="schedule-note">※ メンバーシップ限定配信は表示されません</div>
           </div>
-          <div class="legend-bar" id="tt-legend"></div>
-          <div class="schedule-note">※ メンバーシップ限定配信は表示されません</div>
           <div class="timetable-scroll">
             <table class="timetable" id="timetable"></table>
           </div>
@@ -134,14 +137,17 @@
 
         <!-- 月間スケジュール -->
         <div id="tab-calendar" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-calendar" hidden>
-          <div class="panel-header">月間スケジュール</div>
-          <div class="calendar-controls">
-            <button id="cal-prev" class="nav-btn">◀ 前の月</button>
-            <span id="cal-month-label"></span>
-            <button id="cal-next" class="nav-btn">次の月 ▶</button>
+          <!-- スクロールしても上部に固定する部分（PC）-->
+          <div class="panel-sticky">
+            <div class="panel-header">月間スケジュール</div>
+            <div class="calendar-controls">
+              <button id="cal-prev" class="nav-btn">◀ 前の月</button>
+              <span id="cal-month-label"></span>
+              <button id="cal-next" class="nav-btn">次の月 ▶</button>
+            </div>
+            <div class="legend-bar" id="cal-legend"></div>
+            <div class="schedule-note">※ メンバーシップ限定配信は表示されません</div>
           </div>
-          <div class="legend-bar" id="cal-legend"></div>
-          <div class="schedule-note">※ メンバーシップ限定配信は表示されません</div>
           <div class="calendar-grid-wrap">
             <table class="calendar-table" id="calendar"></table>
           </div>
@@ -149,18 +155,24 @@
 
         <!-- 検索（動画一覧。id・class は旧名 archive のまま）-->
         <div id="tab-archive" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-archive" hidden>
-          <div class="panel-header">検索</div>
-          <div class="archive-filter" id="archive-filter"></div>
-          <div class="archive-search-row">
-            <input type="text" id="archive-search" placeholder="タイトルで検索" class="archive-search" aria-label="タイトルで検索" />
-            <span id="archive-count" class="archive-count" aria-live="polite"></span>
+          <!-- スクロールしても上部に固定する部分（PC）-->
+          <div class="panel-sticky">
+            <div class="panel-header">検索</div>
+            <div class="archive-filter" id="archive-filter"></div>
+            <div class="archive-search-row">
+              <input type="text" id="archive-search" placeholder="タイトルで検索" class="archive-search" aria-label="タイトルで検索" />
+              <span id="archive-count" class="archive-count" aria-live="polite"></span>
+            </div>
           </div>
           <div id="archive-list" class="archive-list"></div>
         </div>
 
         <!-- プロフィール -->
         <div id="tab-profile" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-profile" hidden>
-          <div class="panel-header">👤 プロフィール(wiki)</div>
+          <!-- スクロールしても上部に固定する部分（PC）-->
+          <div class="panel-sticky">
+            <div class="panel-header">👤 プロフィール(wiki)</div>
+          </div>
           <div class="profile-wrap">
 
             <!-- infobox（右フロート）-->
@@ -251,6 +263,6 @@
 
   </div><!-- /layout -->
 
-  <script src="app.js?v=19"></script>
+  <script src="app.js?v=20"></script>
 </body>
 </html>

@@ -1183,3 +1183,34 @@ body {
   .drawer-overlay { display: none !important; }
   .drawer         { display: none !important; }
 }
+
+/* ===== スクロールしても上部に固定（PC）=====
+   タブ → 各タブの上部（見出し・切り替えボタン・凡例・注記・絞り込み）の順に固定する
+   --tabnav-h / --panel-sticky-h は app.js が実際の高さを測って設定する
+   （元の指定を上書きするため、ファイルの最後に置く）*/
+@media (min-width: 701px) {
+  .tab-nav {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: var(--color-bg);
+  }
+  .panel-sticky {
+    position: sticky;
+    top: var(--tabnav-h, 36px);
+    z-index: 50;
+  }
+  /* 週間：番組表の枠を画面の残りの高さに収める。日付の行は枠の上端に固定（枠内でスクロール）*/
+  .timetable-scroll {
+    max-height: calc(100vh - var(--tabnav-h, 36px) - var(--panel-sticky-h, 150px) - 24px);
+  }
+}
+/* 月間：曜日の行も固定（横スクロールが不要な幅のときだけ。横スクロール枠の中では固定できないため）*/
+@media (min-width: 760px) {
+  .calendar-grid-wrap { overflow-x: clip; }
+  .calendar-table thead th {
+    position: sticky;
+    top: calc(var(--tabnav-h, 36px) + var(--panel-sticky-h, 150px));
+    z-index: 40;
+  }
+}
