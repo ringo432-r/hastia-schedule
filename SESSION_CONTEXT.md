@@ -138,7 +138,7 @@ git push
 
 ## キャッシュバースト管理
 HTML内のCSS/JSのバージョン番号：
-- `style.css?v=19`
+- `style.css?v=20`
 - `app.js?v=14`
 
 ファイルを更新したら番号をインクリメントすること。

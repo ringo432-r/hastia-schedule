@@ -458,7 +458,15 @@ body {
   line-height: 1.5;
 }
 
-.timetable th.time-col { width: 44px; }
+/* 横スクロール時も時刻列を左端に固定 */
+.timetable th.time-col {
+  width: 44px;
+  position: sticky;
+  left: 0;
+  top: 0;
+  z-index: 20;
+  box-shadow: inset -2px 0 0 var(--color-border);
+}
 .timetable th.sat { color: #6699ff; }
 .timetable th.sun { color: #ff6666; }
 
@@ -479,6 +487,10 @@ body {
   white-space: nowrap;
   vertical-align: top;
   border-right: 2px solid var(--color-border);
+  position: sticky;
+  left: 0;
+  z-index: 15;
+  box-shadow: inset -2px 0 0 var(--color-border);
 }
 
 .timetable td.today-col { background: var(--color-today); }
@@ -1074,7 +1086,8 @@ body {
   .timetable td.time-cell { font-size: 0.82rem; width: 52px; }
   .timetable td { min-height: 48px; }
 
-  .timetable-scroll { max-height: calc(100vh - 180px); }
+  /* 縦スクロールなし：6:00〜28:00 を常に全表示 */
+  .timetable-scroll { max-height: none; overflow-y: visible; }
 
   /* カレンダー：スマホでも十分な高さを確保（画像付き予定1件分）*/
   .calendar-table td { min-height: 170px; padding: 3px; }
