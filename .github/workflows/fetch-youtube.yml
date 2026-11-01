@@ -3,85 +3,116 @@ name: Fetch YouTube Data
 on:
   schedule:
     # 30分ごとに実行（UTC基準）
-    # APIクォータ節約のため search.list は配信予定の1回のみ使用
+    # APIクォータ節約のため search.list は配信予定の1回のみ使用（1回の実行で約110ユニット）
     - cron: '*/30 * * * *'
   workflow_dispatch: # 手動実行も可能
 
+# 定期実行と手動実行が重なっても、同時には動かさない（順番に実行する）
+concurrency:
+  group: fetch-youtube
+  cancel-in-progress: false
+
 permissions:
-  contents: write
+  contents: write  # data/videos.json のコミット
+  actions: write   # データ更新後に Deploy を呼び出す
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
 
       - name: Fetch YouTube videos
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: |
-          CHANNEL_ID=$(curl -s "https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=god_hastia&key=${YOUTUBE_API_KEY}" | python3 -c "import sys,json; data=json.load(sys.stdin); print(data['items'][0]['id'])")
-          echo "Channel ID: $CHANNEL_ID"
-          export CHANNEL_ID
-
-          # 配信予定のみ search.list（100ユニット）で取得
-          # アーカイブ・通常動画はアップロード一覧（playlistItems, 1ユニット）で取得（Python内）
-          curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=upcoming&type=video&maxResults=50&order=date&key=${YOUTUBE_API_KEY}" -o /tmp/upcoming.json
-
-          python3 << 'EOF'
+          python3 - << 'EOF'
           import json
-          import urllib.request
-          import urllib.parse
-          from datetime import datetime, timezone
           import os
+          import re
+          import sys
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          from datetime import datetime, timedelta, timezone
 
           API_KEY = os.environ['YOUTUBE_API_KEY']
+          API = 'https://www.googleapis.com/youtube/v3'
 
-          def load(path):
-              with open(path) as f:
-                  data = json.load(f)
-              return data.get('items', [])
+          def api_get(endpoint, **params):
+              """YouTube Data API を呼び出す。
+              エラー（上限超え・キー不正・通信失敗など）のときは内容を表示して処理を止める。
+              URL にはAPIキーが含まれるため、URL は表示しない。"""
+              params['key'] = API_KEY
+              url = f"{API}/{endpoint}?{urllib.parse.urlencode(params)}"
+              try:
+                  with urllib.request.urlopen(url, timeout=30) as res:
+                      data = json.loads(res.read().decode('utf-8'))
+              except urllib.error.HTTPError as e:
+                  try:
+                      msg = json.loads(e.read().decode('utf-8', 'replace')).get('error', {}).get('message', '')
+                  except Exception:
+                      msg = ''
+                  sys.exit(f"YouTube API error: {endpoint} HTTP {e.code} {msg}")
+              except urllib.error.URLError as e:
+                  sys.exit(f"YouTube API connection error: {endpoint} {e.reason}")
+              if 'error' in data:
+                  sys.exit(f"YouTube API error: {endpoint} {data['error'].get('message', '')}")
+              return data
 
-          def parse_item(item, category):
+          def thumbs_of(snippet, video_id):
+              t = snippet.get('thumbnails', {})
+              return (t.get('medium', {}).get('url') or f'https://i.ytimg.com/vi/{video_id}/mqdefault.jpg',
+                      t.get('high', {}).get('url') or f'https://i.ytimg.com/vi/{video_id}/hqdefault.jpg')
+
+          # ===== チャンネルID =====
+          ch = api_get('channels', part='id', forHandle='god_hastia')
+          if not ch.get('items'):
+              sys.exit('channel not found: god_hastia')
+          CHANNEL_ID = ch['items'][0]['id']
+          print(f"Channel ID: {CHANNEL_ID}")
+
+          # ===== 配信予定（search.list, 100ユニット）=====
+          def parse_search_item(item):
               snippet = item.get('snippet', {})
-              vid_id = item.get('id', {})
-              if isinstance(vid_id, dict):
-                  video_id = vid_id.get('videoId', '')
-              else:
-                  video_id = str(vid_id)
+              video_id = item.get('id', {}).get('videoId', '')
+              if not video_id:
+                  return None
+              thumb, thumb_high = thumbs_of(snippet, video_id)
               return {
                   'id': video_id,
                   'title': snippet.get('title', ''),
-                  'description': snippet.get('description', ''),
                   'publishedAt': snippet.get('publishedAt', ''),
                   'scheduledStartTime': '',  # 後で videos API で補完
-                  'thumbnail': snippet.get('thumbnails', {}).get('medium', {}).get('url', ''),
-                  'thumbnailHigh': snippet.get('thumbnails', {}).get('high', {}).get('url', ''),
+                  'thumbnail': thumb,
+                  'thumbnailHigh': thumb_high,
                   'liveBroadcastContent': snippet.get('liveBroadcastContent', 'none'),
-                  'category': category,
-                  'url': f'https://www.youtube.com/watch?v={video_id}'
+                  'category': 'upcoming',
+                  'url': f'https://www.youtube.com/watch?v={video_id}',
               }
 
-          # アップロード一覧（最新150件まで）。配信済み・通常動画・ショートを含む
+          upcoming_raw = api_get('search', part='snippet', channelId=CHANNEL_ID, eventType='upcoming',
+                                 type='video', maxResults=50, order='date')
+          upcoming = [x for x in (parse_search_item(i) for i in upcoming_raw.get('items', [])) if x]
+
+          # ===== アップロード一覧（playlistItems, 1ページ1ユニット、最新150件まで）=====
+          # 配信済み・通常動画・ショートを含む
           def fetch_uploads(max_pages=3):
-              playlist_id = 'UU' + os.environ['CHANNEL_ID'][2:]
-              result = []
-              token = ''
+              playlist_id = 'UU' + CHANNEL_ID[2:]
+              items, token = [], ''
               for _ in range(max_pages):
-                  url = (
-                      f"https://www.googleapis.com/youtube/v3/playlistItems"
-                      f"?part=snippet,contentDetails&playlistId={playlist_id}"
-                      f"&maxResults=50&key={API_KEY}"
-                  )
+                  params = dict(part='snippet,contentDetails', playlistId=playlist_id, maxResults=50)
                   if token:
-                      url += f"&pageToken={token}"
-                  data = json.loads(urllib.request.urlopen(url).read().decode())
-                  result += data.get('items', [])
+                      params['pageToken'] = token
+                  data = api_get('playlistItems', **params)
+                  items += data.get('items', [])
                   token = data.get('nextPageToken', '')
                   if not token:
                       break
-              return result
+              return items
 
           def parse_playlist_item(item):
               snippet = item.get('snippet', {})
@@ -90,88 +121,66 @@ jobs:
               title = snippet.get('title', '')
               if not video_id or title in ('Private video', 'Deleted video'):
                   return None
-              thumbs = snippet.get('thumbnails', {})
+              thumb, thumb_high = thumbs_of(snippet, video_id)
               return {
                   'id': video_id,
                   'title': title,
-                  'description': snippet.get('description', ''),
                   'publishedAt': cd.get('videoPublishedAt') or snippet.get('publishedAt', ''),
                   'scheduledStartTime': '',
-                  'thumbnail': thumbs.get('medium', {}).get('url') or f'https://i.ytimg.com/vi/{video_id}/mqdefault.jpg',
-                  'thumbnailHigh': thumbs.get('high', {}).get('url') or f'https://i.ytimg.com/vi/{video_id}/hqdefault.jpg',
+                  'thumbnail': thumb,
+                  'thumbnailHigh': thumb_high,
                   'liveBroadcastContent': 'none',  # 後で videos API で補完
                   'category': 'video',
-                  'url': f'https://www.youtube.com/watch?v={video_id}'
+                  'url': f'https://www.youtube.com/watch?v={video_id}',
               }
 
-          upcoming = [parse_item(i, 'upcoming') for i in load('/tmp/upcoming.json')]
-          uploads  = [x for x in (parse_playlist_item(i) for i in fetch_uploads()) if x]
+          uploads = [x for x in (parse_playlist_item(i) for i in fetch_uploads()) if x]
 
-          # 前回データの配信予定・ライブ中を引き継ぐ
-          # （配信開始後は search の upcoming に出なくなるため、状態を videos API で再確認する）
-          carried_ids = set()
-          carried = []
+          # ===== 前回データの配信予定・ライブ中を引き継ぐ =====
+          # 配信開始後は search の upcoming に出なくなるため、状態を videos API で再確認する
+          # サイトで使わない項目（description など）は引き継がない
+          DROP_FIELDS = {'description', 'isMembersOnly', 'actualEndTime'}
+          carried, carried_ids = [], set()
           try:
               with open('data/videos.json', encoding='utf-8') as f:
                   prev = json.load(f).get('items', [])
               for p in prev:
                   if p.get('liveBroadcastContent') in ('upcoming', 'live') and p.get('id'):
-                      carried.append(p)
+                      carried.append({k: v for k, v in p.items() if k not in DROP_FIELDS})
                       carried_ids.add(p['id'])
-          except Exception as e:
+          except (OSError, ValueError) as e:
               print(f"previous data not loaded: {e}")
 
           # 重複排除（IDベース、優先順位: upcoming > 前回引き継ぎ > uploads）
-          seen = set()
-          all_items = []
+          seen, all_items = set(), []
           for item in upcoming + carried + uploads:
               if item['id'] and item['id'] not in seen:
                   seen.add(item['id'])
                   all_items.append(item)
 
-          # ===== videos API で liveStreamingDetails + status を取得 =====
-          # 全動画対象にする
-          live_ids = [i['id'] for i in all_items if i['id']]
+          # ===== videos API で配信状態・配信時刻を取得（50件ずつ）=====
+          def batches(ids, size=50):
+              for i in range(0, len(ids), size):
+                  yield ids[i:i + size]
 
-          # 50件ずつバッチ処理
           details_map = {}
-          for batch_start in range(0, len(live_ids), 50):
-              batch = live_ids[batch_start:batch_start+50]
-              ids_param = ','.join(batch)
-              url = (
-                  f"https://www.googleapis.com/youtube/v3/videos"
-                  f"?part=liveStreamingDetails,snippet,status"
-                  f"&id={urllib.parse.quote(ids_param)}"
-                  f"&key={API_KEY}"
-              )
-              req = urllib.request.urlopen(url)
-              vdata = json.loads(req.read().decode())
+          for batch in batches([i['id'] for i in all_items]):
+              vdata = api_get('videos', part='liveStreamingDetails,snippet', id=','.join(batch))
               for vitem in vdata.get('items', []):
-                  vid = vitem.get('id', '')
                   lsd = vitem.get('liveStreamingDetails', {})
-                  status = vitem.get('status', {})
-                  # メンバーシップ限定：privacyStatus が 'unlisted' かつ membersOnly
-                  # YouTube API では membersOnly は直接フィールドとして返ってこないが、
-                  # 一般的に membersOnly 動画は privacyStatus='members' または
-                  # contentDetails に membersOnly フラグがある場合がある
-                  privacy = status.get('privacyStatus', '')
-                  is_members = privacy == 'members'
-                  details_map[vid] = {
+                  details_map[vitem.get('id', '')] = {
                       'liveBroadcastContent': vitem.get('snippet', {}).get('liveBroadcastContent', 'none'),
                       'scheduledStartTime':  lsd.get('scheduledStartTime', ''),
                       'actualStartTime':     lsd.get('actualStartTime', ''),
-                      'actualEndTime':       lsd.get('actualEndTime', ''),
-                      'isMembersOnly':       is_members,
                   }
 
           # 前回から引き継いだ配信予定のうち、取得できなくなったもの（削除・非公開）は除外
           all_items = [i for i in all_items
                        if not (i['id'] in carried_ids and i['id'] not in details_map)]
 
-          # all_items に配信時刻を反映
+          # 配信状態・カテゴリ・配信時刻を反映
           for item in all_items:
               d = details_map.get(item['id'], {})
-              # videos API の最新状態で配信状態とカテゴリを更新
               if d.get('liveBroadcastContent'):
                   item['liveBroadcastContent'] = d['liveBroadcastContent']
               lbc = item['liveBroadcastContent']
@@ -183,117 +192,101 @@ jobs:
                   item['category'] = 'archive'
               else:
                   item['category'] = 'video'
+
               if lbc == 'upcoming':
                   # 配信予定：scheduledStartTime を使用
                   item['scheduledStartTime'] = d.get('scheduledStartTime', '')
                   if item['scheduledStartTime']:
                       item['publishedAt'] = item['scheduledStartTime']
-              elif lbc in ('live', 'completed', 'none'):
-                  # ライブ中・アーカイブ・通常ライブ：実際の開始時刻 > 予定時刻 の優先順位
+              else:
+                  # ライブ中・アーカイブ：実際の開始時刻 > 予定時刻 > 公開日時 の優先順位
                   actual = d.get('actualStartTime', '')
                   sched  = d.get('scheduledStartTime', '')
                   item['scheduledStartTime'] = sched
                   item['actualStartTime']    = actual
-                  # publishedAt を配信開始時刻で上書き（actualStartTime優先、なければsched）
                   if actual:
                       item['publishedAt'] = actual
                   elif sched:
                       item['publishedAt'] = sched
-                  # どちらもなければ publishedAt のまま（元の公開日時）
-              # メンバーシップ限定フラグ（contentRating.ytRating == "ytAgeRestricted" ではなく
-              # statusの madeForKids とは別。membersOnly は status.privacyStatus で判断できないが
-              # liveStreamingDetails に isLowLatencyStream が含まれる場合がある。
-              # 実際には membersOnly 動画は search API では返らないことが多いが、
-              # 取得できた場合に備えて snippet.liveBroadcastContent や contentRating で判定）
-              # → videos API の snippet.thumbnails が members限定の場合 "hqdefault" がブロックされることがある
-              # ここでは title / description でのキーワード判定はフロント側に任せ、
-              # status.embeddable == False の動画をメン限候補としてフラグ付け
-              status_data = details_map.get(item['id'], {})
-              if status_data.get('isMembersOnly', False):
-                  item['isMembersOnly'] = True
-              else:
-                  item['isMembersOnly'] = False
-
 
           # 予定時刻から24時間以上過ぎた「配信予定」は、開始されなかった古い枠として除外
-          from datetime import timedelta
-          _now = datetime.now(timezone.utc)
-          def _is_stale_upcoming(item):
+          now = datetime.now(timezone.utc)
+          def is_stale_upcoming(item):
               if item.get('liveBroadcastContent') != 'upcoming':
                   return False
-              t = item.get('scheduledStartTime') or item.get('publishedAt')
+              t = item.get('scheduledStartTime') or item.get('publishedAt') or ''
               try:
-                  return datetime.fromisoformat(t.replace('Z', '+00:00')) < _now - timedelta(hours=24)
-              except Exception:
+                  return datetime.fromisoformat(t.replace('Z', '+00:00')) < now - timedelta(hours=24)
+              except ValueError:
                   return False
-          all_items = [i for i in all_items if not _is_stale_upcoming(i)]
+          all_items = [i for i in all_items if not is_stale_upcoming(i)]
 
-          # ショートURL判定（/shorts/ を含むものはショートとして記録）
-          # さらに contentDetails で duration が60秒以下のものもショートとして記録
-          short_ids_from_url = set()
+          # ===== ショート判定 =====
+          # URL に /shorts/ を含むもの、または動画の長さが60秒以下のもの
           for item in all_items:
-              if '/shorts/' in item.get('url', ''):
-                  item['isShort'] = True
-                  short_ids_from_url.add(item['id'])
-              else:
-                  item['isShort'] = False
+              item['isShort'] = '/shorts/' in item.get('url', '')
 
-          # contentDetails で duration を取得してショート判定を補完
-          # ライブ系以外の動画IDを対象に
-          non_live_ids = [i['id'] for i in all_items 
-                         if i['liveBroadcastContent'] not in ('upcoming','live','completed') 
-                         and i['id'] and not i.get('isShort')]
-
-          import re
           def parse_duration_seconds(duration):
-              # ISO 8601 duration: PT1M30S, PT45S, PT2H etc.
-              match = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', duration or '')
-              if not match:
+              # ISO 8601 duration: PT1M30S, PT45S, PT2H など
+              m = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', duration or '')
+              if not m:
                   return 0
-              h = int(match.group(1) or 0)
-              m = int(match.group(2) or 0)
-              s = int(match.group(3) or 0)
-              return h * 3600 + m * 60 + s
+              return int(m.group(1) or 0) * 3600 + int(m.group(2) or 0) * 60 + int(m.group(3) or 0)
 
+          # 配信予定・ライブ中は長さが決まっていないので対象外
+          duration_ids = [i['id'] for i in all_items
+                          if i['liveBroadcastContent'] not in ('upcoming', 'live') and not i['isShort']]
           duration_map = {}
-          for batch_start in range(0, len(non_live_ids), 50):
-              batch = non_live_ids[batch_start:batch_start+50]
-              ids_param = ','.join(batch)
-              url = (
-                  f"https://www.googleapis.com/youtube/v3/videos"
-                  f"?part=contentDetails"
-                  f"&id={urllib.parse.quote(ids_param)}"
-                  f"&key={API_KEY}"
-              )
-              req = urllib.request.urlopen(url)
-              vdata = json.loads(req.read().decode())
+          for batch in batches(duration_ids):
+              vdata = api_get('videos', part='contentDetails', id=','.join(batch))
               for vitem in vdata.get('items', []):
-                  vid = vitem.get('id', '')
-                  duration = vitem.get('contentDetails', {}).get('duration', '')
-                  duration_map[vid] = parse_duration_seconds(duration)
+                  duration_map[vitem.get('id', '')] = parse_duration_seconds(
+                      vitem.get('contentDetails', {}).get('duration', ''))
 
-          # 60秒以下はショートとしてマーク
           for item in all_items:
-              if item['id'] in duration_map:
-                  if duration_map[item['id']] <= 60:
-                      item['isShort'] = True
+              if 0 < duration_map.get(item['id'], 0) <= 60:
+                  item['isShort'] = True
 
           result = {
               'updatedAt': datetime.now(timezone.utc).isoformat(),
-              'items': all_items
+              'items': all_items,
           }
-
           with open('data/videos.json', 'w', encoding='utf-8') as f:
               json.dump(result, f, ensure_ascii=False, indent=2)
 
-          print(f"Total: {len(all_items)} videos saved.")
-          print(f"Live details fetched: {len(details_map)} items.")
+          print(f"Total: {len(all_items)} videos saved (upcoming={len(upcoming)}, uploads={len(uploads)}, carried={len(carried)}).")
           EOF
 
       - name: Commit and push if changed
+        id: commit
         run: |
+          set -euo pipefail
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add data/videos.json
-          git diff --staged --quiet || git commit -m "chore: update YouTube data [$(date -u '+%Y-%m-%d %H:%M UTC')]"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "chore: update YouTube data [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          # 手元からの push と重なっても失敗しないよう、最新を取り込んでから push する（最大3回）
+          for i in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            echo "push failed (attempt $i), retrying..."
+            sleep $((i * 10))
+          done
+          echo "push failed after 3 attempts" >&2
+          exit 1
+
+      # データが変わったときだけサイトを再デプロイする
+      # （GITHUB_TOKEN の push では Deploy の push トリガーが動かないため、明示的に呼び出す）
+      - name: Trigger deploy
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main

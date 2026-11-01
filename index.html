@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>はすてぃあ様のスケジュール</title>
   <meta name="description" content="VTuber はすてぃあ様の配信予定・アーカイブをまとめた非公式スケジュールサイト" />
-  <link rel="stylesheet" href="style.css?v=24" />
+  <link rel="stylesheet" href="style.css?v=25" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -16,15 +16,16 @@
   <header class="mobile-header">
     <div class="mobile-header-title">はすてぃあ様のスケジュール</div>
     <div class="mobile-header-actions">
-      <button class="mobile-icon-btn" id="theme-toggle-mobile" title="テーマ切り替え">🌙</button>
-      <button class="mobile-icon-btn" id="drawer-open" title="メニュー">☰</button>
+      <button class="mobile-icon-btn" id="theme-toggle-mobile" title="テーマ切り替え" aria-label="テーマ切り替え">🌙</button>
+      <button class="mobile-icon-btn" id="drawer-open" title="メニュー" aria-label="メニューを開く" aria-controls="drawer" aria-expanded="false">☰</button>
     </div>
   </header>
 
   <!-- ===== ドロワーメニュー（スマホ）===== -->
-  <div class="drawer-overlay" id="drawer-overlay"></div>
-  <nav class="drawer" id="drawer">
-    <button class="drawer-close" id="drawer-close">✕</button>
+  <div class="drawer-overlay" id="drawer-overlay" aria-hidden="true"></div>
+  <!-- 閉じている間は inert でフォーカス・読み上げの対象外にする（開閉は app.js で切り替え）-->
+  <nav class="drawer" id="drawer" aria-label="メニュー" inert>
+    <button class="drawer-close" id="drawer-close" aria-label="メニューを閉じる">✕</button>
     <div class="drawer-title">はすてぃあ様のスケジュール</div>
     <img src="img/hastia.png" alt="はすてぃあ" class="drawer-chara" />
     <div class="drawer-links">
@@ -104,17 +105,17 @@
 
     <!-- メインエリア -->
     <div class="main-wrapper">
-      <nav class="tab-nav">
-        <button class="tab-btn active" data-tab="timetable">📅 週間</button>
-        <button class="tab-btn" data-tab="calendar">🗓 月間</button>
-        <button class="tab-btn" data-tab="archive">📼 アーカイブ</button>
-        <button class="tab-btn" data-tab="profile">👤 プロフィール(wiki)</button>
+      <nav class="tab-nav" role="tablist" aria-label="表示の切り替え">
+        <button class="tab-btn active" id="tabbtn-timetable" data-tab="timetable" role="tab" aria-selected="true" aria-controls="tab-timetable">📅 週間</button>
+        <button class="tab-btn" id="tabbtn-calendar" data-tab="calendar" role="tab" aria-selected="false" aria-controls="tab-calendar" tabindex="-1">🗓 月間</button>
+        <button class="tab-btn" id="tabbtn-archive" data-tab="archive" role="tab" aria-selected="false" aria-controls="tab-archive" tabindex="-1">📼 アーカイブ</button>
+        <button class="tab-btn" id="tabbtn-profile" data-tab="profile" role="tab" aria-selected="false" aria-controls="tab-profile" tabindex="-1">👤 プロフィール(wiki)</button>
       </nav>
 
       <div class="tab-panels">
 
         <!-- 週間スケジュール -->
-        <div id="tab-timetable" class="tab-panel active">
+        <div id="tab-timetable" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-timetable">
           <div class="panel-header">週間スケジュール</div>
           <div class="timetable-controls">
             <button id="tt-prev" class="nav-btn">◀ 前の週</button>
@@ -132,7 +133,7 @@
         </div>
 
         <!-- 月間スケジュール -->
-        <div id="tab-calendar" class="tab-panel">
+        <div id="tab-calendar" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-calendar" hidden>
           <div class="panel-header">月間スケジュール</div>
           <div class="calendar-controls">
             <button id="cal-prev" class="nav-btn">◀ 前の月</button>
@@ -147,18 +148,18 @@
         </div>
 
         <!-- アーカイブ -->
-        <div id="tab-archive" class="tab-panel">
+        <div id="tab-archive" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-archive" hidden>
           <div class="panel-header">アーカイブ</div>
           <div class="archive-filter" id="archive-filter"></div>
           <div class="archive-search-row">
-            <input type="text" id="archive-search" placeholder="タイトルで検索" class="archive-search" />
-            <span id="archive-count" class="archive-count"></span>
+            <input type="text" id="archive-search" placeholder="タイトルで検索" class="archive-search" aria-label="タイトルで検索" />
+            <span id="archive-count" class="archive-count" aria-live="polite"></span>
           </div>
           <div id="archive-list" class="archive-list"></div>
         </div>
 
         <!-- プロフィール -->
-        <div id="tab-profile" class="tab-panel">
+        <div id="tab-profile" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-profile" hidden>
           <div class="panel-header">👤 プロフィール(wiki)</div>
           <div class="profile-wrap">
 
@@ -245,6 +246,6 @@
 
   </div><!-- /layout -->
 
-  <script src="app.js?v=17"></script>
+  <script src="app.js?v=18"></script>
 </body>
 </html>

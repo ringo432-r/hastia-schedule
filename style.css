@@ -16,7 +16,6 @@
   --color-btn:          #3a1515;
   --color-btn-hover:    #cc2222;
   --color-accent:       #cc2222;
-  --color-accent-glow:  rgba(204,34,34,0.25);
   --color-overlay:      rgba(0,0,0,0.7);
 
   --cat-game:        #1a3a1a; --cat-game-txt:     #88cc88;
@@ -27,7 +26,6 @@
   --cat-asmr:        #1a2a2a; --cat-asmr-txt:     #88cccc;
   --cat-memorial:    #2a1a1a; --cat-memorial-txt: #cc8888;
   --cat-short:       #2a1a0a; --cat-short-txt:    #ddaa66;
-  --cat-default:     #1e1e1e; --cat-default-txt:  #999;
 }
 
 /* ===== ライトテーマ ===== */
@@ -43,7 +41,6 @@
   --color-btn:          #f8d8d8;
   --color-btn-hover:    #cc2222;
   --color-accent:       #cc2222;
-  --color-accent-glow:  rgba(204,34,34,0.15);
   --color-overlay:      rgba(0,0,0,0.4);
 
   --cat-game:        #d4f0d4; --cat-game-txt:     #226622;
@@ -54,7 +51,6 @@
   --cat-asmr:        #d4f0f0; --cat-asmr-txt:     #226666;
   --cat-memorial:    #f0d8d8; --cat-memorial-txt: #882222;
   --cat-short:       #f8ead4; --cat-short-txt:    #885522;
-  --cat-default:     #e8e8e8; --cat-default-txt:  #555;
 }
 
 html { height: 100%; }
@@ -66,6 +62,23 @@ body {
   min-height: 100vh;
   font-size: 13px;
   transition: background 0.2s, color 0.2s;
+}
+
+/* ===== アクセシビリティ ===== */
+/* キーボード操作時にフォーカス位置がわかるようにする */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+/* 画面には出さず、読み上げソフトにだけ伝える文字 */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ===== スクロールバー ===== */
@@ -499,17 +512,26 @@ body {
 
 .timetable td.today-col { background: var(--color-today); }
 
-.tt-event {
+/* 1つの時間帯の予定をまとめる枠（PC）。同じ時間帯に複数あっても縦に並べて重ならないようにする */
+.tt-slot {
   position: absolute;
+  top: 0;
   left: 1px;
   right: 1px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tt-event {
+  position: relative;
   border-radius: 3px;
   padding: 2px 3px;
   font-size: 0.68rem;
   line-height: 1.3;
   cursor: pointer;
   overflow: hidden;
-  z-index: 2;
   transition: opacity 0.15s, filter 0.15s;
   text-decoration: none;
   display: block;
@@ -825,7 +847,6 @@ body {
 .cat-asmr     { background: var(--cat-asmr);     color: var(--cat-asmr-txt); }
 .cat-memorial { background: var(--cat-memorial); color: var(--cat-memorial-txt); }
 .cat-short    { background: var(--cat-short);    color: var(--cat-short-txt); }
-.cat-default  { background: var(--cat-default);  color: var(--cat-default-txt); }
 
 /* ===== 記念日バッジ ===== */
 .ann-badge {
@@ -1098,13 +1119,13 @@ body {
     height: auto;
     min-height: 40px;
   }
-  /* 週間：イベントブロックをフロー配置に（スマホは absolute 解除）*/
+  /* 週間：予定の枠をフロー配置に（スマホは absolute 解除し、セルを縦に伸ばす）*/
+  .tt-slot {
+    position: static;
+    gap: 3px;
+  }
   .tt-event {
-    position: relative;
-    left: auto;
-    right: auto;
-    top: auto;
-    margin-bottom: 3px;
+    margin-bottom: 0;
     padding: 3px 4px;
     font-size: 0.8rem;
     line-height: 1.4;
