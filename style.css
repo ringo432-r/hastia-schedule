@@ -868,7 +868,6 @@ body {
   border: 1px solid var(--color-border);
   border-top: none;
   padding: 20px 18px;
-  max-width: 900px;
   line-height: 1.85;
 }
 
