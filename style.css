@@ -1205,8 +1205,21 @@ body {
     max-height: calc(100vh - var(--tabnav-h, 36px) - var(--panel-sticky-h, 150px) - 24px);
   }
 }
-/* 月間：曜日の行も固定（横スクロールが不要な幅のときだけ。横スクロール枠の中では固定できないため）*/
+/* 週間・月間：横スクロールが不要な幅のときは、ページ全体でスクロールし、日付・曜日の行を画面の上に固定する
+   （横スクロール枠の中では画面の上に固定できないため、overflow-x: clip で枠をスクロール枠にしない）
+   幅701〜759px は表が横にはみ出すため、週間は枠の中でスクロールする（上の指定のまま）*/
 @media (min-width: 760px) {
+  .timetable-scroll {
+    max-height: none;
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+  .timetable thead th,
+  .timetable th.time-col {
+    top: calc(var(--tabnav-h, 36px) + var(--panel-sticky-h, 150px));
+    z-index: 40;
+  }
+
   .calendar-grid-wrap { overflow-x: clip; }
   .calendar-table thead th {
     position: sticky;

@@ -441,6 +441,25 @@ function scrollTimetableToEvent() {
   }
 
   const rowIndex = Math.max(0, targetHour - HOUR_START);
+
+  // PC（幅760px以上）は枠ではなくページ全体でスクロールする（style.css で overflow-y: visible）
+  if (getComputedStyle(scroll).overflowY === 'visible') {
+    // 週間タブを表示していないときは位置を測れないので何もしない（タブ切り替え時に呼び直す）
+    const panel = document.getElementById('tab-timetable');
+    const table = document.getElementById('timetable');
+    const row = table && table.tBodies[0] && table.tBodies[0].rows[rowIndex];
+    if (!panel || !panel.classList.contains('active') || !row) return;
+    // 上部に固定している部分（タブ・各タブの上部・日付の行）の下に、目的の時間帯が少し余白をあけて来るようにする
+    const nav = document.querySelector('.tab-nav');
+    const sticky = panel.querySelector('.panel-sticky');
+    const covered = (nav ? nav.offsetHeight : 0) + (sticky ? sticky.offsetHeight : 0)
+      + (table.tHead ? table.tHead.offsetHeight : 0);
+    const top = row.getBoundingClientRect().top + window.scrollY - covered - 40;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+    return;
+  }
+
+  // それ以外は番組表の枠の中でスクロールする
   scroll.scrollTop = Math.max(0, rowIndex * ROW_H_PX - 60); // 少し上に余白
 }
 
@@ -691,8 +710,10 @@ function activateTab(btn, moveFocus) {
   if (moveFocus) btn.focus();
   // 表示中のタブが変わると上部固定の高さも変わる（initStickyHeights より前に呼ばれても問題ない）
   updateStickyHeights();
-  // 番組表タブに切り替えたらスクロール位置を再設定
+  // 番組表タブに切り替えたらスクロール位置を再設定。
+  // ほかのタブはページ全体でスクロールするので、前のタブのスクロール位置が残らないよう先頭に戻す
   if (btn.dataset.tab === 'timetable') setTimeout(scrollTimetableToEvent, 50);
+  else if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
 function initTabs() {
