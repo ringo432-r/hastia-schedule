@@ -612,21 +612,25 @@ function renderArchive() {
 
 // ===== テーマ切り替え =====
 // localStorage が使えない環境（一部のプライベートブラウズ等）でも動くようにする
+// 保存するのは、利用者が切り替えボタンを押したときだけ。
+// 以前の 'theme' は開くたびに自動で保存されていた（標準がダークのころの値が残っている）ため、
+// 新しいキー 'themeChoice' を使い、古い値は読まない
+const THEME_KEY = 'themeChoice';
 function loadTheme() {
-  try { return localStorage.getItem('theme'); } catch (e) { return null; }
+  try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; }
 }
 function saveTheme(theme) {
-  try { localStorage.setItem('theme', theme); } catch (e) { /* 保存できなくても表示は切り替える */ }
+  try { localStorage.setItem(THEME_KEY, theme); } catch (e) { /* 保存できなくても表示は切り替える */ }
 }
 
 function initTheme() {
+  // 標準はライトモード。ダークモードを選んだ人だけダークで表示する
   const saved = loadTheme();
-  applyTheme(saved === 'light' ? 'light' : 'dark');
+  applyTheme(saved === 'dark' ? 'dark' : 'light');
 }
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  saveTheme(theme);
   const isDark = theme === 'dark';
   const icon  = isDark ? '☀️' : '🌙';
   const label = isDark ? 'ライトモード' : 'ダークモード';
@@ -648,8 +652,10 @@ function applyTheme(theme) {
 }
 
 function toggleTheme() {
-  const cur = document.documentElement.getAttribute('data-theme') || 'dark';
-  applyTheme(cur === 'dark' ? 'light' : 'dark');
+  const cur = document.documentElement.getAttribute('data-theme') || 'light';
+  const next = cur === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  saveTheme(next);
 }
 
 // ===== ドロワーメニュー（スマホ）=====
