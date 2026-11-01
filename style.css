@@ -441,7 +441,7 @@ body {
 
 .timetable {
   border-collapse: collapse;
-  min-width: 500px;
+  min-width: 560px;
   width: 100%;
   table-layout: fixed;
 }
@@ -568,7 +568,7 @@ body {
 .calendar-table {
   border-collapse: collapse;
   width: 100%;
-  min-width: 320px;
+  min-width: 560px;
   table-layout: fixed;
 }
 
@@ -586,7 +586,7 @@ body {
 .calendar-table td {
   border: 1px solid var(--color-border);
   vertical-align: top;
-  min-height: 120px;
+  min-height: 160px;
   padding: 2px;
   width: calc(100% / 7);
 }
@@ -867,10 +867,8 @@ body {
 
   .timetable-scroll { max-height: calc(100vh - 180px); }
 
-  /* カレンダー：スマホでも十分な高さを確保 */
-  .calendar-table td { min-height: 100px; }
-
-  .timetable { min-width: 300px; }
+  /* カレンダー：スマホでも十分な高さを確保（画像付き予定1件分）*/
+  .calendar-table td { min-height: 140px; }
 
   /* 凡例バーはスマホで横スクロール可能に */
   .legend-bar {

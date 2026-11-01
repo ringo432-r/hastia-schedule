@@ -296,18 +296,14 @@ function renderNextStream() {
 }
 
 // ===== 凡例レンダリング =====
-// 表示対象のカテゴリキーリストを受け取り、凡例HTMLを返す
-// targetId: 描画先要素のID
-function renderLegend(targetId, activeCatKeys) {
+// 常に全カテゴリを表示する
+function renderLegend(targetId) {
   const el = document.getElementById(targetId);
   if (!el) return;
 
-  // CSS変数からカテゴリ色を取得するためダミー要素を使う
-  // 代わりに CATEGORIES の key から直接 CSS クラスのスタイルを参照
   const style = getComputedStyle(document.documentElement);
-  const catDefs = CATEGORIES.filter(c => c.key !== 'live' || activeCatKeys.includes('live'));
-  // live/upcoming は常に先頭、あとは activeCatKeys に含まれるもの
-  const showCats = CATEGORIES.filter(c => activeCatKeys.includes(c.key));
+  // live/upcoming/members を先頭に、残りは定義順
+  const showCats = CATEGORIES;
 
   let html = '';
   showCats.forEach(cat => {
@@ -446,13 +442,8 @@ function renderTimetable() {
   html += '</tbody>';
   table.innerHTML = html;
 
-  // 凡例を更新（この週に存在するカテゴリ）
-  const ttActiveCats = [...new Set(weekItems.map(i => i._cat))];
-  // live/upcoming は常に凡例に含める
-  const ttLegendCats = CATEGORIES.map(c => c.key).filter(k =>
-    ttActiveCats.includes(k) || k === 'live' || k === 'upcoming'
-  );
-  renderLegend('tt-legend', ttLegendCats);
+  // 凡例を更新（常に全カテゴリ）
+  renderLegend('tt-legend');
 
   // 直近イベントか現在時刻にスクロール
   scrollTimetableToEvent();
@@ -607,12 +598,8 @@ function renderCalendar() {
   html += '</tbody>';
   table.innerHTML = html;
 
-  // 凡例を更新（この月に存在するカテゴリ）
-  const calActiveCats = [...new Set(monthItems.map(i => i._cat))];
-  const calLegendCats = CATEGORIES.map(c => c.key).filter(k =>
-    calActiveCats.includes(k) || k === 'live' || k === 'upcoming'
-  );
-  renderLegend('cal-legend', calLegendCats);
+  // 凡例を更新（常に全カテゴリ）
+  renderLegend('cal-legend');
 }
 
 // ===== アーカイブ =====
