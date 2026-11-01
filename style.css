@@ -953,6 +953,22 @@ body {
   margin-bottom: 0.9em;
 }
 
+/* 冒頭の引用（エピグラフ） */
+.profile-epigraph {
+  margin: 4px 0 14px;
+  padding: 8px 14px;
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-panel-header);
+  color: var(--color-text-sub);
+  font-style: italic;
+}
+.profile-epigraph p {
+  margin: 0;
+}
+.profile-epigraph p + p {
+  margin-top: 6px;
+}
+
 .profile-h2 {
   font-size: 1rem;
   font-weight: 700;
