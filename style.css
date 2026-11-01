@@ -1059,24 +1059,33 @@ body {
     left: auto;
     right: auto;
     top: auto;
-    margin-bottom: 2px;
-    font-size: 0.75rem;
+    margin-bottom: 3px;
+    padding: 4px 5px;
+    font-size: 0.88rem;
+    line-height: 1.4;
   }
-  .tt-event .ev-time { font-size: 0.72rem; }
+  .tt-event .ev-time { font-size: 0.85rem; }
+  .tt-event .ev-title { -webkit-line-clamp: 3; }
 
-  /* 週間テーブルを広く */
-  .timetable { min-width: 700px; }
-  .timetable thead th { font-size: 0.82rem; padding: 5px 4px; }
-  .timetable td.time-cell { font-size: 0.78rem; width: 48px; }
+  /* 週間テーブルを広く（1日あたり約150px）*/
+  .timetable { min-width: 1100px; }
+  .timetable thead th { font-size: 0.95rem; padding: 6px 4px; }
+  .timetable th.time-col { width: 56px; }
+  .timetable td.time-cell { font-size: 0.88rem; width: 56px; }
+  .timetable td { min-height: 56px; }
 
   .timetable-scroll { max-height: calc(100vh - 180px); }
 
   /* カレンダー：スマホでも十分な高さを確保（画像付き予定1件分）*/
-  .calendar-table td { min-height: 140px; }
-  /* カレンダーテーブルを広く */
-  .calendar-table { min-width: 700px; }
-  .cal-event { font-size: 0.72rem; }
-  .cal-event .cal-ev-time { font-size: 0.68rem; }
+  .calendar-table td { min-height: 200px; padding: 4px; }
+  /* カレンダーテーブルを広く（1日あたり約150px）*/
+  .calendar-table { min-width: 1050px; }
+  .calendar-table th { font-size: 0.95rem; padding: 6px 2px; }
+  .cal-day-num { font-size: 0.9rem; }
+  .cal-event { font-size: 0.85rem; padding: 3px 5px; }
+  .cal-event .cal-ev-time { font-size: 0.82rem; }
+  .cal-event .cal-ev-title { -webkit-line-clamp: 2; }
+  .ann-badge { font-size: 0.8rem; }
 
   /* 凡例バーはスマホで横スクロール可能に */
   .legend-bar {
