@@ -18,15 +18,6 @@ const CATEGORIES = [
     match: (item) => item.liveBroadcastContent === 'upcoming' || item.category === 'upcoming',
   },
   {
-    // メンバーシップ限定動画
-    key: 'members',
-    label: 'メン限',
-    match: (item) =>
-      item.isMembersOnly === true ||
-      item.membersOnly === true ||
-      /メンバー限定|メン限|メンバーシップ|members.only|membership/i.test(item.title),
-  },
-  {
     // ショートは live/upcoming より後だが isShort フラグを最優先
     // ※ live/upcoming のショートは存在しないので実質問題なし
     key: 'short',
@@ -649,7 +640,6 @@ function renderArchive() {
     items.forEach(item => {
       const thumb = item.thumbnailHigh || item.thumbnail || '';
       const date  = formatJST(getDisplayTime(item), 'datetime');
-      const isMembers = item.isMembersOnly || item.membersOnly || item._cat === 'members';
       const isUpcoming = item._cat === 'upcoming';
       const linkLabel = isUpcoming ? '配信予定を見る' : 'アーカイブを見る';
       html += `
@@ -659,7 +649,6 @@ function renderArchive() {
             <div class="archive-item-date">
               ${date}
               <span class="cat-badge cat-${item._cat}">${getCatLabel(item._cat)}</span>
-              ${isMembers ? '<span class="cat-badge cat-members">メン限</span>' : ''}
             </div>
             <div class="archive-item-title" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</div>
           </div>
