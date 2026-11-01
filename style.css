@@ -1252,6 +1252,13 @@ body {
 }
 
 /* ===== Xポスト ===== */
+/* タブ・見出しの「X」ロゴ（文字の高さに合わせる。読み上げは隠しテキストの「X」）*/
+.x-logo {
+  width: 0.9em;
+  height: 0.9em;
+  vertical-align: -0.1em;
+  margin-right: 0.15em;
+}
 .xpost-wrap {
   background: var(--color-panel);
   border: 1px solid var(--color-border);
