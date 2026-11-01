@@ -946,6 +946,25 @@ body {
   font-size: 0.85rem;
 }
 
+/* ハッシュタグ表 */
+.profile-table {
+  border-collapse: collapse;
+  margin: 4px 0 1em;
+  font-size: 0.85rem;
+}
+.profile-table th,
+.profile-table td {
+  border: 1px solid var(--color-border);
+  padding: 5px 12px;
+  text-align: left;
+}
+.profile-table th {
+  background: var(--color-panel-header);
+  color: var(--color-text-sub);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 /* 初配信リンク */
 .profile-debut-link {
   display: flex;
