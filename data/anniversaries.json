@@ -7,8 +7,8 @@
       "month": 4,
       "day": 20,
       "yearly": true,
-      "color": "#3a1a3a",
-      "textColor": "#ee88ee"
+      "color": "#ff69b4",
+      "textColor": "#fff"
     },
     {
       "id": "debut",
@@ -18,8 +18,8 @@
       "year": 2026,
       "yearly": false,
       "monthly": false,
-      "color": "#2a1a0a",
-      "textColor": "#ffaa44"
+      "color": "#ff8c00",
+      "textColor": "#fff"
     },
     {
       "id": "debut-monthly",
@@ -28,8 +28,8 @@
       "baseMonth": 10,
       "baseDay": 18,
       "monthly": true,
-      "color": "#1a2a1a",
-      "textColor": "#88cc88"
+      "color": "#44bb88",
+      "textColor": "#fff"
     }
   ]
 }

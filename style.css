@@ -30,6 +30,7 @@
   --cat-default:     #1e1e1e; --cat-default-txt:  #999;
   --cat-upcoming:    #0a1a2a; --cat-upcoming-txt: #66aadd;
   --cat-live:        #2a0a0a; --cat-live-txt:     #ff4444;
+  --cat-members:     #1a0a2a; --cat-members-txt:  #bb88ff;
 }
 
 /* ===== ライトテーマ ===== */
@@ -59,6 +60,7 @@
   --cat-default:     #e8e8e8; --cat-default-txt:  #555;
   --cat-upcoming:    #d4e8f8; --cat-upcoming-txt: #224488;
   --cat-live:        #ffd4d4; --cat-live-txt:     #cc0000;
+  --cat-members:     #ead4f8; --cat-members-txt:  #662288;
 }
 
 html { height: 100%; }
@@ -156,6 +158,9 @@ body {
 .sidebar-btn.yt  { color: #ff4444; }
 .sidebar-btn.x   { color: #aaaaaa; }
 .sidebar-btn.lit { color: #aa66ff; }
+.sidebar-btn.fanbox { color: #f08c6a; }
+.sidebar-btn.gipt   { color: #66ccaa; }
+.sidebar-btn.booth  { color: #e67acc; }
 
 /* テーマ切り替えボタン */
 .theme-toggle {
@@ -310,6 +315,9 @@ body {
 .drawer-btn.yt  { color: #ff4444; }
 .drawer-btn.x   { color: #aaaaaa; }
 .drawer-btn.lit { color: #aa66ff; }
+.drawer-btn.fanbox { color: #f08c6a; }
+.drawer-btn.gipt   { color: #66ccaa; }
+.drawer-btn.booth  { color: #e67acc; }
 
 /* ===== メインエリア ===== */
 .main-wrapper {
@@ -779,6 +787,21 @@ body {
 .cat-default  { background: var(--cat-default);  color: var(--cat-default-txt); }
 .cat-upcoming { background: var(--cat-upcoming); color: var(--cat-upcoming-txt); }
 .cat-live     { background: var(--cat-live);     color: var(--cat-live-txt); }
+.cat-members  { background: var(--cat-members);  color: var(--cat-members-txt); }
+
+/* ===== 記念日バッジ ===== */
+.ann-badge {
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+  line-height: 1.4;
+  display: block;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.15) inset;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  letter-spacing: 0.02em;
+}
 
 /* ===== 更新バー・フッター ===== */
 .updated-bar {

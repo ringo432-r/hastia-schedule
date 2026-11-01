@@ -59,10 +59,11 @@ hastia-schedule/
 | カテゴリ | 判定条件 |
 |---|---|
 | ショート | `isShort:true` フラグ / URLに `/shorts/` / `#shorts` / 動画60秒以下 |
+| メン限 | `isMembersOnly:true` フラグ / タイトルに「メンバー限定」「メン限」等 |
 | 歌ってみた | 「歌ってみた」「covered」等 |
 | 歌枠 | 「歌枠」「歌回」「カラオケ」等 |
 | ASMR | 「ASMR」（大文字小文字不問）|
-| 記念 | 「記念」「誕生日」「周年」等 |
+| 記念 | 「記念」「誕生日」「周年」「初配信」等 |
 | コラボ | 「コラボ」「collab」等 |
 | ゲーム | 【】形式のタイトル / ゲームキーワード多数 |
 | 雑談・その他 | 上記に該当しないもの |
@@ -105,6 +106,9 @@ hastia-schedule/
 - YouTube: https://www.youtube.com/@god_hastia
 - X（Twitter）: https://x.com/god_hastia?s=20
 - lit.link: https://lit.link/godhastia
+- FANBOX: https://godhastia.fanbox.cc/
+- Gipt: https://gi-pt.com/main/wishlist/fan-view/3a23ee33-3cc9-4641-79ef-1f364528c083
+- BOOTH: https://godhastia.booth.pm/
 
 ---
 
@@ -134,8 +138,8 @@ git push
 
 ## キャッシュバースト管理
 HTML内のCSS/JSのバージョン番号：
-- `style.css?v=9`
-- `app.js?v=8`
+- `style.css?v=10`
+- `app.js?v=9`
 
 ファイルを更新したら番号をインクリメントすること。
 

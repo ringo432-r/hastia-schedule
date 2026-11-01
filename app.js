@@ -18,6 +18,15 @@ const CATEGORIES = [
     match: (item) => item.liveBroadcastContent === 'upcoming' || item.category === 'upcoming',
   },
   {
+    // メンバーシップ限定動画
+    key: 'members',
+    label: 'メン限',
+    match: (item) =>
+      item.isMembersOnly === true ||
+      item.membersOnly === true ||
+      /メンバー限定|メン限|members.only|membership/i.test(item.title),
+  },
+  {
     // ショートは live/upcoming より後だが isShort フラグを最優先
     // ※ live/upcoming のショートは存在しないので実質問題なし
     key: 'short',
@@ -46,7 +55,7 @@ const CATEGORIES = [
   {
     key: 'memorial',
     label: '記念',
-    match: (item) => /記念|anniversary|バースデー|誕生日|周年/i.test(item.title),
+    match: (item) => /記念|anniversary|バースデー|誕生日|周年|初配信/i.test(item.title),
   },
   {
     key: 'collab',
@@ -314,10 +323,17 @@ function renderTimetable() {
     return `${p(d.getUTCMonth()+1)}/${p(d.getUTCDate())}`;
   };
 
-  document.getElementById('tt-week-range').textContent =
-    `${days[0].getUTCFullYear()}年 ${fmt(days[0])}（日）〜${fmt(days[6])}（土）`;
+  // 週ラベル：7日表示は「〜土」、3日表示は「〜n日目」
+  if (ttDisplayDays === 7) {
+    document.getElementById('tt-week-range').textContent =
+      `${days[0].getUTCFullYear()}年 ${fmt(days[0])}（${DOW[days[0].getUTCDay()]}）〜${fmt(days[6])}（${DOW[days[6].getUTCDay()]}）`;
+  } else {
+    document.getElementById('tt-week-range').textContent =
+      `${days[0].getUTCFullYear()}年 ${fmt(days[0])}（${DOW[days[0].getUTCDay()]}）〜${fmt(days[days.length-1])}（${DOW[days[days.length-1].getUTCDay()]}）`;
+  }
 
-  const weekEnd = new Date(days[6]);
+  const weekStart = days[0];
+  const weekEnd = new Date(days[days.length - 1]);
   weekEnd.setUTCHours(23, 59, 59);
 
   // この週のアイテム（29時=翌5時対応のため翌日分も含める）
@@ -331,16 +347,16 @@ function renderTimetable() {
     const adjustedDate = (h < HOUR_START) 
       ? new Date(jstDate.getTime() - 24*60*60*1000)
       : jstDate;
-    return adjustedDate >= ttWeekStart && adjustedDate <= weekEnd;
+    return adjustedDate >= weekStart && adjustedDate <= weekEnd;
   });
 
   let html = '<thead><tr>';
   html += '<th class="time-col">時刻</th>';
   days.forEach((d, i) => {
     const isToday = d.getTime() === today.getTime();
-    // 日始まり: 0=日, 6=土
-    const cls = i === 0 ? 'sun' : i === 6 ? 'sat' : '';
-    html += `<th class="${cls}${isToday?' today-col':''}">${DOW[i]} ${fmt(d)}</th>`;
+    const dow = d.getUTCDay(); // 0=日, 6=土
+    const cls = dow === 0 ? 'sun' : dow === 6 ? 'sat' : '';
+    html += `<th class="${cls}${isToday?' today-col':''}">${DOW[dow]} ${fmt(d)}</th>`;
   });
   html += '</tr>';
 
@@ -355,7 +371,7 @@ function renderTimetable() {
       const anns = weekAnns[key] || [];
       html += '<td style="padding:2px;vertical-align:top;">';
       anns.forEach(ann => {
-        html += `<div style="background:${ann.color};color:${ann.textColor};border-radius:3px;padding:2px 4px;font-size:0.68rem;font-weight:700;margin-bottom:2px;line-height:1.3;">${escapeHtml(ann.label)}</div>`;
+        html += `<div class="ann-badge" style="background:${ann.color};color:${ann.textColor};">${escapeHtml(ann.label)}</div>`;
       });
       html += '</td>';
     });
@@ -538,7 +554,7 @@ function renderCalendar() {
         const dayAnns = monthAnns.filter(a => a.day === actualDate);
         html += '<div class="cal-events">';
         dayAnns.forEach(ann => {
-          html += `<div style="background:${ann.color};color:${ann.textColor};border-radius:3px;padding:2px 5px;font-size:0.68rem;font-weight:700;margin-bottom:2px;line-height:1.3;">${escapeHtml(ann.label)}</div>`;
+          html += `<div class="ann-badge" style="background:${ann.color};color:${ann.textColor};">${escapeHtml(ann.label)}</div>`;
         });
         const MAX = 3;
         items.slice(0, MAX).forEach(item => {
@@ -569,7 +585,7 @@ function renderCalendar() {
 // ===== アーカイブ =====
 function renderArchive() {
   const archiveItems = allItems
-    .filter(item => item._cat !== 'upcoming' && item._cat !== 'live')
+    .filter(item => item._cat !== 'live')
     .sort((a, b) => (parseDate(b.publishedAt)||0) - (parseDate(a.publishedAt)||0));
 
   // カテゴリ集計（CATEGORIES順を維持）
@@ -613,6 +629,9 @@ function renderArchive() {
     items.forEach(item => {
       const thumb = item.thumbnailHigh || item.thumbnail || '';
       const date  = formatJST(getDisplayTime(item), 'datetime');
+      const isMembers = item.isMembersOnly || item.membersOnly || item._cat === 'members';
+      const isUpcoming = item._cat === 'upcoming';
+      const linkLabel = isUpcoming ? '配信予定を見る' : 'アーカイブを見る';
       html += `
         <div class="archive-item">
           ${thumb ? `<img class="archive-item-thumb" src="${escapeHtml(thumb)}" alt="" loading="lazy">` : ''}
@@ -620,10 +639,11 @@ function renderArchive() {
             <div class="archive-item-date">
               ${date}
               <span class="cat-badge cat-${item._cat}">${getCatLabel(item._cat)}</span>
+              ${isMembers ? '<span class="cat-badge cat-members">メン限</span>' : ''}
             </div>
             <div class="archive-item-title" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</div>
           </div>
-          <a class="archive-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener">アーカイブを見る</a>
+          <a class="archive-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener">${linkLabel}</a>
         </div>`;
     });
   });

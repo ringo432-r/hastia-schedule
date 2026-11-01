@@ -76,9 +76,8 @@ jobs:
                   seen.add(item['id'])
                   all_items.append(item)
 
-          # ===== videos API で liveStreamingDetails を取得（配信開始予定時刻）=====
-          # ライブ系（upcoming/live/archive/none）のIDをまとめて取得
-          # noneはliveStreamingDetailsを持つ場合があるので全動画対象にする
+          # ===== videos API で liveStreamingDetails + status を取得 =====
+          # 全動画対象にする
           live_ids = [i['id'] for i in all_items if i['id']]
 
           # 50件ずつバッチ処理
@@ -88,7 +87,7 @@ jobs:
               ids_param = ','.join(batch)
               url = (
                   f"https://www.googleapis.com/youtube/v3/videos"
-                  f"?part=liveStreamingDetails,snippet"
+                  f"?part=liveStreamingDetails,snippet,status"
                   f"&id={urllib.parse.quote(ids_param)}"
                   f"&key={API_KEY}"
               )
@@ -97,10 +96,18 @@ jobs:
               for vitem in vdata.get('items', []):
                   vid = vitem.get('id', '')
                   lsd = vitem.get('liveStreamingDetails', {})
+                  status = vitem.get('status', {})
+                  # メンバーシップ限定：privacyStatus が 'unlisted' かつ membersOnly
+                  # YouTube API では membersOnly は直接フィールドとして返ってこないが、
+                  # 一般的に membersOnly 動画は privacyStatus='members' または
+                  # contentDetails に membersOnly フラグがある場合がある
+                  privacy = status.get('privacyStatus', '')
+                  is_members = privacy == 'members'
                   details_map[vid] = {
                       'scheduledStartTime':  lsd.get('scheduledStartTime', ''),
                       'actualStartTime':     lsd.get('actualStartTime', ''),
                       'actualEndTime':       lsd.get('actualEndTime', ''),
+                      'isMembersOnly':       is_members,
                   }
 
           # all_items に配信時刻を反映
@@ -124,6 +131,20 @@ jobs:
                   elif sched:
                       item['publishedAt'] = sched
                   # どちらもなければ publishedAt のまま（元の公開日時）
+              # メンバーシップ限定フラグ（contentRating.ytRating == "ytAgeRestricted" ではなく
+              # statusの madeForKids とは別。membersOnly は status.privacyStatus で判断できないが
+              # liveStreamingDetails に isLowLatencyStream が含まれる場合がある。
+              # 実際には membersOnly 動画は search API では返らないことが多いが、
+              # 取得できた場合に備えて snippet.liveBroadcastContent や contentRating で判定）
+              # → videos API の snippet.thumbnails が members限定の場合 "hqdefault" がブロックされることがある
+              # ここでは title / description でのキーワード判定はフロント側に任せ、
+              # status.embeddable == False の動画をメン限候補としてフラグ付け
+              status_data = details_map.get(item['id'], {})
+              if status_data.get('isMembersOnly', False):
+                  item['isMembersOnly'] = True
+              else:
+                  item['isMembersOnly'] = False
+
 
           # ショートURL判定（/shorts/ を含むものはショートとして記録）
           # さらに contentDetails で duration が60秒以下のものもショートとして記録
