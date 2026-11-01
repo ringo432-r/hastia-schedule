@@ -991,7 +991,15 @@ body {
     width: 100%;
     margin: 0 0 16px 0;
   }
-  .profile-infobox-img { max-height: 180px; object-fit: cover; object-position: top; }
+  /* スマホでは画像を全幅・上部を見切らずに表示 */
+  .profile-infobox-img {
+    width: 100%;
+    height: auto;
+    max-height: 280px;
+    object-fit: contain;
+    object-position: top;
+    background: #fff;
+  }
   .profile-debut-thumb { width: 90px; }
   .profile-debut-label { font-size: 0.8rem; }
   .profile-wrap { padding: 12px 10px; }
@@ -1052,12 +1060,23 @@ body {
     right: auto;
     top: auto;
     margin-bottom: 2px;
+    font-size: 0.75rem;
   }
+  .tt-event .ev-time { font-size: 0.72rem; }
+
+  /* 週間テーブルを広く */
+  .timetable { min-width: 700px; }
+  .timetable thead th { font-size: 0.82rem; padding: 5px 4px; }
+  .timetable td.time-cell { font-size: 0.78rem; width: 48px; }
 
   .timetable-scroll { max-height: calc(100vh - 180px); }
 
   /* カレンダー：スマホでも十分な高さを確保（画像付き予定1件分）*/
   .calendar-table td { min-height: 140px; }
+  /* カレンダーテーブルを広く */
+  .calendar-table { min-width: 700px; }
+  .cal-event { font-size: 0.72rem; }
+  .cal-event .cal-ev-time { font-size: 0.68rem; }
 
   /* 凡例バーはスマホで横スクロール可能に */
   .legend-bar {
