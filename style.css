@@ -813,116 +813,111 @@ body {
   background: var(--color-panel);
   border: 1px solid var(--color-border);
   border-top: none;
-  padding: 16px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-width: 720px;
+  padding: 20px 18px;
+  max-width: 900px;
+  line-height: 1.85;
 }
 
-.profile-card {
+/* infobox（右フロート）*/
+.profile-infobox {
+  float: right;
+  margin: 0 0 16px 20px;
+  width: 200px;
   background: var(--color-panel-header);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 16px 18px;
-  position: relative;
-}
-
-.profile-card-icon {
-  position: absolute;
-  top: -10px;
-  left: 16px;
-  font-size: 1.1rem;
-  color: var(--color-accent);
-  background: var(--color-panel-header);
-  padding: 0 6px;
-  line-height: 1;
-}
-
-.profile-card-title {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  margin-bottom: 10px;
-  letter-spacing: 0.04em;
-}
-
-/* 基本情報 */
-.profile-basic {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 12px;
-}
-
-.profile-row {
-  display: flex;
-  gap: 10px;
-  font-size: 0.85rem;
-  align-items: baseline;
-}
-
-.profile-key {
-  color: var(--color-text-sub);
-  font-size: 0.75rem;
-  min-width: 52px;
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 0.78rem;
   flex-shrink: 0;
 }
 
-.profile-key::after { content: '：'; }
-
-.profile-val {
-  font-weight: 600;
-  color: var(--color-text);
-}
-
-.profile-desc {
-  font-size: 0.82rem;
-  line-height: 1.9;
-  color: var(--color-text);
-  border-top: 1px solid var(--color-border);
-  padding-top: 10px;
-  margin-top: 4px;
-}
-
-/* ひとこと */
-.profile-card--quote {
-  border-color: var(--color-accent);
-  text-align: center;
-}
-
-.profile-quote-text {
-  font-size: 0.95rem;
+.profile-infobox-title {
+  background: var(--color-panel-header);
+  border-bottom: 1px solid var(--color-border);
+  padding: 6px 8px;
   font-weight: 700;
-  color: var(--color-text-sub);
-  font-style: italic;
-  letter-spacing: 0.03em;
-  line-height: 1.6;
+  font-size: 0.82rem;
+  text-align: center;
+  color: var(--color-text);
 }
 
-/* リスト */
-.profile-list {
-  list-style: none;
+.profile-infobox-img {
+  width: 100%;
+  display: block;
+  background: #fff;
+}
+
+.profile-infobox-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.72rem;
+}
+
+.profile-infobox-table tr {
+  border-top: 1px solid var(--color-border);
+}
+
+.profile-infobox-table th {
+  background: var(--color-panel-header);
+  padding: 4px 6px;
+  font-weight: 600;
+  color: var(--color-text-sub);
+  white-space: nowrap;
+  vertical-align: top;
+  width: 52px;
+}
+
+.profile-infobox-table td {
+  padding: 4px 6px;
+  color: var(--color-text);
+  vertical-align: top;
+}
+
+.profile-infobox-links {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 0.85rem;
+  gap: 4px;
+  padding: 6px 8px;
+  border-top: 1px solid var(--color-border);
+}
+
+.profile-infobox-links a {
+  font-size: 0.7rem;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+.profile-infobox-links a:hover { text-decoration: underline; }
+
+/* 記事本文 */
+.profile-article {
+  overflow: hidden; /* float 解除 */
+  font-size: 0.88rem;
   color: var(--color-text);
 }
 
-.profile-list li::before {
-  content: '▸ ';
-  color: var(--color-accent);
-  font-size: 0.75rem;
+.profile-article p {
+  margin-bottom: 0.9em;
 }
 
-.profile-list-note {
-  color: var(--color-accent) !important;
-  font-size: 0.8rem !important;
+.profile-h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 3px;
+  margin: 18px 0 8px;
 }
-.profile-list-note::before { content: '⚠ ' !important; }
 
-.profile-list--dream li::before { content: '✦ '; }
+.profile-article-list {
+  margin: 0 0 1em 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-article-list li {
+  font-size: 0.85rem;
+}
 
 /* 初配信リンク */
 .profile-debut-link {
@@ -933,6 +928,7 @@ body {
   border: 1px solid var(--color-border);
   border-radius: 6px;
   padding: 8px 10px;
+  margin: 8px 0 16px;
   transition: background 0.15s, border-color 0.15s;
   background: var(--color-bg);
 }
@@ -973,16 +969,25 @@ body {
 }
 
 .profile-unofficial-note {
+  clear: both;
   font-size: 0.7rem;
   color: var(--color-text-sub);
   text-align: center;
-  padding-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+  margin-top: 8px;
 }
 
 @media (max-width: 700px) {
+  .profile-infobox {
+    float: none;
+    width: 100%;
+    margin: 0 0 16px 0;
+  }
+  .profile-infobox-img { max-height: 180px; object-fit: cover; object-position: top; }
   .profile-debut-thumb { width: 90px; }
   .profile-debut-label { font-size: 0.8rem; }
-  .profile-wrap { padding: 10px 8px; }
+  .profile-wrap { padding: 12px 10px; }
 }
 
 /* ===== 更新バー・フッター ===== */
