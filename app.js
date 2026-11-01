@@ -24,7 +24,7 @@ const CATEGORIES = [
     match: (item) =>
       item.isMembersOnly === true ||
       item.membersOnly === true ||
-      /メンバー限定|メン限|members.only|membership/i.test(item.title),
+      /メンバー限定|メン限|メンバーシップ|members.only|membership/i.test(item.title),
   },
   {
     // ショートは live/upcoming より後だが isShort フラグを最優先
