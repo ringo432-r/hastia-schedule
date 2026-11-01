@@ -8,18 +8,7 @@ const DATA_URL = './data/videos.json';
 // 優先順位：上から順に判定し、最初にマッチしたカテゴリを使用
 const CATEGORIES = [
   {
-    key: 'live',
-    label: 'LIVE中',
-    match: (item) => item.liveBroadcastContent === 'live',
-  },
-  {
-    key: 'upcoming',
-    label: '配信予定',
-    match: (item) => item.liveBroadcastContent === 'upcoming' || item.category === 'upcoming',
-  },
-  {
-    // ショートは live/upcoming より後だが isShort フラグを最優先
-    // ※ live/upcoming のショートは存在しないので実質問題なし
+    // 配信予定・ライブ中も含め、すべて以下の区分のいずれかに振り分ける
     key: 'short',
     label: 'ショート',
     match: (item) =>
@@ -138,11 +127,11 @@ function escapeHtml(s) {
 function getDisplayTime(item) {
   const lbc = item.liveBroadcastContent;
   // 配信予定：scheduledStartTime（配信予定時間）
-  if (item._cat === 'upcoming' && item.scheduledStartTime) {
+  if (lbc === 'upcoming' && item.scheduledStartTime) {
     return item.scheduledStartTime;
   }
   // ライブ中・アーカイブ：actualStartTime > scheduledStartTime > publishedAt の優先順位
-  if (lbc === 'live' || lbc === 'completed' || item._cat === 'live' || item.category === 'archive') {
+  if (lbc === 'live' || lbc === 'completed' || item.category === 'archive') {
     if (item.actualStartTime)    return item.actualStartTime;
     if (item.scheduledStartTime) return item.scheduledStartTime;
   }
@@ -269,7 +258,7 @@ function renderNextStream() {
   const upcoming = allItems
     .filter(item => {
       const d = parseDate(item.publishedAt);
-      return d && d > now && (item._cat === 'upcoming' || item._cat === 'live');
+      return d && d > now && (item.liveBroadcastContent === 'upcoming' || item.liveBroadcastContent === 'live');
     })
     .sort((a, b) => parseDate(a.publishedAt) - parseDate(b.publishedAt));
 
@@ -293,7 +282,7 @@ function renderLegend(targetId) {
   if (!el) return;
 
   const style = getComputedStyle(document.documentElement);
-  // live/upcoming/members を先頭に、残りは定義順
+  // 定義順にすべて表示
   const showCats = CATEGORIES;
 
   let html = '';
@@ -605,11 +594,11 @@ function renderCalendar() {
 // ===== アーカイブ =====
 function renderArchive() {
   const archiveItems = allItems
-    .filter(item => item._cat !== 'live')
+    .filter(item => item.liveBroadcastContent !== 'live')
     .sort((a, b) => (parseDate(b.publishedAt)||0) - (parseDate(a.publishedAt)||0));
 
   // カテゴリ集計（CATEGORIES順を維持）
-  const catOrder = CATEGORIES.map(c => c.key).filter(k => k !== 'live' && k !== 'upcoming');
+  const catOrder = CATEGORIES.map(c => c.key);
   const cats = {};
   archiveItems.forEach(item => { cats[item._cat] = (cats[item._cat]||0) + 1; });
 
@@ -649,7 +638,7 @@ function renderArchive() {
     items.forEach(item => {
       const thumb = item.thumbnailHigh || item.thumbnail || '';
       const date  = formatJST(getDisplayTime(item), 'datetime');
-      const isUpcoming = item._cat === 'upcoming';
+      const isUpcoming = item.liveBroadcastContent === 'upcoming';
       const linkLabel = isUpcoming ? '配信予定を見る' : 'アーカイブを見る';
       html += `
         <div class="archive-item">

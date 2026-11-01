@@ -28,8 +28,6 @@
   --cat-memorial:    #2a1a1a; --cat-memorial-txt: #cc8888;
   --cat-short:       #2a1a0a; --cat-short-txt:    #ddaa66;
   --cat-default:     #1e1e1e; --cat-default-txt:  #999;
-  --cat-upcoming:    #0a1a2a; --cat-upcoming-txt: #66aadd;
-  --cat-live:        #2a0a0a; --cat-live-txt:     #ff4444;
 }
 
 /* ===== ライトテーマ ===== */
@@ -57,8 +55,6 @@
   --cat-memorial:    #f0d8d8; --cat-memorial-txt: #882222;
   --cat-short:       #f8ead4; --cat-short-txt:    #885522;
   --cat-default:     #e8e8e8; --cat-default-txt:  #555;
-  --cat-upcoming:    #d4e8f8; --cat-upcoming-txt: #224488;
-  --cat-live:        #ffd4d4; --cat-live-txt:     #cc0000;
 }
 
 html { height: 100%; }
@@ -830,8 +826,6 @@ body {
 .cat-memorial { background: var(--cat-memorial); color: var(--cat-memorial-txt); }
 .cat-short    { background: var(--cat-short);    color: var(--cat-short-txt); }
 .cat-default  { background: var(--cat-default);  color: var(--cat-default-txt); }
-.cat-upcoming { background: var(--cat-upcoming); color: var(--cat-upcoming-txt); }
-.cat-live     { background: var(--cat-live);     color: var(--cat-live-txt); }
 
 /* ===== 記念日バッジ ===== */
 .ann-badge {

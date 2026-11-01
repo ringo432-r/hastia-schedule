@@ -59,7 +59,6 @@ hastia-schedule/
 | カテゴリ | 判定条件 |
 |---|---|
 | ショート | `isShort:true` フラグ / URLに `/shorts/` / `#shorts` / 動画60秒以下 |
-| メン限 | `isMembersOnly:true` フラグ / タイトルに「メンバー限定」「メン限」等 |
 | 歌ってみた | 「歌ってみた」「covered」等 |
 | 歌枠 | 「歌枠」「歌回」「カラオケ」等 |
 | ASMR | 「ASMR」（大文字小文字不問）|
@@ -138,8 +137,8 @@ git push
 
 ## キャッシュバースト管理
 HTML内のCSS/JSのバージョン番号：
-- `style.css?v=23`
-- `app.js?v=15`
+- `style.css?v=24`
+- `app.js?v=16`
 
 ファイルを更新したら番号をインクリメントすること。
 
