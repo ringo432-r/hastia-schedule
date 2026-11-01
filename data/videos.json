@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T09:06:21.653322+00:00",
+  "updatedAt": "2026-11-01T12:41:44.542064+00:00",
   "items": [
     {
       "id": "VGLduUhCegM",
@@ -60,6 +60,19 @@
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
       "isShort": false
+    },
+    {
+      "id": "bZ4lcvrsB-I",
+      "title": "スーパーサイヤ人を見た初見反応【ドラゴンボールZ KAKAROT】 #shorts  #vtuber",
+      "publishedAt": "2026-11-01T10:00:28Z",
+      "scheduledStartTime": "",
+      "thumbnail": "https://i.ytimg.com/vi/bZ4lcvrsB-I/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/bZ4lcvrsB-I/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=bZ4lcvrsB-I",
+      "actualStartTime": "",
+      "isShort": true
     },
     {
       "id": "orvph8vVt9w",
