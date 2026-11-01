@@ -639,14 +639,15 @@ function renderArchive() {
 }
 
 // ===== Xポスト（ハッシュタグの検索・ポスト）=====
-// プロフ(wiki) の「ハッシュタグ（X用）」と同じもの。並び順もそろえる
+// プロフ(wiki) の「ハッシュタグ（X用）」と同じもの（タグを変えるときは両方直す）
+// postable: false … はすてぃあ様ご本人用のタグ。検索だけでき、ポストには選べない（一覧の一番下に置く）
 const X_HASHTAGS = [
   { label: '総合',         tag: 'はすてぃあ' },
   { label: '配信',         tag: 'はすてぃあ様降臨中' },
   { label: 'ファンアート', tag: 'はすてぃあーと' },
-  { label: '配信予定',     tag: 'エルノア教予定表' },
   { label: '切り抜き',     tag: 'はすてぃあ様布教' },
   { label: 'エゴサ',       tag: 'はすてぃあ様万歳' },
+  { label: '配信予定',     tag: 'エルノア教予定表', postable: false },
 ];
 
 // X の検索結果（最新順）
@@ -685,17 +686,21 @@ function updateXPostComposer() {
 function renderXPost() {
   const list = document.getElementById('xpost-list');
   if (!list) return;
-  list.innerHTML = X_HASHTAGS.map((h, i) => `
-    <li class="xpost-item">
+  list.innerHTML = X_HASHTAGS.map((h, i) => {
+    const postable = h.postable !== false;
+    return `
+    <li class="xpost-item${postable ? '' : ' xpost-item-searchonly'}">
       <label class="xpost-tag">
-        <input type="checkbox" class="xpost-check" id="xpost-check-${i}" value="${escapeHtml(h.tag)}">
+        <input type="checkbox" class="xpost-check" id="xpost-check-${i}" value="${escapeHtml(h.tag)}"${postable ? '' : ' disabled aria-describedby="xpost-searchonly-note"'}>
         <span class="xpost-tag-name">#${escapeHtml(h.tag)}</span>
         <span class="xpost-tag-label">${escapeHtml(h.label)}</span>
+        ${postable ? '' : '<span class="xpost-searchonly" id="xpost-searchonly-note">はすてぃあ様用のため検索のみ</span>'}
       </label>
       <span class="xpost-item-links">
         <a class="xpost-btn" href="${escapeHtml(xSearchUrl(h.tag))}" target="_blank" rel="noopener">検索<span class="visually-hidden">：#${escapeHtml(h.tag)}</span></a>
       </span>
-    </li>`).join('');
+    </li>`;
+  }).join('');
 
   list.addEventListener('change', updateXPostComposer);
   document.getElementById('xpost-text').addEventListener('input', updateXPostComposer);

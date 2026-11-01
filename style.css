@@ -1319,6 +1319,14 @@ body {
   cursor: pointer;
 }
 .xpost-tag-name { font-weight: 700; word-break: break-all; }
+/* 検索のみ（ポストに選べない）タグ */
+.xpost-item-searchonly .xpost-tag { cursor: default; }
+.xpost-item-searchonly .xpost-check { cursor: not-allowed; opacity: 0.4; }
+.xpost-item-searchonly .xpost-tag-name { color: var(--color-text-sub); }
+.xpost-searchonly {
+  font-size: 0.72rem;
+  color: var(--color-text-sub);
+}
 .xpost-tag-label {
   font-size: 0.72rem;
   color: var(--color-text-sub);
