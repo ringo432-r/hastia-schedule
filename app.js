@@ -116,11 +116,11 @@ function formatJST(iso, fmt = 'datetime') {
   const mi   = pad(j.getUTCMinutes());
   const DOW  = ['日','月','火','水','木','金','土'];
   const dow  = DOW[j.getUTCDay()];
-  if (fmt === 'date')     return `${yyyy}/${mm}/${dd}（${dow}）`;
+  if (fmt === 'date')     return `${yyyy}/${mm}/${dd}(${dow})`;
   if (fmt === 'time')     return `${hh}:${mi}`;
-  if (fmt === 'month')    return `${yyyy}年${mm}月`;
-  if (fmt === 'datetime') return `${yyyy}/${mm}/${dd}（${dow}） ${hh}:${mi}`;
-  if (fmt === 'mdow')     return `${mm}/${dd}（${dow}）`;
+  if (fmt === 'month')    return `${yyyy}/${mm}`;
+  if (fmt === 'datetime') return `${yyyy}/${mm}/${dd}(${dow}) ${hh}:${mi}`;
+  if (fmt === 'mdow')     return `${mm}/${dd}(${dow})`;
   return `${yyyy}/${mm}/${dd} ${hh}:${mi}`;
 }
 
@@ -304,16 +304,9 @@ function renderTimetable() {
   const table = document.getElementById('timetable');
   const today = todayJST();
 
-  const days = Array.from({length: ttDisplayDays}, (_, i) => {
+  const days = Array.from({length: 7}, (_, i) => {
     const d = new Date(ttWeekStart);
-    // スマホ3日表示の場合：今日起点
-    if (ttDisplayDays === 3) {
-      const base = todayJST();
-      d.setTime(base.getTime());
-      d.setUTCDate(d.getUTCDate() + i);
-    } else {
-      d.setUTCDate(d.getUTCDate() + i);
-    }
+    d.setUTCDate(d.getUTCDate() + i);
     return d;
   });
 
@@ -323,17 +316,16 @@ function renderTimetable() {
     return `${p(d.getUTCMonth()+1)}/${p(d.getUTCDate())}`;
   };
 
-  // 週ラベル：7日表示は「〜土」、3日表示は「〜n日目」
-  if (ttDisplayDays === 7) {
-    document.getElementById('tt-week-range').textContent =
-      `${days[0].getUTCFullYear()}年 ${fmt(days[0])}（${DOW[days[0].getUTCDay()]}）〜${fmt(days[6])}（${DOW[days[6].getUTCDay()]}）`;
-  } else {
-    document.getElementById('tt-week-range').textContent =
-      `${days[0].getUTCFullYear()}年 ${fmt(days[0])}（${DOW[days[0].getUTCDay()]}）〜${fmt(days[days.length-1])}（${DOW[days[days.length-1].getUTCDay()]}）`;
-  }
+  // 週ラベル：yyyy/mm/dd(曜) ~ yyyy/mm/dd(曜)
+  const fmtFull = d => {
+    const p = n => String(n).padStart(2,'0');
+    return `${d.getUTCFullYear()}/${p(d.getUTCMonth()+1)}/${p(d.getUTCDate())}(${DOW[d.getUTCDay()]})`;
+  };
+  document.getElementById('tt-week-range').textContent =
+    `${fmtFull(days[0])} ~ ${fmtFull(days[6])}`;
 
   const weekStart = days[0];
-  const weekEnd = new Date(days[days.length - 1]);
+  const weekEnd = new Date(days[6]);
   weekEnd.setUTCHours(23, 59, 59);
 
   // この週のアイテム（29時=翌5時対応のため翌日分も含める）
@@ -356,7 +348,7 @@ function renderTimetable() {
     const isToday = d.getTime() === today.getTime();
     const dow = d.getUTCDay(); // 0=日, 6=土
     const cls = dow === 0 ? 'sun' : dow === 6 ? 'sat' : '';
-    html += `<th class="${cls}${isToday?' today-col':''}">${DOW[dow]} ${fmt(d)}</th>`;
+    html += `<th class="${cls}${isToday?' today-col':''}">${fmt(d)}<br>${DOW[dow]}</th>`;
   });
   html += '</tr>';
 
@@ -497,7 +489,7 @@ function renderCalendar() {
   const table = document.getElementById('calendar');
   const today = todayJST();
   document.getElementById('cal-month-label').textContent =
-    `${calYear}年${String(calMonth+1).padStart(2,'0')}月`;
+    `${calYear}/${String(calMonth+1).padStart(2,'0')}`;
 
   const DOW_LABELS = ['日','月','火','水','木','金','土'];
   const firstDay = new Date(Date.UTC(calYear, calMonth, 1));
@@ -612,7 +604,7 @@ function renderArchive() {
   const byMonth = {};
   filtered.forEach(item => {
     const j = toJST(parseDate(item.publishedAt));
-    const key = `${j.getUTCFullYear()}年${String(j.getUTCMonth()+1).padStart(2,'0')}月`;
+    const key = `${j.getUTCFullYear()}/${String(j.getUTCMonth()+1).padStart(2,'0')}`;
     if (!byMonth[key]) byMonth[key] = [];
     byMonth[key].push(item);
   });
@@ -692,19 +684,6 @@ function initDrawer() {
   overlay.addEventListener('click', close);
 }
 
-// ===== スマホ番組表：表示日数 =====
-let ttDisplayDays = 7;
-
-function initDayToggle() {
-  document.getElementById('tt-day-toggle')?.addEventListener('click', e => {
-    const btn = e.target.closest('.tt-day-btn');
-    if (!btn) return;
-    ttDisplayDays = parseInt(btn.dataset.days);
-    document.querySelectorAll('.tt-day-btn').forEach(b => b.classList.toggle('active', b === btn));
-    renderTimetable();
-  });
-}
-
 // ===== テーマ・ドロワーのボタンバインド =====
 function initThemeButtons() {
   document.getElementById('theme-toggle-pc')?.addEventListener('click', toggleTheme);
@@ -769,7 +748,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initThemeButtons();
   initDrawer();
-  initDayToggle();
   initEvents();
   loadData();
 });
