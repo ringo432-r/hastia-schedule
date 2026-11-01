@@ -2,8 +2,9 @@ name: Fetch YouTube Data
 
 on:
   schedule:
-    # 1時間ごとに実行（UTC基準）
-    - cron: '0 * * * *'
+    # 30分ごとに実行（UTC基準）
+    # APIクォータ節約のため search.list は配信予定の1回のみ使用
+    - cron: '*/30 * * * *'
   workflow_dispatch: # 手動実行も可能
 
 permissions:
@@ -22,12 +23,11 @@ jobs:
         run: |
           CHANNEL_ID=$(curl -s "https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=god_hastia&key=${YOUTUBE_API_KEY}" | python3 -c "import sys,json; data=json.load(sys.stdin); print(data['items'][0]['id'])")
           echo "Channel ID: $CHANNEL_ID"
+          export CHANNEL_ID
 
-          # 配信予定・ライブ中・アーカイブ・通常動画を取得
+          # 配信予定のみ search.list（100ユニット）で取得
+          # アーカイブ・通常動画はアップロード一覧（playlistItems, 1ユニット）で取得（Python内）
           curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=upcoming&type=video&maxResults=50&order=date&key=${YOUTUBE_API_KEY}" -o /tmp/upcoming.json
-          curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&maxResults=10&order=date&key=${YOUTUBE_API_KEY}" -o /tmp/live.json
-          curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=completed&type=video&maxResults=50&order=date&key=${YOUTUBE_API_KEY}" -o /tmp/completed.json
-          curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&maxResults=50&order=date&key=${YOUTUBE_API_KEY}" -o /tmp/videos.json
 
           python3 << 'EOF'
           import json
@@ -63,15 +63,68 @@ jobs:
                   'url': f'https://www.youtube.com/watch?v={video_id}'
               }
 
-          upcoming  = [parse_item(i, 'upcoming') for i in load('/tmp/upcoming.json')]
-          live      = [parse_item(i, 'live')     for i in load('/tmp/live.json')]
-          completed = [parse_item(i, 'archive')  for i in load('/tmp/completed.json')]
-          videos    = [parse_item(i, 'video')    for i in load('/tmp/videos.json')]
+          # アップロード一覧（最新150件まで）。配信済み・通常動画・ショートを含む
+          def fetch_uploads(max_pages=3):
+              playlist_id = 'UU' + os.environ['CHANNEL_ID'][2:]
+              result = []
+              token = ''
+              for _ in range(max_pages):
+                  url = (
+                      f"https://www.googleapis.com/youtube/v3/playlistItems"
+                      f"?part=snippet,contentDetails&playlistId={playlist_id}"
+                      f"&maxResults=50&key={API_KEY}"
+                  )
+                  if token:
+                      url += f"&pageToken={token}"
+                  data = json.loads(urllib.request.urlopen(url).read().decode())
+                  result += data.get('items', [])
+                  token = data.get('nextPageToken', '')
+                  if not token:
+                      break
+              return result
 
-          # 重複排除（IDベース、優先順位: live > upcoming > completed > videos）
+          def parse_playlist_item(item):
+              snippet = item.get('snippet', {})
+              cd = item.get('contentDetails', {})
+              video_id = cd.get('videoId') or snippet.get('resourceId', {}).get('videoId', '')
+              title = snippet.get('title', '')
+              if not video_id or title in ('Private video', 'Deleted video'):
+                  return None
+              thumbs = snippet.get('thumbnails', {})
+              return {
+                  'id': video_id,
+                  'title': title,
+                  'description': snippet.get('description', ''),
+                  'publishedAt': cd.get('videoPublishedAt') or snippet.get('publishedAt', ''),
+                  'scheduledStartTime': '',
+                  'thumbnail': thumbs.get('medium', {}).get('url') or f'https://i.ytimg.com/vi/{video_id}/mqdefault.jpg',
+                  'thumbnailHigh': thumbs.get('high', {}).get('url') or f'https://i.ytimg.com/vi/{video_id}/hqdefault.jpg',
+                  'liveBroadcastContent': 'none',  # 後で videos API で補完
+                  'category': 'video',
+                  'url': f'https://www.youtube.com/watch?v={video_id}'
+              }
+
+          upcoming = [parse_item(i, 'upcoming') for i in load('/tmp/upcoming.json')]
+          uploads  = [x for x in (parse_playlist_item(i) for i in fetch_uploads()) if x]
+
+          # 前回データの配信予定・ライブ中を引き継ぐ
+          # （配信開始後は search の upcoming に出なくなるため、状態を videos API で再確認する）
+          carried_ids = set()
+          carried = []
+          try:
+              with open('data/videos.json', encoding='utf-8') as f:
+                  prev = json.load(f).get('items', [])
+              for p in prev:
+                  if p.get('liveBroadcastContent') in ('upcoming', 'live') and p.get('id'):
+                      carried.append(p)
+                      carried_ids.add(p['id'])
+          except Exception as e:
+              print(f"previous data not loaded: {e}")
+
+          # 重複排除（IDベース、優先順位: upcoming > 前回引き継ぎ > uploads）
           seen = set()
           all_items = []
-          for item in live + upcoming + completed + videos:
+          for item in upcoming + carried + uploads:
               if item['id'] and item['id'] not in seen:
                   seen.add(item['id'])
                   all_items.append(item)
@@ -104,16 +157,32 @@ jobs:
                   privacy = status.get('privacyStatus', '')
                   is_members = privacy == 'members'
                   details_map[vid] = {
+                      'liveBroadcastContent': vitem.get('snippet', {}).get('liveBroadcastContent', 'none'),
                       'scheduledStartTime':  lsd.get('scheduledStartTime', ''),
                       'actualStartTime':     lsd.get('actualStartTime', ''),
                       'actualEndTime':       lsd.get('actualEndTime', ''),
                       'isMembersOnly':       is_members,
                   }
 
+          # 前回から引き継いだ配信予定のうち、取得できなくなったもの（削除・非公開）は除外
+          all_items = [i for i in all_items
+                       if not (i['id'] in carried_ids and i['id'] not in details_map)]
+
           # all_items に配信時刻を反映
           for item in all_items:
               d = details_map.get(item['id'], {})
+              # videos API の最新状態で配信状態とカテゴリを更新
+              if d.get('liveBroadcastContent'):
+                  item['liveBroadcastContent'] = d['liveBroadcastContent']
               lbc = item['liveBroadcastContent']
+              if lbc == 'upcoming':
+                  item['category'] = 'upcoming'
+              elif lbc == 'live':
+                  item['category'] = 'live'
+              elif d.get('actualStartTime'):
+                  item['category'] = 'archive'
+              else:
+                  item['category'] = 'video'
               if lbc == 'upcoming':
                   # 配信予定：scheduledStartTime を使用
                   item['scheduledStartTime'] = d.get('scheduledStartTime', '')
