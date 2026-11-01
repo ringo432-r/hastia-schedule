@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T13:37:19.675752+00:00",
+  "updatedAt": "2026-11-01T14:07:14.926230+00:00",
   "items": [
     {
       "id": "VGLduUhCegM",
@@ -28,13 +28,14 @@
     {
       "id": "RtUi8vLigWU",
       "title": "【マクドナルド新作】5年かけた超大作！？新作を深夜に食べ比べ！！【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-01T14:00:00Z",
+      "publishedAt": "2026-11-01T14:01:05Z",
       "scheduledStartTime": "2026-11-01T14:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/RtUi8vLigWU/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/RtUi8vLigWU/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
+      "liveBroadcastContent": "live",
+      "category": "live",
       "url": "https://www.youtube.com/watch?v=RtUi8vLigWU",
+      "actualStartTime": "2026-11-01T14:01:05Z",
       "isShort": false
     },
     {
