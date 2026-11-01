@@ -690,15 +690,15 @@ function renderXPost() {
     const postable = h.postable !== false;
     return `
     <li class="xpost-item${postable ? '' : ' xpost-item-searchonly'}">
+      <span class="xpost-item-links">
+        <a class="xpost-btn" href="${escapeHtml(xSearchUrl(h.tag))}" target="_blank" rel="noopener">検索<span class="visually-hidden">：#${escapeHtml(h.tag)}</span></a>
+      </span>
       <label class="xpost-tag">
         <input type="checkbox" class="xpost-check" id="xpost-check-${i}" value="${escapeHtml(h.tag)}"${postable ? '' : ' disabled aria-describedby="xpost-searchonly-note"'}>
         <span class="xpost-tag-name">#${escapeHtml(h.tag)}</span>
         <span class="xpost-tag-label">${escapeHtml(h.label)}</span>
         ${postable ? '' : '<span class="xpost-searchonly" id="xpost-searchonly-note">はすてぃあ様用のため検索のみ</span>'}
       </label>
-      <span class="xpost-item-links">
-        <a class="xpost-btn" href="${escapeHtml(xSearchUrl(h.tag))}" target="_blank" rel="noopener">検索<span class="visually-hidden">：#${escapeHtml(h.tag)}</span></a>
-      </span>
     </li>`;
   }).join('');
 
