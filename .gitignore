@@ -2,3 +2,7 @@
 *.env.local
 .DS_Store
 Thumbs.db
+
+# 作業メモ（ローカルでのみ管理し、Git・GitHub には含めない）
+SESSION_CONTEXT.md
+*.local.md
