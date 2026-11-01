@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-31T22:58:40.037154+00:00",
+  "updatedAt": "2026-11-01T01:59:36.678785+00:00",
   "items": [
     {
       "id": "VGLduUhCegM",
@@ -41,20 +41,6 @@
       "isShort": false
     },
     {
-      "id": "orvph8vVt9w",
-      "title": "【タンポポは耐える。】ハロウィンなので、タンポポの仮装しました。【 はすてぃあ / 新人Vtuber 】",
-      "description": "タンポポは耐える。 https://store.steampowered.com/app/4368560/タンポポは耐える/?l=japanese&cc=jp エルティア～♡ ...",
-      "publishedAt": "2026-10-31T14:06:03Z",
-      "scheduledStartTime": "2026-10-31T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/orvph8vVt9w/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/orvph8vVt9w/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=orvph8vVt9w",
-      "actualStartTime": "2026-10-31T14:06:03Z",
-      "isShort": false
-    },
-    {
       "id": "iEQ6w2uy9zs",
       "title": "デビューグッズ発売中　～2026/11/1",
       "description": "ご購入はこちらから…！ とってもこだわったグッズなのでぜひ見ていただきたいですっ ...",
@@ -78,6 +64,20 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
+      "id": "orvph8vVt9w",
+      "title": "【タンポポは耐える。】ハロウィンなので、タンポポの仮装しました。【 はすてぃあ / 新人Vtuber 】",
+      "description": "タンポポは耐える。 https://store.steampowered.com/app/4368560/タンポポは耐える/?l=japanese&cc=jp エルティア～♡ ...",
+      "publishedAt": "2026-10-31T14:06:03Z",
+      "scheduledStartTime": "2026-10-31T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/orvph8vVt9w/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/orvph8vVt9w/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=orvph8vVt9w",
+      "actualStartTime": "2026-10-31T14:06:03Z",
       "isShort": false
     },
     {
