@@ -146,7 +146,7 @@ function getDisplayTime(item) {
   return item.publishedAt;
 }
 
-// 表示に使う日時（Date）。週間・月間・アーカイブで同じ基準を使う
+// 表示に使う日時（Date）。週間・月間・検索タブで同じ基準を使う
 function itemDate(item) {
   return parseDate(getDisplayTime(item));
 }
@@ -524,7 +524,7 @@ function renderCalendar() {
   renderLegend('cal-legend');
 }
 
-// ===== アーカイブ =====
+// ===== 検索タブ（動画一覧。関数名・id は旧名 archive のまま）=====
 function renderArchive() {
   const archiveItems = allItems
     .filter(item => item.liveBroadcastContent !== 'live')

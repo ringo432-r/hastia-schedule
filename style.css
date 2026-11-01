@@ -709,7 +709,7 @@ body {
   margin-bottom: 2px;
 }
 
-/* ===== アーカイブ ===== */
+/* ===== 検索タブ（class は旧名 archive のまま） ===== */
 .archive-filter {
   background: var(--color-panel);
   border: 1px solid var(--color-border);
