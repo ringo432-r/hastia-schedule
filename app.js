@@ -580,6 +580,15 @@ function renderCalendar() {
         if (items.length > MAX) {
           html += `<div class="cal-more">他 ${items.length - MAX} 件</div>`;
         }
+        // 予定がない日：予定1件分の高さを確保するため、見えない予定カードを入れる
+        if (items.length === 0) {
+          html += `
+            <div class="cal-event cal-event-ghost" aria-hidden="true">
+              <div class="cal-ev-thumb-ghost"></div>
+              <span class="cal-ev-time">&nbsp;</span>
+              <span class="cal-ev-title">&nbsp;<br>&nbsp;</span>
+            </div>`;
+        }
         html += '</div>';
       }
       html += '</td>';

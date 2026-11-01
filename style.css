@@ -679,6 +679,18 @@ body {
 
 .cal-more { font-size: 0.62rem; color: var(--color-text-sub); padding: 1px 3px; }
 
+/* 予定がない日の高さ確保用（見えない予定カード）*/
+.cal-event-ghost {
+  visibility: hidden;
+  pointer-events: none;
+  cursor: default;
+}
+.cal-event-ghost .cal-ev-thumb-ghost {
+  width: 100%;
+  aspect-ratio: 16/9;
+  margin-bottom: 2px;
+}
+
 /* ===== アーカイブ ===== */
 .archive-filter {
   background: var(--color-panel);
