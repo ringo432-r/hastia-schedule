@@ -596,6 +596,19 @@ body {
   box-shadow: 0 2px 6px rgba(204,34,34,0.3);
 }
 .schedule-x-link:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+/* ダークモード：暗い背景で浮きすぎないよう、赤を落ち着かせ、白い光り方を抑える */
+[data-theme="dark"] .schedule-x-link {
+  background: #8f1c1c;
+  border-color: #a82a2a;
+  color: #f2dede;
+  box-shadow: none;
+}
+[data-theme="dark"] .schedule-x-link:hover {
+  background: #b02424;
+  border-color: #cc3333;
+  color: #fff;
+  box-shadow: none;
+}
 
 /* ===== カテゴリ凡例バー ===== */
 .legend-bar {
