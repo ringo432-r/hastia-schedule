@@ -320,7 +320,6 @@ function eventLinkInner(item, slot, thumbClass, timeTag, titleTag) {
 }
 
 // ===== 番組表（週間）=====
-const ROW_H_PX = 40; // 1時間=40px（PC表示時）
 
 function renderTimetable() {
   const table = document.getElementById('timetable');
@@ -425,42 +424,67 @@ function scrollTimetableToEvent() {
     .filter(x => x.slot && x.slot.day >= ttWeekStart && x.slot.day < weekEnd)
     .sort((a, b) => a.date - b.date);
 
-  let targetHour;
+  // 目的の放送日（UTC 0時の Date）と時（6〜29）
+  let targetDay, targetHour;
   if (ttWeekStart.getTime() === getWeekStart(todayJST()).getTime()) {
     // 今週表示中なら：現在時刻以降で最初のイベント。なければ現在時刻
     const future = weekItems.find(x => x.date >= now);
     if (future) {
+      targetDay = future.slot.day;
       targetHour = future.slot.hour;
     } else {
-      const h = toJST(now).getUTCHours();
-      targetHour = h < HOUR_START ? h + 24 : h;
+      const j = toJST(now);
+      const h = j.getUTCHours();
+      const late = h < HOUR_START;
+      targetDay = new Date(Date.UTC(j.getUTCFullYear(), j.getUTCMonth(), j.getUTCDate() - (late ? 1 : 0)));
+      targetHour = late ? h + 24 : h;
     }
   } else {
     // 他の週：その週の最初のイベント
+    targetDay = weekItems.length > 0 ? weekItems[0].slot.day : ttWeekStart;
     targetHour = weekItems.length > 0 ? weekItems[0].slot.hour : HOUR_START;
   }
 
   const rowIndex = Math.max(0, targetHour - HOUR_START);
+  const dayIndex = Math.min(6, Math.max(0, Math.round((targetDay - ttWeekStart) / 86400000)));
 
-  // PC（幅760px以上）は枠ではなくページ全体でスクロールする（style.css で overflow-y: visible）
-  if (getComputedStyle(scroll).overflowY === 'visible') {
-    // 週間タブを表示していないときは位置を測れないので何もしない（タブ切り替え時に呼び直す）
-    const panel = document.getElementById('tab-timetable');
-    const table = document.getElementById('timetable');
-    const row = table && table.tBodies[0] && table.tBodies[0].rows[rowIndex];
-    if (!panel || !panel.classList.contains('active') || !row) return;
-    // 上部に固定している部分（タブ・各タブの上部・日付の行）の下に、目的の時間帯が少し余白をあけて来るようにする
-    const nav = document.querySelector('.tab-nav');
-    const sticky = panel.querySelector('.panel-sticky');
-    const covered = (nav ? nav.offsetHeight : 0) + (sticky ? sticky.offsetHeight : 0)
-      + (table.tHead ? table.tHead.offsetHeight : 0);
-    const top = row.getBoundingClientRect().top + window.scrollY - covered - 40;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+  // 週間タブを表示していないときは位置を測れないので何もしない（タブ切り替え時に呼び直す）
+  const panel = document.getElementById('tab-timetable');
+  const table = document.getElementById('timetable');
+  const row = table && table.tBodies[0] && table.tBodies[0].rows[rowIndex];
+  if (!panel || !panel.classList.contains('active') || !row) return;
+
+  // 横方向：表が横にはみ出しているとき（スマホなど）は、目的の日の列が時刻列のすぐ右に来るようにする
+  if (scroll.scrollWidth > scroll.clientWidth + 1) {
+    const headRow = table.tHead && table.tHead.rows[0];
+    const th = headRow && headRow.cells[dayIndex + 1]; // 0番目は時刻列
+    const timeCol = headRow && headRow.cells[0];
+    if (th) {
+      const left = th.getBoundingClientRect().left - scroll.getBoundingClientRect().left + scroll.scrollLeft
+        - (timeCol ? timeCol.offsetWidth : 0);
+      scroll.scrollLeft = Math.max(0, left);
+    }
+  }
+
+  // 縦方向：番組表の枠の中でスクロールできるとき（幅701〜759px）は枠の中を動かす
+  const innerVertical = getComputedStyle(scroll).overflowY !== 'visible'
+    && scroll.scrollHeight > scroll.clientHeight + 1;
+  if (innerVertical) {
+    scroll.scrollTop = Math.max(0, row.offsetTop - 60); // 少し上に余白
     return;
   }
 
-  // それ以外は番組表の枠の中でスクロールする
-  scroll.scrollTop = Math.max(0, rowIndex * ROW_H_PX - 60); // 少し上に余白
+  // それ以外（PC・スマホ）はページ全体を動かす。
+  // 画面の上に固定されている部分（スマホのヘッダー、PC のタブ・各タブの上部・日付の行）の下に、
+  // 目的の時間帯が少し余白をあけて来るようにする
+  const isStuck = el => el && getComputedStyle(el).position === 'sticky' && el.offsetHeight > 0;
+  let covered = 0;
+  [document.querySelector('.mobile-header'), document.querySelector('.tab-nav'), panel.querySelector('.panel-sticky')]
+    .forEach(el => { if (isStuck(el)) covered += el.offsetHeight; });
+  // 日付の行が画面の上に固定されるのは、枠がスクロール枠でないとき（PC 幅760px以上）だけ
+  if (getComputedStyle(scroll).overflowY === 'visible' && table.tHead) covered += table.tHead.offsetHeight;
+  const top = row.getBoundingClientRect().top + window.scrollY - covered - 40;
+  window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
 }
 
 // ===== カレンダー（月間）=====
