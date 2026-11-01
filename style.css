@@ -808,6 +808,183 @@ body {
   letter-spacing: 0.02em;
 }
 
+/* ===== プロフィール ===== */
+.profile-wrap {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-top: none;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 720px;
+}
+
+.profile-card {
+  background: var(--color-panel-header);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  position: relative;
+}
+
+.profile-card-icon {
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  font-size: 1.1rem;
+  color: var(--color-accent);
+  background: var(--color-panel-header);
+  padding: 0 6px;
+  line-height: 1;
+}
+
+.profile-card-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+
+/* 基本情報 */
+.profile-basic {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.profile-row {
+  display: flex;
+  gap: 10px;
+  font-size: 0.85rem;
+  align-items: baseline;
+}
+
+.profile-key {
+  color: var(--color-text-sub);
+  font-size: 0.75rem;
+  min-width: 52px;
+  flex-shrink: 0;
+}
+
+.profile-key::after { content: '：'; }
+
+.profile-val {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.profile-desc {
+  font-size: 0.82rem;
+  line-height: 1.9;
+  color: var(--color-text);
+  border-top: 1px solid var(--color-border);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+/* ひとこと */
+.profile-card--quote {
+  border-color: var(--color-accent);
+  text-align: center;
+}
+
+.profile-quote-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text-sub);
+  font-style: italic;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+}
+
+/* リスト */
+.profile-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.profile-list li::before {
+  content: '▸ ';
+  color: var(--color-accent);
+  font-size: 0.75rem;
+}
+
+.profile-list-note {
+  color: var(--color-accent) !important;
+  font-size: 0.8rem !important;
+}
+.profile-list-note::before { content: '⚠ ' !important; }
+
+.profile-list--dream li::before { content: '✦ '; }
+
+/* 初配信リンク */
+.profile-debut-link {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  text-decoration: none;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  transition: background 0.15s, border-color 0.15s;
+  background: var(--color-bg);
+}
+.profile-debut-link:hover {
+  background: rgba(204,34,34,0.08);
+  border-color: var(--color-accent);
+}
+
+.profile-debut-thumb {
+  width: 120px;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+}
+
+.profile-debut-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.profile-debut-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.profile-debut-url {
+  font-size: 0.72rem;
+  color: var(--color-text-sub);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-unofficial-note {
+  font-size: 0.7rem;
+  color: var(--color-text-sub);
+  text-align: center;
+  padding-top: 4px;
+}
+
+@media (max-width: 700px) {
+  .profile-debut-thumb { width: 90px; }
+  .profile-debut-label { font-size: 0.8rem; }
+  .profile-wrap { padding: 10px 8px; }
+}
+
 /* ===== 更新バー・フッター ===== */
 .updated-bar {
   margin-top: 8px;
