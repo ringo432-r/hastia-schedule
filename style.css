@@ -518,6 +518,33 @@ body {
   margin-bottom: 2px;
 }
 
+/* ===== カテゴリ凡例バー ===== */
+.legend-bar {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-top: none;
+  padding: 6px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
 /* ===== カレンダー ===== */
 .calendar-controls {
   background: var(--color-panel);
@@ -530,7 +557,6 @@ body {
   font-weight: 700;
   font-size: 0.95rem;
 }
-
 .calendar-grid-wrap {
   overflow-x: auto;
   background: var(--color-panel);
@@ -560,7 +586,7 @@ body {
 .calendar-table td {
   border: 1px solid var(--color-border);
   vertical-align: top;
-  min-height: 80px;
+  min-height: 120px;
   padding: 2px;
   width: calc(100% / 7);
 }
@@ -821,14 +847,38 @@ body {
   .archive-item-thumb { width: 72px; }
   .archive-link { padding: 4px 8px; font-size: 0.72rem; }
 
-  .tt-event .ev-thumb    { display: none; }
-  .cal-event .cal-ev-thumb { display: none; }
+  /* スマホでも画像を表示する */
+  .tt-event .ev-thumb    { display: block; }
+  .cal-event .cal-ev-thumb { display: block; }
+
+  /* 週間：セルの高さをイベント内容に合わせて自動伸長 */
+  .timetable td {
+    height: auto;
+    min-height: 40px;
+  }
+  /* 週間：イベントブロックをフロー配置に（スマホは absolute 解除）*/
+  .tt-event {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    margin-bottom: 2px;
+  }
 
   .timetable-scroll { max-height: calc(100vh - 180px); }
 
-  .calendar-table td { min-height: 60px; }
+  /* カレンダー：スマホでも十分な高さを確保 */
+  .calendar-table td { min-height: 100px; }
 
   .timetable { min-width: 300px; }
+
+  /* 凡例バーはスマホで横スクロール可能に */
+  .legend-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .legend-bar::-webkit-scrollbar { display: none; }
 }
 
 @media (min-width: 701px) {
