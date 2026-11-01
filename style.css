@@ -875,7 +875,7 @@ body {
 .profile-infobox {
   float: right;
   margin: 0 0 16px 20px;
-  width: 200px;
+  width: 270px; /* 「神様（エルノア教の教祖）」などが折り返さない幅 */
   background: var(--color-panel-header);
   border: 1px solid var(--color-border);
   border-radius: 6px;
@@ -922,6 +922,7 @@ body {
 
 .profile-infobox-table td {
   padding: 4px 6px;
+  white-space: nowrap; /* 値を1行で表示する（スマホは情報欄が全幅になるので余裕がある）*/
   color: var(--color-text);
   vertical-align: top;
 }
