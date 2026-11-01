@@ -48,6 +48,8 @@ const CATEGORIES = [
     // タイトルに【〜】形式のゲームタイトルがある or ゲームキーワード
     match: (item) => {
       const t = item.title;
+      // 「食べ比べ」を含む場合はゲームではなく雑談・その他にする
+      if (/食べ比べ/.test(t)) return false;
       // 【タイトル名】パターン（配信でよく使われる形式）
       if (/【[^】]+】/.test(t)) return true;
       // 具体的なゲームキーワード
