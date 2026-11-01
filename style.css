@@ -1374,6 +1374,26 @@ body {
 }
 .xpost-text:focus { outline: none; border-color: var(--color-accent); }
 
+/* ハッシュタグの位置（本文の後 / 前）*/
+.xpost-position {
+  border: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+}
+.xpost-position legend { float: left; margin: 0 8px 0 0; }
+.xpost-position label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.xpost-position input { accent-color: var(--color-accent); cursor: pointer; }
+
 .xpost-preview-label { font-size: 0.8rem; color: var(--color-text-sub); margin: 10px 0 4px; }
 .xpost-preview {
   border: 1px dashed var(--color-border);
@@ -1389,6 +1409,4 @@ body {
 
 @media (max-width: 700px) {
   .xpost-wrap { padding: 12px 10px 16px; }
-  .xpost-item { flex-wrap: wrap; }
-  .xpost-item-links { margin-left: 26px; }
 }

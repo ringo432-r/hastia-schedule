@@ -662,7 +662,11 @@ function xPostUrl(text) {
 function composeXPostText() {
   const body = document.getElementById('xpost-text').value.trim();
   const tags = [...document.querySelectorAll('.xpost-check:checked')].map(el => `#${el.value}`);
-  return { text: [body, tags.join(' ')].filter(Boolean).join('\n'), count: tags.length };
+  const tagLine = tags.join(' ');
+  // ハッシュタグの位置（本文の後 / 前）。本文とは改行で区切る
+  const before = document.querySelector('input[name="xpost-position"]:checked')?.value === 'before';
+  const parts = before ? [tagLine, body] : [body, tagLine];
+  return { text: parts.filter(Boolean).join('\n'), count: tags.length };
 }
 
 function updateXPostComposer() {
@@ -690,12 +694,12 @@ function renderXPost() {
       </label>
       <span class="xpost-item-links">
         <a class="xpost-btn" href="${escapeHtml(xSearchUrl(h.tag))}" target="_blank" rel="noopener">検索<span class="visually-hidden">：#${escapeHtml(h.tag)}</span></a>
-        <a class="xpost-btn" href="${escapeHtml(xPostUrl(`#${h.tag} `))}" target="_blank" rel="noopener">ポスト<span class="visually-hidden">：#${escapeHtml(h.tag)}</span></a>
       </span>
     </li>`).join('');
 
   list.addEventListener('change', updateXPostComposer);
   document.getElementById('xpost-text').addEventListener('input', updateXPostComposer);
+  document.querySelectorAll('input[name="xpost-position"]').forEach(el => el.addEventListener('change', updateXPostComposer));
   document.getElementById('xpost-clear').addEventListener('click', () => {
     list.querySelectorAll('.xpost-check').forEach(el => { el.checked = false; });
     updateXPostComposer();
