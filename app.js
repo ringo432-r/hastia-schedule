@@ -638,6 +638,75 @@ function renderArchive() {
   listEl.innerHTML = html;
 }
 
+// ===== Xポスト（ハッシュタグの検索・ポスト）=====
+// プロフ(wiki) の「ハッシュタグ（X用）」と同じもの。並び順もそろえる
+const X_HASHTAGS = [
+  { label: '総合',         tag: 'はすてぃあ' },
+  { label: '配信',         tag: 'はすてぃあ様降臨中' },
+  { label: 'ファンアート', tag: 'はすてぃあーと' },
+  { label: '配信予定',     tag: 'エルノア教予定表' },
+  { label: '切り抜き',     tag: 'はすてぃあ様布教' },
+  { label: 'エゴサ',       tag: 'はすてぃあ様万歳' },
+];
+
+// X の検索結果（最新順）
+function xSearchUrl(tag) {
+  return `https://x.com/search?q=${encodeURIComponent(`#${tag}`)}&src=hashtag_click&f=live`;
+}
+// 本文を入れた状態の投稿画面（Web Intent。投稿はしない）
+function xPostUrl(text) {
+  return `https://x.com/intent/post?text=${encodeURIComponent(text)}`;
+}
+
+// 本文＋選択したハッシュタグ（タグの前後は空白で区切る）
+function composeXPostText() {
+  const body = document.getElementById('xpost-text').value.trim();
+  const tags = [...document.querySelectorAll('.xpost-check:checked')].map(el => `#${el.value}`);
+  return { text: [body, tags.join(' ')].filter(Boolean).join('\n'), count: tags.length };
+}
+
+function updateXPostComposer() {
+  const { text, count } = composeXPostText();
+  const preview = document.getElementById('xpost-preview');
+  const submit = document.getElementById('xpost-submit');
+  preview.textContent = text || '（ハッシュタグを選ぶと、ここに表示されます）';
+  preview.classList.toggle('empty', !text);
+  const enabled = count > 0;
+  submit.classList.toggle('disabled', !enabled);
+  submit.setAttribute('aria-disabled', String(!enabled));
+  submit.href = enabled ? xPostUrl(`${text} `) : '#';
+  submit.textContent = enabled ? `選択したハッシュタグでポスト（${count}件）` : '選択したハッシュタグでポスト';
+}
+
+function renderXPost() {
+  const list = document.getElementById('xpost-list');
+  if (!list) return;
+  list.innerHTML = X_HASHTAGS.map((h, i) => `
+    <li class="xpost-item">
+      <label class="xpost-tag">
+        <input type="checkbox" class="xpost-check" id="xpost-check-${i}" value="${escapeHtml(h.tag)}">
+        <span class="xpost-tag-name">#${escapeHtml(h.tag)}</span>
+        <span class="xpost-tag-label">${escapeHtml(h.label)}</span>
+      </label>
+      <span class="xpost-item-links">
+        <a class="xpost-btn" href="${escapeHtml(xSearchUrl(h.tag))}" target="_blank" rel="noopener">検索<span class="visually-hidden">：#${escapeHtml(h.tag)}</span></a>
+        <a class="xpost-btn" href="${escapeHtml(xPostUrl(`#${h.tag} `))}" target="_blank" rel="noopener">ポスト<span class="visually-hidden">：#${escapeHtml(h.tag)}</span></a>
+      </span>
+    </li>`).join('');
+
+  list.addEventListener('change', updateXPostComposer);
+  document.getElementById('xpost-text').addEventListener('input', updateXPostComposer);
+  document.getElementById('xpost-clear').addEventListener('click', () => {
+    list.querySelectorAll('.xpost-check').forEach(el => { el.checked = false; });
+    updateXPostComposer();
+  });
+  // 何も選んでいないときは開かない
+  document.getElementById('xpost-submit').addEventListener('click', e => {
+    if (e.currentTarget.getAttribute('aria-disabled') === 'true') e.preventDefault();
+  });
+  updateXPostComposer();
+}
+
 // ===== テーマ切り替え =====
 // localStorage が使えない環境（一部のプライベートブラウズ等）でも動くようにする
 // 保存するのは、利用者が切り替えボタンを押したときだけ。
@@ -889,6 +958,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeButtons();
   initDrawer();
   initEvents();
+  renderXPost();
   initStickyHeights();
   loadData();
 });

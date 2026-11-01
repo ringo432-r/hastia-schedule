@@ -1250,3 +1250,138 @@ body {
   /* この幅では元の見出し行が画面の上に固定されるので、複製は使わない */
   .sticky-head { display: none !important; }
 }
+
+/* ===== Xポスト ===== */
+.xpost-wrap {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-top: none;
+  padding: 16px 18px 20px;
+  font-size: 0.88rem;
+  color: var(--color-text);
+  line-height: 1.7;
+}
+.xpost-h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 3px;
+  margin: 6px 0 8px;
+}
+.xpost-h2 + .xpost-desc { margin-top: 0; }
+.xpost-desc,
+.xpost-note {
+  font-size: 0.8rem;
+  color: var(--color-text-sub);
+  margin: 0 0 10px;
+}
+.xpost-note { margin-top: 10px; }
+
+.xpost-list {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.xpost-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  border-top: 1px solid var(--color-border);
+}
+.xpost-item:first-child { border-top: none; }
+.xpost-item:has(.xpost-check:checked) { background: var(--color-today); }
+
+.xpost-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+.xpost-check {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-accent);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.xpost-tag-name { font-weight: 700; word-break: break-all; }
+.xpost-tag-label {
+  font-size: 0.72rem;
+  color: var(--color-text-sub);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0 7px;
+  white-space: nowrap;
+}
+.xpost-item-links { display: flex; gap: 6px; flex-shrink: 0; }
+
+.xpost-btn {
+  display: inline-block;
+  background: var(--color-btn);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  color: var(--color-text);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.xpost-btn:hover { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+.xpost-btn-main {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+  font-weight: 700;
+  padding: 7px 16px;
+  font-size: 0.85rem;
+}
+.xpost-btn.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: auto;
+}
+.xpost-btn-main.disabled:hover { background: var(--color-accent); }
+
+.xpost-label { display: block; font-size: 0.8rem; color: var(--color-text-sub); margin-bottom: 4px; }
+.xpost-text {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  resize: vertical;
+}
+.xpost-text:focus { outline: none; border-color: var(--color-accent); }
+
+.xpost-preview-label { font-size: 0.8rem; color: var(--color-text-sub); margin: 10px 0 4px; }
+.xpost-preview {
+  border: 1px dashed var(--color-border);
+  border-radius: 4px;
+  padding: 8px 10px;
+  min-height: 2.4em;
+  white-space: pre-wrap;
+  word-break: break-all;
+  background: var(--color-panel-header);
+}
+.xpost-preview.empty { color: var(--color-text-sub); font-size: 0.8rem; }
+.xpost-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
+
+@media (max-width: 700px) {
+  .xpost-wrap { padding: 12px 10px 16px; }
+  .xpost-item { flex-wrap: wrap; }
+  .xpost-item-links { margin-left: 26px; }
+}

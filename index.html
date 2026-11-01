@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>はすてぃあ様のスケジュール</title>
   <meta name="description" content="VTuber はすてぃあ様の配信予定をまとめ、過去の動画も検索できる非公式スケジュールサイト" />
-  <link rel="stylesheet" href="style.css?v=32" />
+  <link rel="stylesheet" href="style.css?v=33" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -110,6 +110,7 @@
         <button class="tab-btn" id="tabbtn-calendar" data-tab="calendar" role="tab" aria-selected="false" aria-controls="tab-calendar" tabindex="-1">🗓 月間</button>
         <button class="tab-btn" id="tabbtn-archive" data-tab="archive" role="tab" aria-selected="false" aria-controls="tab-archive" tabindex="-1">🔍 検索</button>
         <button class="tab-btn" id="tabbtn-profile" data-tab="profile" role="tab" aria-selected="false" aria-controls="tab-profile" tabindex="-1">👤 プロフ(wiki)</button>
+        <button class="tab-btn" id="tabbtn-xpost" data-tab="xpost" role="tab" aria-selected="false" aria-controls="tab-xpost" tabindex="-1">📣 Xポスト</button>
       </nav>
 
       <div class="tab-panels">
@@ -255,6 +256,31 @@
           </div>
         </div>
 
+        <!-- Xポスト（ハッシュタグの検索・ポスト）-->
+        <div id="tab-xpost" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-xpost" hidden>
+          <!-- スクロールしても上部に固定する部分 -->
+          <div class="panel-sticky">
+            <div class="panel-header">📣 Xポスト</div>
+          </div>
+          <div class="xpost-wrap">
+
+            <h2 class="xpost-h2">ハッシュタグ</h2>
+            <p class="xpost-desc">「検索」で X の検索結果（最新）を、「ポスト」でそのハッシュタグが入った投稿画面を開きます。<br>チェックを入れると、下の「まとめてポスト」で複数のハッシュタグを一緒に使えます。</p>
+            <ul class="xpost-list" id="xpost-list"></ul>
+
+            <h2 class="xpost-h2">まとめてポスト</h2>
+            <label class="xpost-label" for="xpost-text">本文（任意）</label>
+            <textarea id="xpost-text" class="xpost-text" rows="3" placeholder="本文を入力（ハッシュタグは後ろに付きます）"></textarea>
+            <div class="xpost-preview-label">投稿される内容</div>
+            <div class="xpost-preview" id="xpost-preview" aria-live="polite"></div>
+            <div class="xpost-actions">
+              <a id="xpost-submit" class="xpost-btn xpost-btn-main" href="#" target="_blank" rel="noopener">選択したハッシュタグでポスト</a>
+              <button type="button" id="xpost-clear" class="xpost-btn">選択を解除</button>
+            </div>
+            <p class="xpost-note">X の投稿画面が開くだけで、自動では投稿されません。投稿するには X へのログインが必要です。</p>
+          </div>
+        </div>
+
       </div>
 
       <div class="updated-bar">最終更新: <span id="updatedAt">読み込み中...</span></div>
@@ -267,6 +293,6 @@
 
   </div><!-- /layout -->
 
-  <script src="app.js?v=24"></script>
+  <script src="app.js?v=25"></script>
 </body>
 </html>
