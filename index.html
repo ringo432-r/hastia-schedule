@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>はすてぃあ様のスケジュール</title>
   <meta name="description" content="VTuber はすてぃあ様の配信予定をまとめ、過去の動画も検索できる非公式スケジュールサイト" />
-  <link rel="stylesheet" href="style.css?v=38" />
+  <link rel="stylesheet" href="style.css?v=39" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -129,7 +129,12 @@
               <button id="tt-next" class="nav-btn">次の週 ▶</button>
             </div>
             <div class="legend-bar" id="tt-legend"></div>
-            <div class="schedule-note">※ メンバーシップ限定配信は表示されません</div>
+            <div class="schedule-note schedule-note-row">
+              <span>※ メンバーシップ限定配信は表示されません</span>
+              <a class="schedule-x-link" href="https://x.com/search?q=%23%E3%82%A8%E3%83%AB%E3%83%8E%E3%82%A2%E6%95%99%E4%BA%88%E5%AE%9A%E8%A1%A8&amp;src=hashtag_click&amp;f=live" target="_blank" rel="noopener">
+                <svg class="x-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>最新の週間スケジュールはこちら（#エルノア教予定表）<span class="visually-hidden">（X の検索結果を新しいタブで開きます）</span>
+              </a>
+            </div>
             <!-- 日付の行の複製（表が横スクロールになる幅で、スクロール中に上部へ表示。app.js が作る）-->
             <div class="sticky-head" id="tt-sticky-head" aria-hidden="true" hidden></div>
           </div>
