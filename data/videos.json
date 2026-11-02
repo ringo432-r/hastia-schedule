@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T09:37:21.838755+00:00",
+  "updatedAt": "2026-11-02T10:07:23.924837+00:00",
   "items": [
     {
       "id": "z_XDln0WH5E",
@@ -48,6 +48,19 @@
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
       "isShort": false
+    },
+    {
+      "id": "a5cYApEaC_s",
+      "title": "クリリンのことか 初見反応【ドラゴンボールZ KAKAROT】 #shorts  #vtuber",
+      "publishedAt": "2026-11-02T10:00:13Z",
+      "scheduledStartTime": "",
+      "thumbnail": "https://i.ytimg.com/vi/a5cYApEaC_s/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/a5cYApEaC_s/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=a5cYApEaC_s",
+      "actualStartTime": "",
+      "isShort": true
     },
     {
       "id": "RtUi8vLigWU",
