@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-01T23:37:13.464754+00:00",
+  "updatedAt": "2026-11-02T00:07:18.135249+00:00",
   "items": [
     {
       "id": "z_XDln0WH5E",
@@ -38,19 +38,6 @@
       "isShort": false
     },
     {
-      "id": "RtUi8vLigWU",
-      "title": "【マクドナルド新作】5年かけた超大作！？新作を深夜に食べ比べ！！【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-01T14:01:05Z",
-      "scheduledStartTime": "2026-11-01T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/RtUi8vLigWU/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/RtUi8vLigWU/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=RtUi8vLigWU",
-      "actualStartTime": "2026-11-01T14:01:05Z",
-      "isShort": false
-    },
-    {
       "id": "iEQ6w2uy9zs",
       "title": "デビューグッズ発売中　～2026/11/1",
       "publishedAt": "2026-12-02T17:55:00Z",
@@ -72,6 +59,19 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
+      "id": "RtUi8vLigWU",
+      "title": "【マクドナルド新作】5年かけた超大作！？新作を深夜に食べ比べ！！【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-01T14:01:05Z",
+      "scheduledStartTime": "2026-11-01T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/RtUi8vLigWU/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/RtUi8vLigWU/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=RtUi8vLigWU",
+      "actualStartTime": "2026-11-01T14:01:05Z",
       "isShort": false
     },
     {
