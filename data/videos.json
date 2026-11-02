@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T20:37:24.981279+00:00",
+  "updatedAt": "2026-11-02T21:07:14.155110+00:00",
   "items": [
     {
       "id": "z_XDln0WH5E",
@@ -26,19 +26,6 @@
       "isShort": false
     },
     {
-      "id": "rZKccFsUIx8",
-      "title": "【デス桃太郎】ホラゲー？！昔話「桃太郎」を超改変した面白いゲーム！【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-02T14:08:05Z",
-      "scheduledStartTime": "2026-11-02T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/rZKccFsUIx8/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/rZKccFsUIx8/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=rZKccFsUIx8",
-      "actualStartTime": "2026-11-02T14:08:05Z",
-      "isShort": false
-    },
-    {
       "id": "u23sPngSFmw",
       "title": "Weekly Schedule",
       "publishedAt": "2027-06-16T17:50:00Z",
@@ -48,6 +35,19 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
+      "id": "rZKccFsUIx8",
+      "title": "【デス桃太郎】ホラゲー？！昔話「桃太郎」を超改変した面白いゲーム！【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-02T14:08:05Z",
+      "scheduledStartTime": "2026-11-02T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/rZKccFsUIx8/mqdefault.jpg?v=6ae63545",
+      "thumbnailHigh": "https://i.ytimg.com/vi/rZKccFsUIx8/hqdefault.jpg?v=6ae63545",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=rZKccFsUIx8",
+      "actualStartTime": "2026-11-02T14:08:05Z",
       "isShort": false
     },
     {
