@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02T09:07:14.805060+00:00",
+  "updatedAt": "2026-11-02T09:37:21.838755+00:00",
   "items": [
     {
       "id": "z_XDln0WH5E",
@@ -35,18 +35,6 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=rZKccFsUIx8",
-      "isShort": false
-    },
-    {
-      "id": "iEQ6w2uy9zs",
-      "title": "デビューグッズ発売中　～2026/11/1",
-      "publishedAt": "2026-12-02T17:55:00Z",
-      "scheduledStartTime": "2026-12-02T17:55:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/iEQ6w2uy9zs/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/iEQ6w2uy9zs/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=iEQ6w2uy9zs",
       "isShort": false
     },
     {
