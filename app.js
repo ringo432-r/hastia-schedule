@@ -3,6 +3,10 @@
  */
 
 const DATA_URL = './data/videos.json';
+// メンバーシップ限定配信（手動で追加。自動更新では書き換えない）
+const MEMBERS_URL = './data/members.json';
+// メン限の予定に URL が書かれていないときのリンク先
+const MEMBERS_FALLBACK_URL = 'https://www.youtube.com/@god_hastia/membership';
 
 // ===== カテゴリ定義 =====
 // 優先順位：上から順に判定し、最初にマッチしたカテゴリを使用
@@ -126,6 +130,18 @@ function safeColor(c, fallback = 'inherit') {
   return fallback;
 }
 
+// リンクに使う URL は https:// で始まるものだけ許可する（javascript: などを防ぐ）
+function safeUrl(u, fallback = '#') {
+  const s = String(u ?? '').trim();
+  return /^https:\/\/[^\s"'<>]+$/i.test(s) ? s : fallback;
+}
+
+// YouTube の URL から動画ID（11文字）を取り出す。見つからなければ ''
+function youtubeId(url) {
+  const m = String(url || '').match(/(?:[?&]v=|youtu\.be\/|\/live\/|\/shorts\/)([\w-]{11})/);
+  return m ? m[1] : '';
+}
+
 // UTC の Date から年月日を YYYY-MM-DD にする（日付キー用）
 function dateKey(d) {
   return `${d.getUTCFullYear()}-${pad2(d.getUTCMonth() + 1)}-${pad2(d.getUTCDate())}`;
@@ -236,14 +252,55 @@ function annBadgeHtml(ann) {
   return `<div class="ann-badge" style="background:${safeColor(ann.color, 'transparent')};color:${safeColor(ann.textColor)};">${escapeHtml(ann.label)}</div>`;
 }
 
+// ===== メンバーシップ限定配信（data/members.json）=====
+// 1件は { title, start（日本時間なら +09:00 付きの日時）, url（任意）, thumbnail（任意）}
+// 日時が読めないものは表示しない。videos.json に同じ動画があるときは、そちらを優先する
+function normalizeMembers(list, knownIds) {
+  const now = Date.now();
+  return list.map((m, i) => {
+    const start = parseDate(m && m.start);
+    if (!start) {
+      console.warn(`members.json の ${i + 1} 件目は start（日時）が読めないため表示しません`);
+      return null;
+    }
+    const url = safeUrl(m.url, MEMBERS_FALLBACK_URL);
+    const vid = youtubeId(url);
+    if (vid && knownIds.has(vid)) return null;
+    const iso = start.toISOString();
+    const upcoming = start.getTime() > now;
+    const thumb = safeUrl(m.thumbnail, '') || (vid ? `https://i.ytimg.com/vi/${vid}/mqdefault.jpg` : '');
+    const it = {
+      id: vid || `members-${i}`,
+      title: String(m.title || 'メンバー限定配信'),
+      publishedAt: iso,
+      scheduledStartTime: iso,
+      actualStartTime: upcoming ? '' : iso,
+      liveBroadcastContent: upcoming ? 'upcoming' : 'none',
+      category: upcoming ? 'upcoming' : 'archive',
+      url,
+      thumbnail: thumb,
+      thumbnailHigh: thumb,
+      _members: true,
+    };
+    it._cat = detectCategory(it);
+    return it;
+  }).filter(Boolean);
+}
+
+// メン限のバッジ（週間・月間・検索タブで共通）
+function membersBadge(item) {
+  return item._members ? '<span class="members-badge">メン限</span>' : '';
+}
+
 // ===== データ読み込み =====
 async function loadData() {
   try {
-    // 動画データと記念日データを並行取得
-    // 記念日データの取得に失敗しても、動画データは表示する
-    const [videoResult, annResult] = await Promise.allSettled([
+    // 動画データ・記念日データ・メン限データを並行取得
+    // 記念日・メン限のデータの取得に失敗しても、動画データは表示する
+    const [videoResult, annResult, memResult] = await Promise.allSettled([
       fetch(`${DATA_URL}?t=${Date.now()}`),
-      fetch(`./data/anniversaries.json?t=${Date.now()}`)
+      fetch(`./data/anniversaries.json?t=${Date.now()}`),
+      fetch(`${MEMBERS_URL}?t=${Date.now()}`)
     ]);
     if (videoResult.status !== 'fulfilled') throw videoResult.reason;
     const res = videoResult.value;
@@ -273,6 +330,19 @@ async function loadData() {
         it._cat = detectCategory(it);
         return it;
       });
+
+    // メン限（手動追加）を合わせる。書き方の間違いなどで読めなくても、ほかの予定は表示する
+    if (memResult.status === 'fulfilled' && memResult.value.ok) {
+      try {
+        const memData = await memResult.value.json();
+        const list = Array.isArray(memData.items) ? memData.items : [];
+        allItems = allItems.concat(normalizeMembers(list, new Set(allItems.map(i => i.id))));
+      } catch (e) {
+        console.warn('メン限データ（members.json）を読み込めませんでした:', e);
+      }
+    } else {
+      console.warn('メン限データ（members.json）を取得できませんでした');
+    }
 
     const today = todayJST();
     ttWeekStart = getWeekStart(today);
@@ -316,7 +386,7 @@ function eventLinkInner(item, slot, thumbClass, timeTag, titleTag) {
   return `
       ${thumb ? `<img class="${thumbClass}" src="${escapeHtml(thumb)}" alt="" loading="lazy">` : ''}
       <${timeTag} class="${timeTag === 'div' ? 'ev-time' : 'cal-ev-time'}">${slotTimeLabel(slot)}</${timeTag}>
-      <${titleTag} class="${titleTag === 'div' ? 'ev-title' : 'cal-ev-title'}">${escapeHtml(item.title)}</${titleTag}>`;
+      <${titleTag} class="${titleTag === 'div' ? 'ev-title' : 'cal-ev-title'}">${membersBadge(item)}${escapeHtml(item.title)}</${titleTag}>`;
 }
 
 // ===== 番組表（週間）=====
@@ -390,7 +460,7 @@ function renderTimetable() {
         html += '<div class="tt-slot">';
         list.forEach(({ item, slot }) => {
           html += `
-          <a class="tt-event cat-${item._cat}" href="${escapeHtml(item.url)}" target="_blank" rel="noopener" title="${escapeHtml(item.title)}">
+          <a class="tt-event cat-${item._cat}" href="${escapeHtml(safeUrl(item.url))}" target="_blank" rel="noopener" title="${escapeHtml(item.title)}">
             ${eventLinkInner(item, slot, 'ev-thumb', 'div', 'div')}
           </a>`;
         });
@@ -540,7 +610,7 @@ function renderCalendar() {
         monthAnns.filter(a => a.day === date).forEach(ann => { html += annBadgeHtml(ann); });
         list.slice(0, MAX).forEach(({ item, slot }) => {
           html += `
-            <a class="cal-event cat-${item._cat}" href="${escapeHtml(item.url)}" target="_blank" rel="noopener" title="${escapeHtml(item.title)}">
+            <a class="cal-event cat-${item._cat}" href="${escapeHtml(safeUrl(item.url))}" target="_blank" rel="noopener" title="${escapeHtml(item.title)}">
               ${eventLinkInner(item, slot, 'cal-ev-thumb', 'span', 'span')}
             </a>`;
         });
@@ -620,7 +690,8 @@ function renderArchive() {
     items.forEach(item => {
       const thumb = item.thumbnailHigh || item.thumbnail || '';
       const date  = formatJST(getDisplayTime(item));
-      const linkLabel = item.liveBroadcastContent === 'upcoming' ? '配信予定を見る' : 'アーカイブを見る';
+      const linkLabel = item._members && item.url === MEMBERS_FALLBACK_URL ? 'メンバーシップを見る'
+        : item.liveBroadcastContent === 'upcoming' ? '配信予定を見る' : 'アーカイブを見る';
       html += `
         <div class="archive-item">
           ${thumb ? `<img class="archive-item-thumb" src="${escapeHtml(thumb)}" alt="" loading="lazy">` : ''}
@@ -628,10 +699,11 @@ function renderArchive() {
             <div class="archive-item-date">
               ${date}
               <span class="cat-badge cat-${item._cat}">${escapeHtml(getCatLabel(item._cat))}</span>
+              ${membersBadge(item)}
             </div>
             <div class="archive-item-title" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</div>
           </div>
-          <a class="archive-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener">${linkLabel}<span class="visually-hidden">：${escapeHtml(item.title)}</span></a>
+          <a class="archive-link" href="${escapeHtml(safeUrl(item.url))}" target="_blank" rel="noopener">${linkLabel}<span class="visually-hidden">：${escapeHtml(item.title)}</span></a>
         </div>`;
     });
   });

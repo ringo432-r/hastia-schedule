@@ -1,0 +1,10 @@
+{
+  "note": "メンバーシップ限定配信を手動で追加するファイル。自動更新では書き換えられません。items に1件ずつ追加します。start は日本時間（+09:00 付き）、url と thumbnail は省略できます。",
+  "example": {
+    "title": "【メン限】雑談",
+    "start": "2026-11-03T23:00:00+09:00",
+    "url": "https://www.youtube.com/watch?v=xxxxxxxxxxx",
+    "thumbnail": ""
+  },
+  "items": []
+}

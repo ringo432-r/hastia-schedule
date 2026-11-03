@@ -16,6 +16,27 @@ GitHub Actions（`fetch-youtube.yml`）が30分ごとに YouTube Data API v3 か
 
 GitHub Pages に公開するのは、サイトに必要なファイル（`index.html` `app.js` `style.css` `data/` `img/`）だけです。
 
+### メンバーシップ限定配信の追加（手動）
+
+メン限配信は API では取得できないため、`data/members.json` の `items` に手動で追加します。自動更新では書き換えられません。GitHub の画面で直接編集して保存すると、1〜2分でサイトに反映されます。
+
+```json
+{
+  "items": [
+    {
+      "title": "【メン限】雑談",
+      "start": "2026-11-03T23:00:00+09:00",
+      "url": "https://www.youtube.com/watch?v=xxxxxxxxxxx",
+      "thumbnail": ""
+    }
+  ]
+}
+```
+
+- `title` と `start`（日本時間は `+09:00` を付ける）は必須、`url` と `thumbnail` は省略できます
+- 2件目以降は `},` のようにカンマで区切ります
+- 週間・月間・検索タブに「メン限」バッジ付きで表示されます
+
 ## セットアップ
 
 ### 1. リポジトリのSecretにAPIキーを追加
