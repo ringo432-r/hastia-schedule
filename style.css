@@ -1480,3 +1480,9 @@ body {
   white-space: nowrap;
 }
 .archive-item-date .members-badge { margin-left: 4px; font-size: 0.68rem; }
+/* 検索タブの「メン限」絞り込みボタン（バッジと同じ緑）*/
+.filter-btn-members { border-color: #1b7f4a; color: #1b7f4a; }
+[data-theme="dark"] .filter-btn-members { color: #5fc08a; border-color: #2f8f5c; }
+.filter-btn-members:hover { background: rgba(27,127,74,0.12); border-color: #1b7f4a; }
+.filter-btn-members.active,
+[data-theme="dark"] .filter-btn-members.active { background: #1b7f4a; border-color: #1b7f4a; color: #fff; }

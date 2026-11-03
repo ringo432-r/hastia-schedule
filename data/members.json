@@ -1,16 +1,18 @@
 {
-  "note": "メンバーシップ限定配信を手動で追加するファイル。自動更新では書き換えられません。items に1件ずつ追加します。start は日本時間（+09:00 付き）、url と thumbnail は省略できます。",
+  "note": "メンバーシップ限定配信を手動で追加するファイル。自動更新では書き換えられません。items に1件ずつ追加します。start は日本時間（+09:00 付き）。url・thumbnail・category は省略できます。category は ショート / 歌ってみた / 歌枠 / ASMR / 記念 / コラボ / ゲーム / 雑談・その他 のどれか（省略するとタイトルから判定）。",
   "example": {
     "title": "【メン限】雑談",
     "start": "2026-11-03T23:00:00+09:00",
     "url": "https://www.youtube.com/watch?v=xxxxxxxxxxx",
-    "thumbnail": ""
+    "thumbnail": "",
+    "category": "雑談・その他"
   },
   "items": [
     {
       "title": "はじめてのメン限。ASMRマイクでこそこそおはなしと癒し",
       "start": "2026-11-03T23:00:00+09:00",
-      "url": "https://www.youtube.com/live/EQ3pXgNoWnk"
+      "url": "https://www.youtube.com/live/EQ3pXgNoWnk",
+      "category": "雑談・その他"
     }
   ]
 }

@@ -282,10 +282,23 @@ function normalizeMembers(list, knownIds) {
       thumbnailHigh: thumb,
       _members: true,
     };
-    it._cat = detectCategory(it);
+    // category を書いたときはその区分にする（キー "chat" でも表示名 "雑談・その他" でもよい）。
+    // 書いていない・合わないときはタイトルから判定する
+    it._cat = categoryKeyOf(m.category) || detectCategory(it);
     return it;
   }).filter(Boolean);
 }
+
+// 区分のキーまたは表示名から、区分のキーを返す。合わなければ ''
+function categoryKeyOf(v) {
+  const s = String(v ?? '').trim();
+  if (!s) return '';
+  const cat = CATEGORIES.find(c => c.key === s || c.label === s);
+  return cat ? cat.key : '';
+}
+
+// 検索タブの「メン限」で絞り込むときの値（区分のキーと重ならない名前）
+const MEMBERS_FILTER = '_members';
 
 // メン限のバッジ（週間・月間・検索タブで共通）
 function membersBadge(item) {
@@ -657,10 +670,19 @@ function renderArchive() {
     const on = archiveFilter === cat;
     filterHtml += `<button class="filter-btn ${on ? 'active' : ''}" data-cat="${cat}" aria-pressed="${on}">${escapeHtml(getCatLabel(cat))} ${cats[cat]}</button>`;
   });
+  // メン限（区分とは別の絞り込み。1件以上あるときだけ表示）
+  const membersCount = archiveItems.filter(i => i._members).length;
+  if (membersCount) {
+    const on = archiveFilter === MEMBERS_FILTER;
+    filterHtml += `<button class="filter-btn filter-btn-members ${on ? 'active' : ''}" data-cat="${MEMBERS_FILTER}" aria-pressed="${on}">メン限 ${membersCount}</button>`;
+  } else if (archiveFilter === MEMBERS_FILTER) {
+    archiveFilter = 'all';
+  }
   filterEl.innerHTML = filterHtml;
 
   let filtered = archiveItems;
-  if (archiveFilter !== 'all') filtered = filtered.filter(i => i._cat === archiveFilter);
+  if (archiveFilter === MEMBERS_FILTER) filtered = filtered.filter(i => i._members);
+  else if (archiveFilter !== 'all') filtered = filtered.filter(i => i._cat === archiveFilter);
   if (archiveSearch) {
     const q = archiveSearch.toLowerCase();
     filtered = filtered.filter(i => i.title.toLowerCase().includes(q));
