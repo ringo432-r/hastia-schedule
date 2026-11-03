@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T09:37:14.495815+00:00",
+  "updatedAt": "2026-11-03T10:07:15.596420+00:00",
   "items": [
     {
       "id": "z_XDln0WH5E",
@@ -35,6 +35,19 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
+      "id": "tvkZ45YnNZc",
+      "title": "「オレに〇されるべきなんだ」フリーザの名言！初見反応【ドラゴンボールZ KAKAROT】 #shorts  #vtuber",
+      "publishedAt": "2026-11-03T10:00:28Z",
+      "scheduledStartTime": "",
+      "thumbnail": "https://i.ytimg.com/vi/tvkZ45YnNZc/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/tvkZ45YnNZc/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=tvkZ45YnNZc",
+      "actualStartTime": "",
       "isShort": false
     },
     {
