@@ -1,6 +1,18 @@
 {
-  "updatedAt": "2026-11-04T03:37:14.574468+00:00",
+  "updatedAt": "2026-11-04T04:07:13.997302+00:00",
   "items": [
+    {
+      "id": "YlU4Gz8drdQ",
+      "title": "【4000人耐久歌枠】楽しく歌って新しい信徒を増やしちゃいます♡【はすてぃあ / 新人vtuber 】",
+      "publishedAt": "2026-11-04T11:00:00Z",
+      "scheduledStartTime": "2026-11-04T11:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/YlU4Gz8drdQ/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/YlU4Gz8drdQ/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=YlU4Gz8drdQ",
+      "isShort": false
+    },
     {
       "id": "z_XDln0WH5E",
       "title": "【Don&#39;t Drop The Cake】なにがあっても絶対にケーキを落とすな!!大注目のゲームをやってみるっ【 はすてぃあ / 新人Vtuber 】",
@@ -16,8 +28,8 @@
     {
       "id": "VGLduUhCegM",
       "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編　後編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-04T14:00:00Z",
-      "scheduledStartTime": "2026-11-04T14:00:00Z",
+      "publishedAt": "2026-11-06T14:00:00Z",
+      "scheduledStartTime": "2026-11-06T14:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/VGLduUhCegM/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/VGLduUhCegM/hqdefault.jpg",
       "liveBroadcastContent": "upcoming",
