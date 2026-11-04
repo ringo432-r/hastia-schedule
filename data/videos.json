@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T13:37:15.067743+00:00",
+  "updatedAt": "2026-11-04T14:07:15.370258+00:00",
   "items": [
     {
       "id": "z_XDln0WH5E",
@@ -44,8 +44,8 @@
       "scheduledStartTime": "2026-11-04T11:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/YlU4Gz8drdQ/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/YlU4Gz8drdQ/hqdefault.jpg",
-      "liveBroadcastContent": "live",
-      "category": "live",
+      "liveBroadcastContent": "none",
+      "category": "archive",
       "url": "https://www.youtube.com/watch?v=YlU4Gz8drdQ",
       "isShort": false,
       "actualStartTime": "2026-11-04T11:09:31Z"
