@@ -12,7 +12,7 @@ VTuber [はすてぃあ](https://www.youtube.com/@god_hastia) 様の配信予定
 
 ## 仕組み
 
-GitHub Actions（`fetch-youtube.yml`）が30分ごとに YouTube Data API v3 からデータを取得し、`data/videos.json` を更新します。データが変わったときは `deploy.yml` を呼び出して GitHub Pages を更新します。フロントエンドはこのJSONを読み込んで表示します。
+GitHub Actions（`fetch-youtube.yml`）が30分ごとに YouTube Data API v3 からデータを取得し、`data/videos.json` を更新します。アップロード一覧は最新150件を取得し、それより古い動画は前回のデータから引き継いで蓄積します（YouTube で非公開・削除にした古い動画は自動では消えないため、必要なら `data/videos.json` から手で削除します）。データが変わったときは `deploy.yml` を呼び出して GitHub Pages を更新します。フロントエンドはこのJSONを読み込んで表示します。
 
 GitHub Pages に公開するのは、サイトに必要なファイル（`index.html` `app.js` `style.css` `data/` `img/`）だけです。
 

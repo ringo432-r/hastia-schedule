@@ -144,6 +144,7 @@ jobs:
           # サイトで使わない項目（description など）は引き継がない
           DROP_FIELDS = {'description', 'isMembersOnly', 'actualEndTime'}
           carried, carried_ids = [], set()
+          prev = []
           try:
               with open('data/videos.json', encoding='utf-8') as f:
                   prev = json.load(f).get('items', [])
@@ -250,6 +251,23 @@ jobs:
               if 0 < duration_map.get(item['id'], 0) <= 60:
                   item['isShort'] = True
 
+          # ===== 過去の動画を蓄積する =====
+          # アップロード一覧は最新150件しか取らないため、それより古い動画は前回のデータから引き継いで残す
+          # （API は呼ばないので使用量は増えない。前回保存した時刻・区分・ショート判定をそのまま使う）
+          # 注意：YouTube で非公開・削除にした動画も、最新150件から外れると残り続ける
+          #       （消したいときは data/videos.json から該当の項目を手で削除する）
+          kept = 0
+          for p in prev:
+              pid = p.get('id')
+              if not pid or pid in seen:
+                  continue
+              # 配信予定・ライブ中は上の「引き継ぎ」で扱う（取得できなくなったものは除外済み）
+              if p.get('liveBroadcastContent') in ('upcoming', 'live'):
+                  continue
+              all_items.append({k: v for k, v in p.items() if k not in DROP_FIELDS})
+              seen.add(pid)
+              kept += 1
+
           result = {
               'updatedAt': datetime.now(timezone.utc).isoformat(),
               'items': all_items,
@@ -257,7 +275,7 @@ jobs:
           with open('data/videos.json', 'w', encoding='utf-8') as f:
               json.dump(result, f, ensure_ascii=False, indent=2)
 
-          print(f"Total: {len(all_items)} videos saved (upcoming={len(upcoming)}, uploads={len(uploads)}, carried={len(carried)}).")
+          print(f"Total: {len(all_items)} videos saved (upcoming={len(upcoming)}, uploads={len(uploads)}, carried={len(carried)}, kept={kept}).")
           EOF
 
       - name: Commit and push if changed
