@@ -1,18 +1,6 @@
 {
-  "updatedAt": "2026-11-04T11:07:16.053268+00:00",
+  "updatedAt": "2026-11-04T11:37:13.831014+00:00",
   "items": [
-    {
-      "id": "YlU4Gz8drdQ",
-      "title": "【4000人耐久歌枠】楽しく歌って新しい信徒を増やしちゃいます♡【はすてぃあ / 新人vtuber 】",
-      "publishedAt": "2026-11-04T11:00:00Z",
-      "scheduledStartTime": "2026-11-04T11:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/YlU4Gz8drdQ/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/YlU4Gz8drdQ/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=YlU4Gz8drdQ",
-      "isShort": false
-    },
     {
       "id": "z_XDln0WH5E",
       "title": "【Don&#39;t Drop The Cake】なにがあっても絶対にケーキを落とすな!!大注目のゲームをやってみるっ【 はすてぃあ / 新人Vtuber 】",
@@ -48,6 +36,19 @@
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
       "isShort": false
+    },
+    {
+      "id": "YlU4Gz8drdQ",
+      "title": "【4000人耐久歌枠】楽しく歌って新しい信徒を増やしちゃいます♡【はすてぃあ / 新人vtuber 】",
+      "publishedAt": "2026-11-04T11:09:31Z",
+      "scheduledStartTime": "2026-11-04T11:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/YlU4Gz8drdQ/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/YlU4Gz8drdQ/hqdefault.jpg",
+      "liveBroadcastContent": "live",
+      "category": "live",
+      "url": "https://www.youtube.com/watch?v=YlU4Gz8drdQ",
+      "isShort": false,
+      "actualStartTime": "2026-11-04T11:09:31Z"
     },
     {
       "id": "tvkZ45YnNZc",
