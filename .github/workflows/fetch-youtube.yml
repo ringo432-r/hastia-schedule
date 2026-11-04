@@ -145,9 +145,12 @@ jobs:
           DROP_FIELDS = {'description', 'isMembersOnly', 'actualEndTime'}
           carried, carried_ids = [], set()
           prev = []
+          prev_full_refreshed = ''
           try:
               with open('data/videos.json', encoding='utf-8') as f:
-                  prev = json.load(f).get('items', [])
+                  prev_doc = json.load(f)
+              prev = prev_doc.get('items', [])
+              prev_full_refreshed = prev_doc.get('fullRefreshedAt', '')
               for p in prev:
                   if p.get('liveBroadcastContent') in ('upcoming', 'live') and p.get('id'):
                       carried.append({k: v for k, v in p.items() if k not in DROP_FIELDS})
@@ -253,10 +256,7 @@ jobs:
 
           # ===== 過去の動画を蓄積する =====
           # アップロード一覧は最新150件しか取らないため、それより古い動画は前回のデータから引き継いで残す
-          # （API は呼ばないので使用量は増えない。前回保存した時刻・区分・ショート判定をそのまま使う）
-          # 注意：YouTube で非公開・削除にした動画も、最新150件から外れると残り続ける
-          #       （消したいときは data/videos.json から該当の項目を手で削除する）
-          kept = 0
+          kept_items = []
           for p in prev:
               pid = p.get('id')
               if not pid or pid in seen:
@@ -264,18 +264,72 @@ jobs:
               # 配信予定・ライブ中は上の「引き継ぎ」で扱う（取得できなくなったものは除外済み）
               if p.get('liveBroadcastContent') in ('upcoming', 'live'):
                   continue
-              all_items.append({k: v for k, v in p.items() if k not in DROP_FIELDS})
+              kept_items.append({k: v for k, v in p.items() if k not in DROP_FIELDS})
               seen.add(pid)
-              kept += 1
+
+          # ===== 引き継いだ動画を1日1回取り直す =====
+          # YouTube API の規約（保存したデータは30日以内に取り直すか削除する）に合わせ、
+          # 前回の取り直しから20時間以上たっていたら、引き継いだ動画をすべて videos API で取り直す
+          # （50件ごとに1ユニット。取得できなかった動画＝削除・非公開はここで外す）
+          def parse_iso(t):
+              try:
+                  return datetime.fromisoformat((t or '').replace('Z', '+00:00'))
+              except ValueError:
+                  return None
+
+          last_full = parse_iso(prev_full_refreshed)
+          need_full = last_full is None or now - last_full >= timedelta(hours=20)
+          removed = 0
+          if need_full and kept_items:
+              fresh = {}
+              for batch in batches([k['id'] for k in kept_items]):
+                  vdata = api_get('videos', part='snippet,liveStreamingDetails,contentDetails', id=','.join(batch))
+                  for v in vdata.get('items', []):
+                      fresh[v.get('id', '')] = v
+              refreshed_items = []
+              for k in kept_items:
+                  v = fresh.get(k['id'])
+                  if not v:
+                      removed += 1
+                      continue
+                  sn = v.get('snippet', {})
+                  lsd = v.get('liveStreamingDetails', {})
+                  k['title'] = sn.get('title', k.get('title', ''))
+                  k['thumbnail'], k['thumbnailHigh'] = thumbs_of(sn, k['id'])
+                  lbc = sn.get('liveBroadcastContent', 'none')
+                  k['liveBroadcastContent'] = lbc
+                  actual = lsd.get('actualStartTime', '')
+                  sched = lsd.get('scheduledStartTime', '')
+                  k['scheduledStartTime'] = sched
+                  k['actualStartTime'] = actual
+                  if lbc in ('upcoming', 'live'):
+                      k['category'] = lbc
+                  elif actual:
+                      k['category'] = 'archive'
+                  else:
+                      k['category'] = 'video'
+                  if lbc == 'upcoming' and sched:
+                      k['publishedAt'] = sched
+                  else:
+                      k['publishedAt'] = actual or sched or sn.get('publishedAt', k.get('publishedAt', ''))
+                  sec = parse_duration_seconds(v.get('contentDetails', {}).get('duration', ''))
+                  k['isShort'] = '/shorts/' in k.get('url', '') or 0 < sec <= 60
+                  refreshed_items.append(k)
+              kept_items = refreshed_items
+          all_items += kept_items
+          kept = len(kept_items)
+          full_refreshed_at = now.isoformat() if need_full else prev_full_refreshed
 
           result = {
               'updatedAt': datetime.now(timezone.utc).isoformat(),
+              # 引き継いだ過去の動画を最後に取り直した日時（1日1回）
+              'fullRefreshedAt': full_refreshed_at,
               'items': all_items,
           }
           with open('data/videos.json', 'w', encoding='utf-8') as f:
               json.dump(result, f, ensure_ascii=False, indent=2)
 
-          print(f"Total: {len(all_items)} videos saved (upcoming={len(upcoming)}, uploads={len(uploads)}, carried={len(carried)}, kept={kept}).")
+          print(f"Total: {len(all_items)} videos saved (upcoming={len(upcoming)}, uploads={len(uploads)}, carried={len(carried)}, kept={kept}, full_refresh={need_full}, removed={removed}).")
           EOF
 
       - name: Commit and push if changed
