@@ -656,8 +656,9 @@ function renderCalendar() {
 
 // ===== 検索タブ（動画一覧。関数名・id は旧名 archive のまま）=====
 function renderArchive() {
+  // 配信予定・配信中・アーカイブ・動画をすべて新しい順に並べる（配信中は「配信中」バッジ付き）
   const archiveItems = allItems
-    .filter(item => item.liveBroadcastContent !== 'live')
+    .slice()
     .sort((a, b) => byItemDate(b, a));
 
   // カテゴリ集計（CATEGORIES順を維持）
@@ -713,13 +714,16 @@ function renderArchive() {
       const thumb = item.thumbnailHigh || item.thumbnail || '';
       const date  = formatJST(getDisplayTime(item));
       const linkLabel = item._members && item.url === MEMBERS_FALLBACK_URL ? 'メンバーシップを見る'
+        : item.liveBroadcastContent === 'live' ? '配信を見る'
         : item.liveBroadcastContent === 'upcoming' ? '配信予定を見る' : 'アーカイブを見る';
+      const liveBadge = item.liveBroadcastContent === 'live' ? '<span class="live-badge">配信中</span>' : '';
       html += `
         <div class="archive-item">
           ${thumb ? `<img class="archive-item-thumb" src="${escapeHtml(thumb)}" alt="" loading="lazy">` : ''}
           <div class="archive-item-info">
             <div class="archive-item-date">
               ${date}
+              ${liveBadge}
               <span class="cat-badge cat-${item._cat}">${escapeHtml(getCatLabel(item._cat))}</span>
               ${membersBadge(item)}
             </div>

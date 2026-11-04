@@ -1486,3 +1486,19 @@ body {
 .filter-btn-members:hover { background: rgba(27,127,74,0.12); border-color: #1b7f4a; }
 .filter-btn-members.active,
 [data-theme="dark"] .filter-btn-members.active { background: #1b7f4a; border-color: #1b7f4a; color: #fff; }
+
+/* 検索タブ：配信中バッジ */
+.live-badge {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 5px;
+  border-radius: 3px;
+  background: #e02424;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.5;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+[data-theme="dark"] .live-badge { background: #b81f1f; }
