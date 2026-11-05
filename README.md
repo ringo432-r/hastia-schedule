@@ -14,7 +14,7 @@ VTuber [はすてぃあ](https://www.youtube.com/@god_hastia) 様の配信予定
 
 GitHub Actions（`fetch-youtube.yml`）が30分ごとに YouTube Data API v3 からデータを取得し、`data/videos.json` を更新します。アップロード一覧は最新150件を取得し、それより古い動画は前回のデータから引き継いで蓄積します。YouTube API の規約（保存したデータは30日以内に取り直すか削除する）に合わせ、引き継いだ動画は1日1回まとめて取り直し、削除・非公開になった動画はその時に外します。データが変わったときは `deploy.yml` を呼び出して GitHub Pages を更新します。フロントエンドはこのJSONを読み込んで表示します。
 
-GitHub Pages に公開するのは、サイトに必要なファイル（`index.html` `app.js` `style.css` `data/` `img/`）だけです。
+GitHub Pages に公開するのは、サイトに必要なファイル（`index.html` `app.js` `style.css` `sitemap.xml` `robots.txt` `data/` `img/`）だけです。
 
 ### メンバーシップ限定配信の追加（手動）
 
