@@ -1,32 +1,7 @@
 {
-  "updatedAt": "2026-11-05T14:07:16.286607+00:00",
+  "updatedAt": "2026-11-05T14:37:15.038493+00:00",
   "fullRefreshedAt": "2026-11-05T11:07:13.729305+00:00",
   "items": [
-    {
-      "id": "iuErM1SpOfA",
-      "title": "【Don&#39;t Drop The Cake】なにがあっても絶対にケーキを落とすな!!大注目のゲームをやってみるっ【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-05T14:05:00Z",
-      "scheduledStartTime": "2026-11-05T14:05:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/iuErM1SpOfA/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/iuErM1SpOfA/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=iuErM1SpOfA",
-      "isShort": false
-    },
-    {
-      "id": "z_XDln0WH5E",
-      "title": "【Don&#39;t Drop The Cake】なにがあっても絶対にケーキを落とすな!!大注目のゲームをやってみるっ【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-05T14:02:02Z",
-      "scheduledStartTime": "2026-11-05T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/z_XDln0WH5E/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/z_XDln0WH5E/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=z_XDln0WH5E",
-      "actualStartTime": "2026-11-05T14:02:02Z",
-      "isShort": false
-    },
     {
       "id": "VGLduUhCegM",
       "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編　後編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
@@ -50,6 +25,19 @@
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
       "isShort": false
+    },
+    {
+      "id": "iuErM1SpOfA",
+      "title": "【Don&#39;t Drop The Cake】なにがあっても絶対にケーキを落とすな!!大注目のゲームをやってみるっ【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-05T14:08:09Z",
+      "scheduledStartTime": "2026-11-05T14:05:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/iuErM1SpOfA/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/iuErM1SpOfA/hqdefault.jpg",
+      "liveBroadcastContent": "live",
+      "category": "live",
+      "url": "https://www.youtube.com/watch?v=iuErM1SpOfA",
+      "isShort": false,
+      "actualStartTime": "2026-11-05T14:08:09Z"
     },
     {
       "id": "YlU4Gz8drdQ",
@@ -908,6 +896,19 @@
       "url": "https://www.youtube.com/watch?v=jajJm7WrG3w",
       "actualStartTime": "",
       "isShort": true
+    },
+    {
+      "id": "z_XDln0WH5E",
+      "title": "【Don&#39;t Drop The Cake】なにがあっても絶対にケーキを落とすな!!大注目のゲームをやってみるっ【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-05T14:02:02Z",
+      "scheduledStartTime": "2026-11-05T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/z_XDln0WH5E/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/z_XDln0WH5E/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=z_XDln0WH5E",
+      "actualStartTime": "2026-11-05T14:02:02Z",
+      "isShort": false
     }
   ]
 }
