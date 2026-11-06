@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T14:07:15.397204+00:00",
+  "updatedAt": "2026-11-06T14:37:14.444729+00:00",
   "fullRefreshedAt": "2026-11-06T07:07:17.334237+00:00",
   "items": [
     {
@@ -9,8 +9,8 @@
       "scheduledStartTime": "2026-11-06T14:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/VGLduUhCegM/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/VGLduUhCegM/hqdefault.jpg",
-      "liveBroadcastContent": "live",
-      "category": "live",
+      "liveBroadcastContent": "none",
+      "category": "archive",
       "url": "https://www.youtube.com/watch?v=VGLduUhCegM",
       "actualStartTime": "2026-11-06T14:04:25Z",
       "isShort": false
@@ -25,6 +25,19 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
+      "id": "N12fXDpe1sk",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編　後編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-06T14:09:38Z",
+      "scheduledStartTime": "2026-11-06T14:10:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/N12fXDpe1sk/mqdefault.jpg?v=6aeddf74",
+      "thumbnailHigh": "https://i.ytimg.com/vi/N12fXDpe1sk/hqdefault.jpg?v=6aeddf74",
+      "liveBroadcastContent": "live",
+      "category": "live",
+      "url": "https://www.youtube.com/watch?v=N12fXDpe1sk",
+      "actualStartTime": "2026-11-06T14:09:38Z",
       "isShort": false
     },
     {
