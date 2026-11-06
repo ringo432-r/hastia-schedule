@@ -1,19 +1,7 @@
 {
-  "updatedAt": "2026-11-06T22:37:13.622992+00:00",
+  "updatedAt": "2026-11-06T23:07:14.271940+00:00",
   "fullRefreshedAt": "2026-11-06T07:07:17.334237+00:00",
   "items": [
-    {
-      "id": "u23sPngSFmw",
-      "title": "Weekly Schedule",
-      "publishedAt": "2027-06-16T17:50:00Z",
-      "scheduledStartTime": "2027-06-16T17:50:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/u23sPngSFmw/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/u23sPngSFmw/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
-      "isShort": false
-    },
     {
       "id": "-aFRE8q2k_I",
       "title": "【ASMR/黒3dio】とってもここちいいオイルマッサージで身も心もリラックスさせちゃいます【はすてぃあ】",
@@ -24,6 +12,18 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=-aFRE8q2k_I",
+      "isShort": false
+    },
+    {
+      "id": "u23sPngSFmw",
+      "title": "Weekly Schedule",
+      "publishedAt": "2027-06-16T17:50:00Z",
+      "scheduledStartTime": "2027-06-16T17:50:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/u23sPngSFmw/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/u23sPngSFmw/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
       "isShort": false
     },
     {
