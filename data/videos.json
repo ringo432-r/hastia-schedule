@@ -1,18 +1,17 @@
 {
-  "updatedAt": "2026-11-06T14:37:14.444729+00:00",
+  "updatedAt": "2026-11-06T15:07:14.811792+00:00",
   "fullRefreshedAt": "2026-11-06T07:07:17.334237+00:00",
   "items": [
     {
-      "id": "VGLduUhCegM",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編　後編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-06T14:04:25Z",
-      "scheduledStartTime": "2026-11-06T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/VGLduUhCegM/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/VGLduUhCegM/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=VGLduUhCegM",
-      "actualStartTime": "2026-11-06T14:04:25Z",
+      "id": "-aFRE8q2k_I",
+      "title": "【ASMR/黒3dio】とってもここちいいオイルマッサージで身も心もリラックスさせちゃいます【はすてぃあ】",
+      "publishedAt": "2026-11-07T14:00:00Z",
+      "scheduledStartTime": "2026-11-07T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/-aFRE8q2k_I/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/-aFRE8q2k_I/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=-aFRE8q2k_I",
       "isShort": false
     },
     {
@@ -25,19 +24,6 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
-      "isShort": false
-    },
-    {
-      "id": "N12fXDpe1sk",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編　後編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-06T14:09:38Z",
-      "scheduledStartTime": "2026-11-06T14:10:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/N12fXDpe1sk/mqdefault.jpg?v=6aeddf74",
-      "thumbnailHigh": "https://i.ytimg.com/vi/N12fXDpe1sk/hqdefault.jpg?v=6aeddf74",
-      "liveBroadcastContent": "live",
-      "category": "live",
-      "url": "https://www.youtube.com/watch?v=N12fXDpe1sk",
-      "actualStartTime": "2026-11-06T14:09:38Z",
       "isShort": false
     },
     {
@@ -910,6 +896,19 @@
       "url": "https://www.youtube.com/watch?v=jajJm7WrG3w",
       "actualStartTime": "",
       "isShort": true
+    },
+    {
+      "id": "VGLduUhCegM",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編　後編 ※ネタバレ注意 ＃４【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-06T14:04:25Z",
+      "scheduledStartTime": "2026-11-06T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/VGLduUhCegM/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/VGLduUhCegM/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=VGLduUhCegM",
+      "actualStartTime": "2026-11-06T14:04:25Z",
+      "isShort": false
     }
   ]
 }
