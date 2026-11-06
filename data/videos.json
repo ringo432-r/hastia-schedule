@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-06T06:59:53.625783+00:00",
-  "fullRefreshedAt": "2026-11-05T11:07:13.729305+00:00",
+  "updatedAt": "2026-11-06T07:07:17.698008+00:00",
+  "fullRefreshedAt": "2026-11-06T07:07:17.334237+00:00",
   "items": [
     {
       "id": "VGLduUhCegM",
@@ -896,19 +896,6 @@
       "url": "https://www.youtube.com/watch?v=jajJm7WrG3w",
       "actualStartTime": "",
       "isShort": true
-    },
-    {
-      "id": "z_XDln0WH5E",
-      "title": "【Don&#39;t Drop The Cake】なにがあっても絶対にケーキを落とすな!!大注目のゲームをやってみるっ【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-05T14:02:02Z",
-      "scheduledStartTime": "2026-11-05T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/z_XDln0WH5E/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/z_XDln0WH5E/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=z_XDln0WH5E",
-      "actualStartTime": "2026-11-05T14:02:02Z",
-      "isShort": false
     }
   ]
 }
