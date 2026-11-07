@@ -1128,19 +1128,11 @@ function renderSubscribers(box, items, hidden) {
     `<circle class="subs-dot" cx="${x(i.date).toFixed(1)}" cy="${y(i.subscribers).toFixed(1)}" r="4"><title>${md(i.date)}：${num(i.subscribers)}人</title></circle>`
   ).join('');
 
-  const rows = items.slice().reverse().map(i =>
-    `<tr><td>${escapeHtml(md(i.date))}</td><td>${escapeHtml(num(i.subscribers))}人</td></tr>`
-  ).join('');
-
   box.innerHTML = `
-    <div class="subs-latest">最新：<strong>${escapeHtml(num(last.subscribers))}人</strong>（${escapeHtml(md(last.date))} 朝6時ごろの記録）</div>
+    <div class="subs-latest">最終更新：${escapeHtml(md(last.date))}　<strong>${escapeHtml(num(last.subscribers))}人</strong></div>
     <svg class="subs-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="チャンネル登録者数の推移。${escapeHtml(md(items[0].date))}から${escapeHtml(md(last.date))}までの${items.length}日分。最新は${escapeHtml(num(last.subscribers))}人。">
       ${grid}${line}${dots}${xLabels}
-    </svg>
-    <details class="subs-details">
-      <summary>数値の一覧を見る</summary>
-      <table class="profile-table subs-table"><thead><tr><th scope="col">日付</th><th scope="col">登録者数</th></tr></thead><tbody>${rows}</tbody></table>
-    </details>`;
+    </svg>`;
 }
 
 // ===== 初期化 =====
