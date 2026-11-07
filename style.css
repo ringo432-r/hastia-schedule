@@ -1512,3 +1512,4 @@ body {
 .subs-axis { fill: var(--color-text-sub); font-size: 12px; }
 .subs-line { fill: none; stroke: var(--color-accent); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
 .subs-dot { fill: var(--color-accent); stroke: var(--color-panel); stroke-width: 1.5; }
+.subs-note { margin-top: 6px; font-size: 0.85em; color: var(--color-text-sub); }
