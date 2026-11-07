@@ -1129,7 +1129,7 @@ function renderSubscribers(box, items, hidden) {
   ).join('');
 
   box.innerHTML = `
-    <div class="subs-latest">最終更新：${escapeHtml(md(last.date))}　<strong>${escapeHtml(num(last.subscribers))}人</strong></div>
+    <div class="subs-latest">最終更新：${escapeHtml(last.date.replace(/-/g, '/'))}　<strong>${escapeHtml(num(last.subscribers))}人</strong></div>
     <svg class="subs-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="チャンネル登録者数の推移。${escapeHtml(md(items[0].date))}から${escapeHtml(md(last.date))}までの${items.length}日分。最新は${escapeHtml(num(last.subscribers))}人。">
       ${grid}${line}${dots}${xLabels}
     </svg>`;
