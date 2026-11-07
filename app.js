@@ -7,6 +7,9 @@ const DATA_URL = './data/videos.json';
 const MEMBERS_URL = './data/members.json';
 // メン限の予定に URL が書かれていないときのリンク先
 const MEMBERS_FALLBACK_URL = 'https://www.youtube.com/@god_hastia/membership';
+// チャンネル登録者数（毎朝6時ごろに記録。YouTube API の規約で28日を過ぎた数値は保存・表示しない）
+const SUBS_URL = './data/subscribers.json';
+const SUBS_RETENTION_MS = 28 * 24 * 60 * 60 * 1000;
 
 // ===== カテゴリ定義 =====
 // 優先順位：上から順に判定し、最初にマッチしたカテゴリを使用
@@ -1059,6 +1062,87 @@ function updateStickyHeads() {
   STICKY_HEADS.forEach(updateStickyHead);
 }
 
+// ===== チャンネル登録者数のグラフ =====
+// 記録された数値をそのまま折れ線で結ぶだけ（増減の計算や予想はしない）
+async function loadSubscribers() {
+  const box = document.getElementById('subs-chart');
+  if (!box) return;
+  try {
+    const res = await fetch(`${SUBS_URL}?t=${Date.now()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const now = Date.now();
+    // 取得から28日を過ぎた数値は、データに残っていても表示しない
+    const items = (Array.isArray(data.items) ? data.items : [])
+      .filter(i => i && /^\d{4}-\d{2}-\d{2}$/.test(i.date) && Number.isFinite(i.subscribers))
+      .filter(i => {
+        const t = Date.parse(i.fetchedAt);
+        return Number.isFinite(t) && now - t < SUBS_RETENTION_MS;
+      })
+      .sort((a, b) => a.date.localeCompare(b.date));
+    renderSubscribers(box, items, data.hidden === true);
+  } catch (e) {
+    console.warn('登録者数データを読み込めませんでした:', e);
+    box.textContent = '登録者数のデータはまだありません。';
+  }
+}
+
+function renderSubscribers(box, items, hidden) {
+  if (hidden) {
+    box.textContent = 'チャンネルの登録者数は非公開に設定されているため、表示できません。';
+    return;
+  }
+  if (items.length === 0) {
+    box.textContent = 'まだ記録がありません。毎朝6時ごろに記録します。';
+    return;
+  }
+  const md = (date) => `${Number(date.slice(5, 7))}/${Number(date.slice(8, 10))}`;
+  const num = (n) => n.toLocaleString('ja-JP');
+  const last = items[items.length - 1];
+
+  // 描画サイズ（viewBox。画面幅に合わせて拡縮する）
+  const W = 640, H = 260, L = 64, R = 20, T = 20, B = 40;
+  const toTime = (date) => Date.parse(`${date}T00:00:00Z`);
+  const t0 = toTime(items[0].date);
+  const t1 = toTime(last.date);
+  const vals = items.map(i => i.subscribers);
+  let vMin = Math.min(...vals), vMax = Math.max(...vals);
+  if (vMin === vMax) { vMin -= 1; vMax += 1; }
+  const pad = (vMax - vMin) * 0.1;
+  const yMin = Math.max(0, Math.floor(vMin - pad));
+  const yMax = Math.ceil(vMax + pad);
+  const x = (date) => (t1 === t0 ? (L + (W - R)) / 2 : L + (toTime(date) - t0) / (t1 - t0) * (W - L - R));
+  const y = (v) => T + (1 - (v - yMin) / (yMax - yMin)) * (H - T - B);
+
+  const ticks = [yMin, Math.round((yMin + yMax) / 2), yMax];
+  const grid = ticks.map(v =>
+    `<line class="subs-grid" x1="${L}" y1="${y(v).toFixed(1)}" x2="${W - R}" y2="${y(v).toFixed(1)}"/>` +
+    `<text class="subs-axis" x="${L - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${num(v)}</text>`
+  ).join('');
+  const xLabels = (items.length === 1 ? [items[0]] : [items[0], last]).map((i, idx, arr) =>
+    `<text class="subs-axis" x="${x(i.date).toFixed(1)}" y="${H - 14}" text-anchor="${arr.length === 1 ? 'middle' : idx === 0 ? 'start' : 'end'}">${md(i.date)}</text>`
+  ).join('');
+  const points = items.map(i => `${x(i.date).toFixed(1)},${y(i.subscribers).toFixed(1)}`).join(' ');
+  const line = items.length > 1 ? `<polyline class="subs-line" points="${points}"/>` : '';
+  const dots = items.map(i =>
+    `<circle class="subs-dot" cx="${x(i.date).toFixed(1)}" cy="${y(i.subscribers).toFixed(1)}" r="4"><title>${md(i.date)}：${num(i.subscribers)}人</title></circle>`
+  ).join('');
+
+  const rows = items.slice().reverse().map(i =>
+    `<tr><td>${escapeHtml(md(i.date))}</td><td>${escapeHtml(num(i.subscribers))}人</td></tr>`
+  ).join('');
+
+  box.innerHTML = `
+    <div class="subs-latest">最新：<strong>${escapeHtml(num(last.subscribers))}人</strong>（${escapeHtml(md(last.date))} 朝6時ごろの記録）</div>
+    <svg class="subs-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="チャンネル登録者数の推移。${escapeHtml(md(items[0].date))}から${escapeHtml(md(last.date))}までの${items.length}日分。最新は${escapeHtml(num(last.subscribers))}人。">
+      ${grid}${line}${dots}${xLabels}
+    </svg>
+    <details class="subs-details">
+      <summary>数値の一覧を見る</summary>
+      <table class="profile-table subs-table"><thead><tr><th scope="col">日付</th><th scope="col">登録者数</th></tr></thead><tbody>${rows}</tbody></table>
+    </details>`;
+}
+
 // ===== 初期化 =====
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
@@ -1068,4 +1152,5 @@ document.addEventListener('DOMContentLoaded', () => {
   renderXPost();
   initStickyHeights();
   loadData();
+  loadSubscribers();
 });

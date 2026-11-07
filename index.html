@@ -26,7 +26,7 @@
   <meta name="twitter:description" content="VTuber はすてぃあ様の配信予定をまとめ、過去の動画も検索できる非公式スケジュールサイト" />
   <meta name="twitter:image" content="https://hastia-schedule.com/img/hastia.png" />
   <meta name="twitter:image:alt" content="はすてぃあ様のイラスト" />
-  <link rel="stylesheet" href="style.css?v=44" />
+  <link rel="stylesheet" href="style.css?v=45" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -276,6 +276,11 @@
                 </div>
               </a>
 
+              <h2 class="profile-h2">チャンネル登録者数の推移</h2>
+              <p>毎朝6時ごろに記録した、YouTube チャンネルの登録者数（直近28日分）。</p>
+              <div id="subs-chart" class="subs-chart" aria-live="polite">読み込み中...</div>
+              <p class="subs-note">※ 数値は YouTube Data API から取得したものです（YouTube が公開している概数で、細かい桁は丸められます）。YouTube API の規約により、取得から28日を過ぎた数値は削除します。</p>
+
             </div><!-- /profile-article -->
 
             <p class="profile-unofficial-note">このサイトは信徒による非公式のファンサイトです。情報は初配信動画等をもとに作成しています。</p>
@@ -326,6 +331,6 @@
 
   </div><!-- /layout -->
 
-  <script src="app.js?v=31"></script>
+  <script src="app.js?v=32"></script>
 </body>
 </html>
