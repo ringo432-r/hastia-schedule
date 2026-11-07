@@ -1,0 +1,148 @@
+name: Fetch Subscriber Count
+
+on:
+  # 通常の更新は外部サービス（cron-job.org）が毎日日本時間6:00に workflow_dispatch で起動する
+  # GitHub の schedule は遅延・スキップがあるため、外部サービスが止まったときの予備（日本時間6:35＝UTC 21:35）
+  # 1日1件だけ記録する（同じ日付がすでにあれば追加しない）。API の消費は channels.list の1ユニット
+  schedule:
+    - cron: '35 21 * * *'
+  workflow_dispatch: # 外部サービス・手動からの起動
+
+concurrency:
+  group: fetch-subscribers
+  cancel-in-progress: false
+
+permissions:
+  contents: write  # 専用ブランチ data-subscribers の更新
+  actions: write   # 更新後に Deploy を呼び出す
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      # 前回のデータを専用ブランチから読む（まだブランチがなければ空から始める）
+      - name: Load previous data
+        run: |
+          set -euo pipefail
+          if git fetch --depth=1 origin data-subscribers; then
+            git show FETCH_HEAD:subscribers.json > "$RUNNER_TEMP/prev.json"
+          else
+            echo '{}' > "$RUNNER_TEMP/prev.json"
+          fi
+
+      - name: Fetch subscriber count
+        id: fetch
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          PREV_PATH: ${{ runner.temp }}/prev.json
+          OUT_PATH: ${{ runner.temp }}/subscribers.json
+        run: |
+          python3 - << 'EOF'
+          import json
+          import os
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+          from datetime import datetime, timedelta, timezone
+
+          # YouTube API の規約（API キーで取得した統計は30日を超えて保存しない）に合わせ、
+          # 取得から28日以上たった数値は削除する
+          RETENTION = timedelta(days=28)
+
+          now = datetime.now(timezone.utc)
+          today_jst = (now + timedelta(hours=9)).strftime('%Y-%m-%d')
+
+          def parse_iso(t):
+              try:
+                  return datetime.fromisoformat((t or '').replace('Z', '+00:00'))
+              except ValueError:
+                  return None
+
+          # 前回のデータ（壊れていたら空から始める）
+          try:
+              with open(os.environ['PREV_PATH'], encoding='utf-8') as f:
+                  prev = json.load(f)
+          except (OSError, ValueError):
+              prev = {}
+          items = []
+          for it in prev.get('items', []) if isinstance(prev, dict) else []:
+              if not isinstance(it, dict):
+                  continue
+              t = parse_iso(it.get('fetchedAt'))
+              if t is None or not isinstance(it.get('subscribers'), int) or not it.get('date'):
+                  continue
+              if now - t < RETENTION:
+                  items.append({'date': it['date'], 'fetchedAt': it['fetchedAt'], 'subscribers': it['subscribers']})
+          dropped = len(prev.get('items', [])) - len(items) if isinstance(prev, dict) else 0
+
+          hidden = bool(prev.get('hidden')) if isinstance(prev, dict) else False
+          failed = False
+
+          # 今日の分を取得（channels.list, 1ユニット）。URL には API キーが含まれるため表示しない
+          params = {'part': 'statistics', 'forHandle': 'god_hastia', 'key': os.environ['YOUTUBE_API_KEY']}
+          url = 'https://www.googleapis.com/youtube/v3/channels?' + urllib.parse.urlencode(params)
+          try:
+              with urllib.request.urlopen(url, timeout=30) as res:
+                  data = json.loads(res.read().decode('utf-8'))
+              if 'error' in data:
+                  raise RuntimeError(data['error'].get('message', ''))
+              stats = (data.get('items') or [{}])[0].get('statistics')
+              if stats is None:
+                  raise RuntimeError('channel statistics not found')
+              hidden = bool(stats.get('hiddenSubscriberCount'))
+              if not hidden:
+                  count = int(stats['subscriberCount'])
+                  if not any(i['date'] == today_jst for i in items):
+                      items.append({'date': today_jst, 'fetchedAt': now.isoformat(timespec='seconds'), 'subscribers': count})
+          except urllib.error.HTTPError as e:
+              print(f"::warning::YouTube API error: HTTP {e.code}")
+              failed = True
+          except Exception as e:
+              print(f"::warning::subscriber fetch failed: {type(e).__name__}")
+              failed = True
+
+          items.sort(key=lambda i: i['date'])
+          doc = {'hidden': hidden, 'items': items}
+          with open(os.environ['OUT_PATH'], 'w', encoding='utf-8') as f:
+              json.dump(doc, f, ensure_ascii=False, indent=2)
+              f.write('\n')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f"failed={'true' if failed else 'false'}\n")
+          print(f"Saved: {len(items)} points, dropped={dropped}, hidden={hidden}, failed={failed}")
+          EOF
+
+      # 履歴を残さないため、専用ブランチを「1コミットだけ」の状態で置き直す（main には触れない）
+      - name: Publish to data-subscribers branch
+        id: publish
+        run: |
+          set -euo pipefail
+          if git fetch --depth=1 origin data-subscribers && \
+             git show FETCH_HEAD:subscribers.json | cmp -s - "$RUNNER_TEMP/subscribers.json"; then
+            echo "No changes."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git switch --orphan data-subscribers-tmp
+          cp "$RUNNER_TEMP/subscribers.json" subscribers.json
+          git add subscribers.json
+          git commit -m "chore: update subscriber data"
+          git push --force origin HEAD:refs/heads/data-subscribers
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger deploy
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main
+
+      # 取得に失敗したときは、古い数値の削除だけ済ませたうえで、実行を失敗として知らせる
+      - name: Report failure
+        if: steps.fetch.outputs.failed == 'true'
+        run: |
+          echo "Subscriber count fetch failed." >&2
+          exit 1
