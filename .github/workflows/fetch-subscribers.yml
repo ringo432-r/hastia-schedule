@@ -1,11 +1,8 @@
 name: Fetch Subscriber Count
 
 on:
-  # 通常の更新は外部サービス（cron-job.org）が毎日日本時間6:00に workflow_dispatch で起動する
-  # GitHub の schedule は遅延・スキップがあるため、外部サービスが止まったときの予備（日本時間6:35＝UTC 21:35）
+  # 起動は外部サービス（cron-job.org）が毎日日本時間6:00に workflow_dispatch で行う（GitHub の schedule は使わない）
   # 1日1件だけ記録する（同じ日付がすでにあれば追加しない）。API の消費は channels.list の1ユニット
-  schedule:
-    - cron: '35 21 * * *'
   workflow_dispatch: # 外部サービス・手動からの起動
 
 concurrency:
