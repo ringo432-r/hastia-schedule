@@ -1143,7 +1143,11 @@ function renderPlaylistsView() {
   }
   // 各再生リストに区分をつける（中の動画でいちばん多い区分）
   const byId = new Map(allItems.map(i => [i.id, i]));
-  const withCat = allPlaylists.map(p => ({ ...p, _cat: playlistCategory(p, byId) }));
+  const withCat = allPlaylists.map(p => ({
+    ...p,
+    _cat: playlistCategory(p, byId),
+    _members: PLAYLIST_MEMBERS_TITLES.includes(String(p.title || '').trim()),
+  }));
   renderPlaylistFilter(withCat);
   const filtered = playlistFilter === 'all' ? withCat : withCat.filter(p => p._cat === playlistFilter);
   const n = renderPlaylists(box, filtered, playlistSearch);
@@ -1155,6 +1159,9 @@ const PLAYLIST_FIXED_CATEGORY = {
   '記念配信': 'memorial',
   '雑談配信': 'chat', // 区分名は「雑談・その他」
 };
+
+// 題名がこれに一致する再生リストには、緑の「メン限」バッジを付ける
+const PLAYLIST_MEMBERS_TITLES = ['メン限'];
 
 // 再生リストの区分：中の動画の区分を数えて、いちばん多いもの。
 // 動画データ（videos.json / members.json）にある動画はその区分を、ないものはタイトルから判定する。
@@ -1239,6 +1246,7 @@ function renderPlaylists(box, lists, query = '') {
           ${thumb ? `<img class="archive-item-thumb" src="${escapeHtml(thumb)}" alt="" loading="lazy">` : ''}
           <span class="playlist-title">${escapeHtml(title)}</span>
           ${p._cat ? `<span class="cat-badge cat-${p._cat}">${escapeHtml(getCatLabel(p._cat))}</span>` : ''}
+          ${membersBadge(p)}
         </summary>
         <div class="playlist-body">
           <a class="archive-link playlist-open" href="${escapeHtml(listUrl)}" target="_blank" rel="noopener">YouTube で再生リストを再生<span class="visually-hidden">：${escapeHtml(title)}</span></a>
