@@ -1163,20 +1163,16 @@ function renderSubscribers(box, items, hidden) {
   const t0 = toTime(items[0].date);
   const t1 = toTime(last.date);
   const vals = items.map(i => i.subscribers);
-  // 縦軸の上端・下端は 1,000 単位に切り上げ・切り下げる（例：4,560人 → 4,000〜5,000）
-  const STEP = 1000;
-  const yMin = Math.floor(Math.min(...vals) / STEP) * STEP;
-  let yMax = Math.ceil(Math.max(...vals) / STEP) * STEP;
-  if (yMax === yMin) yMax = yMin + STEP; // ちょうど 1,000 の倍数のときも幅を持たせる
+  // 縦軸の下端はデータの最小値に少し余白を足した値、上端は最大値を 1,000 単位に切り上げた値（例：4,560人 → 上端 5,000）
+  let vMin = Math.min(...vals);
+  const vMax = Math.max(...vals);
+  if (vMin === vMax) vMin -= 1;
+  const yMin = Math.max(0, Math.floor(vMin - (vMax - vMin) * 0.1));
+  const yMax = Math.ceil(vMax / 1000) * 1000;
   const x = (date) => (t1 === t0 ? (L + (W - R)) / 2 : L + (toTime(date) - t0) / (t1 - t0) * (W - L - R));
   const y = (v) => T + (1 - (v - yMin) / (yMax - yMin)) * (H - T - B);
 
-  // 目盛りも 1,000 の倍数（区間が多いときは間引く）
-  const spans = (yMax - yMin) / STEP;
-  const tickStep = spans <= 5 ? STEP : Math.ceil(spans / 4) * STEP;
-  const ticks = [];
-  for (let v = yMin; v < yMax; v += tickStep) ticks.push(v);
-  ticks.push(yMax);
+  const ticks = [yMin, Math.round((yMin + yMax) / 2), yMax];
   const grid = ticks.map(v =>
     `<line class="subs-grid" x1="${L}" y1="${y(v).toFixed(1)}" x2="${W - R}" y2="${y(v).toFixed(1)}"/>` +
     `<text class="subs-axis" x="${L - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${num(v)}</text>`
