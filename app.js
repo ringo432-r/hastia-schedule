@@ -1163,12 +1163,11 @@ function renderSubscribers(box, items, hidden) {
   const t0 = toTime(items[0].date);
   const t1 = toTime(last.date);
   const vals = items.map(i => i.subscribers);
-  // 縦軸の下端はデータの最小値に少し余白を足した値、上端は最大値を 1,000 単位に切り上げた値（例：4,560人 → 上端 5,000）
-  let vMin = Math.min(...vals);
-  const vMax = Math.max(...vals);
-  if (vMin === vMax) vMin -= 1;
-  const yMin = Math.max(0, Math.floor(vMin - (vMax - vMin) * 0.1));
-  const yMax = Math.ceil(vMax / 1000) * 1000;
+  // 縦軸の下端は最小値を 100 単位に切り下げ、上端は最大値を 100 単位に切り上げた値（例：4,560人 → 4,500〜4,600）
+  const STEP = 100;
+  const yMin = Math.floor(Math.min(...vals) / STEP) * STEP;
+  let yMax = Math.ceil(Math.max(...vals) / STEP) * STEP;
+  if (yMax === yMin) yMax = yMin + STEP; // ちょうど 100 の倍数のときも幅を持たせる
   const x = (date) => (t1 === t0 ? (L + (W - R)) / 2 : L + (toTime(date) - t0) / (t1 - t0) * (W - L - R));
   const y = (v) => T + (1 - (v - yMin) / (yMax - yMin)) * (H - T - B);
 
