@@ -1150,10 +1150,18 @@ function renderPlaylistsView() {
   if (inMode && countEl) countEl.textContent = `${n}件`;
 }
 
+// 再生リストの題名 → 区分のキー（CATEGORIES の key）。ここに書いたものは、自動判定より優先する
+const PLAYLIST_FIXED_CATEGORY = {
+  '記念配信': 'memorial',
+};
+
 // 再生リストの区分：中の動画の区分を数えて、いちばん多いもの。
 // 動画データ（videos.json / members.json）にある動画はその区分を、ないものはタイトルから判定する。
 // 同数のときは、CATEGORIES で上にある区分を選ぶ
 function playlistCategory(p, byId) {
+  // 題名で区分を固定している再生リストは、中の動画に関係なくその区分にする
+  const fixed = PLAYLIST_FIXED_CATEGORY[String(p.title || '').trim()];
+  if (fixed) return fixed;
   const counts = {};
   (p.videos || []).forEach(v => {
     if (!v || !v.id) return;
