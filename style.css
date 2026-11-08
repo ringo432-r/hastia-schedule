@@ -1533,3 +1533,4 @@ body {
 .playlist-title { flex: 1; min-width: 0; font-size: 0.9rem; font-weight: 600; color: var(--color-text); overflow-wrap: anywhere; }
 .playlist-body { border-top: 1px solid var(--color-border); background: var(--color-bg); }
 .playlist-open { display: inline-block; margin: 8px 14px; text-decoration: none; }
+.playlist-summary .cat-badge { flex-shrink: 0; }

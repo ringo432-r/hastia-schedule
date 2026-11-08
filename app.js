@@ -206,6 +206,7 @@ let archiveFilter    = 'all';
 let archiveSearch    = '';
 let archiveMode      = 'video';  // 検索タブの表示：'video'（動画）/ 'playlist'（再生リスト）。毎回「動画」から始める
 let playlistSearch   = '';
+let playlistFilter   = 'all';    // 再生リスト表示の区分（'all' または区分のキー）
 let allPlaylists     = null;     // null = まだ読み込めていない
 let playlistLoadFailed = false;
 
@@ -374,6 +375,8 @@ async function loadData() {
     renderTimetable();
     renderCalendar();
     renderArchive();
+    // 再生リストの区分は動画データをもとにつけるので、動画の読み込み後にも描き直す
+    renderPlaylistsView();
 
   } catch (err) {
     console.error('データ読み込みエラー:', err);
@@ -989,6 +992,13 @@ function initEvents() {
     renderArchive();
   });
 
+  document.getElementById('playlist-filter').addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    playlistFilter = btn.dataset.cat;
+    renderPlaylistsView();
+  });
+
   document.getElementById('archive-search').addEventListener('input', e => {
     // 動画と再生リストで、検索の文字は別々に覚えておく
     if (archiveMode === 'playlist') {
@@ -1016,6 +1026,7 @@ function setArchiveMode(mode) {
     b.setAttribute('aria-pressed', String(on));
   });
   document.getElementById('archive-filter').hidden = isPl;
+  document.getElementById('playlist-filter').hidden = !isPl;
   document.getElementById('archive-list').hidden = isPl;
   document.getElementById('playlist-list').hidden = !isPl;
   const input = document.getElementById('archive-search');
@@ -1130,8 +1141,47 @@ function renderPlaylistsView() {
     if (inMode && countEl) countEl.textContent = '';
     return;
   }
-  const n = renderPlaylists(box, allPlaylists, playlistSearch);
+  // 各再生リストに区分をつける（中の動画でいちばん多い区分）
+  const byId = new Map(allItems.map(i => [i.id, i]));
+  const withCat = allPlaylists.map(p => ({ ...p, _cat: playlistCategory(p, byId) }));
+  renderPlaylistFilter(withCat);
+  const filtered = playlistFilter === 'all' ? withCat : withCat.filter(p => p._cat === playlistFilter);
+  const n = renderPlaylists(box, filtered, playlistSearch);
   if (inMode && countEl) countEl.textContent = `${n}件`;
+}
+
+// 再生リストの区分：中の動画の区分を数えて、いちばん多いもの。
+// 動画データ（videos.json / members.json）にある動画はその区分を、ないものはタイトルから判定する。
+// 同数のときは、CATEGORIES で上にある区分を選ぶ
+function playlistCategory(p, byId) {
+  const counts = {};
+  (p.videos || []).forEach(v => {
+    if (!v || !v.id) return;
+    const known = byId.get(v.id);
+    const cat = known ? known._cat : detectCategory({ title: String(v.title || ''), url: '' });
+    counts[cat] = (counts[cat] || 0) + 1;
+  });
+  let best = 'chat', bestN = 0;
+  CATEGORIES.forEach(c => {
+    if ((counts[c.key] || 0) > bestN) { best = c.key; bestN = counts[c.key]; }
+  });
+  return best;
+}
+
+// 再生リスト表示の区分ボタン（件数は再生リストの数）
+function renderPlaylistFilter(withCat) {
+  const el = document.getElementById('playlist-filter');
+  if (!el) return;
+  const cats = {};
+  withCat.forEach(p => { cats[p._cat] = (cats[p._cat] || 0) + 1; });
+  if (playlistFilter !== 'all' && !cats[playlistFilter]) playlistFilter = 'all';
+  if (!withCat.length) { el.innerHTML = ''; return; }
+  let html = `<button type="button" class="filter-btn ${playlistFilter === 'all' ? 'active' : ''}" data-cat="all" aria-pressed="${playlistFilter === 'all'}">すべて ${withCat.length}</button>`;
+  CATEGORIES.map(c => c.key).filter(k => cats[k]).forEach(cat => {
+    const on = playlistFilter === cat;
+    html += `<button type="button" class="filter-btn ${on ? 'active' : ''}" data-cat="${cat}" aria-pressed="${on}">${escapeHtml(getCatLabel(cat))} ${cats[cat]}</button>`;
+  });
+  el.innerHTML = html;
 }
 
 // 検索ボックスに文字があるときは、合う再生リストだけを開いた状態で並べる
@@ -1179,6 +1229,7 @@ function renderPlaylists(box, lists, query = '') {
         <summary class="playlist-summary">
           ${thumb ? `<img class="archive-item-thumb" src="${escapeHtml(thumb)}" alt="" loading="lazy">` : ''}
           <span class="playlist-title">${escapeHtml(title)}</span>
+          ${p._cat ? `<span class="cat-badge cat-${p._cat}">${escapeHtml(getCatLabel(p._cat))}</span>` : ''}
         </summary>
         <div class="playlist-body">
           <a class="archive-link playlist-open" href="${escapeHtml(listUrl)}" target="_blank" rel="noopener">YouTube で再生リストを再生<span class="visually-hidden">：${escapeHtml(title)}</span></a>
