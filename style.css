@@ -1103,16 +1103,6 @@ body {
   white-space: nowrap;
 }
 
-.profile-unofficial-note {
-  clear: both;
-  font-size: 0.7rem;
-  color: var(--color-text-sub);
-  text-align: center;
-  padding-top: 12px;
-  border-top: 1px solid var(--color-border);
-  margin-top: 8px;
-}
-
 @media (max-width: 700px) {
   .profile-infobox {
     float: none;
