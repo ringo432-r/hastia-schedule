@@ -1153,6 +1153,7 @@ function renderPlaylistsView() {
 // 再生リストの題名 → 区分のキー（CATEGORIES の key）。ここに書いたものは、自動判定より優先する
 const PLAYLIST_FIXED_CATEGORY = {
   '記念配信': 'memorial',
+  '雑談配信': 'chat', // 区分名は「雑談・その他」
 };
 
 // 再生リストの区分：中の動画の区分を数えて、いちばん多いもの。
