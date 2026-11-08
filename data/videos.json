@@ -1,17 +1,18 @@
 {
-  "updatedAt": "2026-11-08T13:40:21.423143+00:00",
+  "updatedAt": "2026-11-08T14:07:13.746942+00:00",
   "fullRefreshedAt": "2026-11-08T00:07:13.441029+00:00",
   "items": [
     {
       "id": "pJy3bfiUEjM",
       "title": "【あ。あ。あ。】声で操作する健全なアクションゲーム【はすてぃあ / 新人Vtuber】",
-      "publishedAt": "2026-11-08T14:00:00Z",
+      "publishedAt": "2026-11-08T14:01:15Z",
       "scheduledStartTime": "2026-11-08T14:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/pJy3bfiUEjM/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/pJy3bfiUEjM/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
+      "liveBroadcastContent": "live",
+      "category": "live",
       "url": "https://www.youtube.com/watch?v=pJy3bfiUEjM",
+      "actualStartTime": "2026-11-08T14:01:15Z",
       "isShort": false
     },
     {
