@@ -26,7 +26,7 @@
   <meta name="twitter:description" content="VTuber はすてぃあ様の配信予定をまとめ、過去の動画も検索できる非公式スケジュールサイト" />
   <meta name="twitter:image" content="https://hastia-schedule.com/img/hastia.png" />
   <meta name="twitter:image:alt" content="はすてぃあ様のイラスト" />
-  <link rel="stylesheet" href="style.css?v=49" />
+  <link rel="stylesheet" href="style.css?v=50" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -130,7 +130,6 @@
         <button class="tab-btn active" id="tabbtn-timetable" data-tab="timetable" role="tab" aria-selected="true" aria-controls="tab-timetable">📅 週間</button>
         <button class="tab-btn" id="tabbtn-calendar" data-tab="calendar" role="tab" aria-selected="false" aria-controls="tab-calendar" tabindex="-1">🗓 月間</button>
         <button class="tab-btn" id="tabbtn-archive" data-tab="archive" role="tab" aria-selected="false" aria-controls="tab-archive" tabindex="-1">🔍 検索</button>
-        <button class="tab-btn" id="tabbtn-playlist" data-tab="playlist" role="tab" aria-selected="false" aria-controls="tab-playlist" tabindex="-1">🎥 再生リスト</button>
         <button class="tab-btn" id="tabbtn-profile" data-tab="profile" role="tab" aria-selected="false" aria-controls="tab-profile" tabindex="-1">👤 プロフ(wiki)</button>
         <button class="tab-btn" id="tabbtn-xpost" data-tab="xpost" role="tab" aria-selected="false" aria-controls="tab-xpost" tabindex="-1"><svg class="x-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span class="visually-hidden">X</span>ポスト</button>
       </nav>
@@ -190,6 +189,11 @@
           <!-- スクロールしても上部に固定する部分 -->
           <div class="panel-sticky">
             <div class="panel-header">検索</div>
+            <!-- 動画 / 再生リストの切り替え -->
+            <div class="archive-filter archive-mode" role="group" aria-label="表示の切り替え">
+              <button type="button" class="filter-btn mode-btn active" data-mode="video" aria-pressed="true">動画</button>
+              <button type="button" class="filter-btn mode-btn" data-mode="playlist" aria-pressed="false">再生リスト</button>
+            </div>
             <div class="archive-filter" id="archive-filter"></div>
             <div class="archive-search-row">
               <input type="text" id="archive-search" placeholder="タイトルで検索" class="archive-search" aria-label="タイトルで検索" />
@@ -197,15 +201,8 @@
             </div>
           </div>
           <div id="archive-list" class="archive-list"></div>
-        </div>
-
-        <!-- 再生リスト（YouTube チャンネルの再生リスト。1日1回更新）-->
-        <div id="tab-playlist" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-playlist" hidden>
-          <!-- スクロールしても上部に固定する部分 -->
-          <div class="panel-sticky">
-            <div class="panel-header">再生リスト</div>
-          </div>
-          <div id="playlist-list" class="playlist-list">読み込み中...</div>
+          <!-- 再生リスト表示（YouTube チャンネルの再生リスト。1日1回更新）-->
+          <div id="playlist-list" class="playlist-list" hidden>読み込み中...</div>
         </div>
 
         <!-- プロフィール -->
@@ -338,6 +335,6 @@
 
   </div><!-- /layout -->
 
-  <script src="app.js?v=38"></script>
+  <script src="app.js?v=39"></script>
 </body>
 </html>

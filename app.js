@@ -204,6 +204,10 @@ let calYear          = 0;
 let calMonth         = 0;
 let archiveFilter    = 'all';
 let archiveSearch    = '';
+let archiveMode      = 'video';  // 検索タブの表示：'video'（動画）/ 'playlist'（再生リスト）。毎回「動画」から始める
+let playlistSearch   = '';
+let allPlaylists     = null;     // null = まだ読み込めていない
+let playlistLoadFailed = false;
 
 // ===== 記念日計算 =====
 // 指定年月に該当する記念日を返す（JST年月で渡す）
@@ -694,7 +698,8 @@ function renderArchive() {
     filtered = filtered.filter(i => i.title.toLowerCase().includes(q));
   }
 
-  document.getElementById('archive-count').textContent = `${filtered.length}件`;
+  // 再生リスト表示中は、件数欄を再生リストの件数に使っているので書き換えない
+  if (archiveMode === 'video') document.getElementById('archive-count').textContent = `${filtered.length}件`;
 
   const listEl = document.getElementById('archive-list');
   if (!filtered.length) {
@@ -985,9 +990,41 @@ function initEvents() {
   });
 
   document.getElementById('archive-search').addEventListener('input', e => {
-    archiveSearch = e.target.value.trim();
-    renderArchive();
+    // 動画と再生リストで、検索の文字は別々に覚えておく
+    if (archiveMode === 'playlist') {
+      playlistSearch = e.target.value.trim();
+      renderPlaylistsView();
+    } else {
+      archiveSearch = e.target.value.trim();
+      renderArchive();
+    }
   });
+
+  // 検索タブの「動画 / 再生リスト」の切り替え
+  document.querySelector('.archive-mode').addEventListener('click', e => {
+    const btn = e.target.closest('.mode-btn');
+    if (btn) setArchiveMode(btn.dataset.mode);
+  });
+}
+
+function setArchiveMode(mode) {
+  archiveMode = mode === 'playlist' ? 'playlist' : 'video';
+  const isPl = archiveMode === 'playlist';
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    const on = b.dataset.mode === archiveMode;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', String(on));
+  });
+  document.getElementById('archive-filter').hidden = isPl;
+  document.getElementById('archive-list').hidden = isPl;
+  document.getElementById('playlist-list').hidden = !isPl;
+  const input = document.getElementById('archive-search');
+  input.value = isPl ? playlistSearch : archiveSearch;
+  input.placeholder = isPl ? '再生リスト・動画のタイトルで検索' : 'タイトルで検索';
+  input.setAttribute('aria-label', input.placeholder);
+  if (isPl) renderPlaylistsView(); else renderArchive();
+  // 上部に固定している部分の高さが変わるので測り直す
+  updateStickyHeights();
 }
 
 // ===== 上部固定の高さ =====
@@ -1064,33 +1101,62 @@ function updateStickyHeads() {
   STICKY_HEADS.forEach(updateStickyHead);
 }
 
-// ===== 再生リストタブ =====
+// ===== 検索タブの「再生リスト」表示 =====
 // 各再生リストを開閉できる一覧にする（開くと中の動画が並ぶ）。動画へのリンクは再生リストの文脈（list=）付き
 async function loadPlaylists() {
-  const box = document.getElementById('playlist-list');
-  if (!box) return;
+  if (!document.getElementById('playlist-list')) return;
   try {
     const res = await fetch(`${PLAYLISTS_URL}?t=${Date.now()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     const lists = (Array.isArray(data.items) ? data.items : [])
       .filter(p => p && /^[\w-]+$/.test(String(p.id || '')) && Array.isArray(p.videos));
-    renderPlaylists(box, lists);
+    allPlaylists = lists;
   } catch (e) {
     console.warn('再生リストを読み込めませんでした:', e);
-    box.innerHTML = '<div class="empty-msg">再生リストはまだ取得できていません。</div>';
+    playlistLoadFailed = true;
   }
+  renderPlaylistsView();
 }
 
-function renderPlaylists(box, lists) {
-  if (!lists.length) {
-    box.innerHTML = '<div class="empty-msg">再生リストはまだありません。</div>';
+// 検索タブの「再生リスト」表示を描く（検索ボックスの内容で絞り込む）
+function renderPlaylistsView() {
+  const box = document.getElementById('playlist-list');
+  const countEl = document.getElementById('archive-count');
+  if (!box) return;
+  const inMode = archiveMode === 'playlist';
+  if (allPlaylists === null) {
+    box.innerHTML = `<div class="empty-msg">${playlistLoadFailed ? '再生リストはまだ取得できていません。' : '読み込み中...'}</div>`;
+    if (inMode && countEl) countEl.textContent = '';
     return;
   }
-  box.innerHTML = lists.map(p => {
-    const vids = p.videos.filter(v => v && /^[\w-]{6,}$/.test(String(v.id || '')));
+  const n = renderPlaylists(box, allPlaylists, playlistSearch);
+  if (inMode && countEl) countEl.textContent = `${n}件`;
+}
+
+// 検索ボックスに文字があるときは、合う再生リストだけを開いた状態で並べる
+// （再生リストの題名に合えば中の動画をすべて、動画の題名だけに合えば合う動画だけ）。表示した再生リストの数を返す
+function renderPlaylists(box, lists, query = '') {
+  const q = query.toLowerCase();
+  const hit = (s) => String(s || '').toLowerCase().includes(q);
+  const rows = lists.map(p => {
+    const all = p.videos.filter(v => v && /^[\w-]{6,}$/.test(String(v.id || '')));
     const title = String(p.title || '（題名なし）');
-    const first = vids[0];
+    if (!q || hit(title)) return { p, all, shown: all, title };
+    const shown = all.filter(v => hit(v.title));
+    return shown.length ? { p, all, shown, title } : null;
+  }).filter(Boolean);
+  if (!lists.length) {
+    box.innerHTML = '<div class="empty-msg">再生リストはまだありません。</div>';
+    return 0;
+  }
+  if (!rows.length) {
+    box.innerHTML = '<div class="empty-msg">該当する再生リストが見つかりませんでした。</div>';
+    return 0;
+  }
+  box.innerHTML = rows.map(({ p, all, shown, title }) => {
+    const vids = shown;
+    const first = all[0]; // 再生ボタンは、絞り込みに関係なく再生リストの先頭から再生する
     // 先頭の動画＋再生リスト指定の形にすると、開いた時点で先頭から再生され、続けて次の動画へ進む
     const listUrl = first
       ? `https://www.youtube.com/watch?v=${encodeURIComponent(first.id)}&list=${encodeURIComponent(p.id)}`
@@ -1109,7 +1175,7 @@ function renderPlaylists(box, lists) {
         </div>`;
     }).join('');
     return `
-      <details class="playlist-item">
+      <details class="playlist-item"${q ? ' open' : ''}>
         <summary class="playlist-summary">
           ${thumb ? `<img class="archive-item-thumb" src="${escapeHtml(thumb)}" alt="" loading="lazy">` : ''}
           <span class="playlist-title">${escapeHtml(title)}</span>
@@ -1120,6 +1186,7 @@ function renderPlaylists(box, lists) {
         </div>
       </details>`;
   }).join('');
+  return rows.length;
 }
 
 // ===== チャンネル登録者数のグラフ =====

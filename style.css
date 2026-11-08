@@ -1504,12 +1504,17 @@ body {
 .subs-dot { fill: var(--color-accent); stroke: var(--color-panel); stroke-width: 1.5; }
 .subs-note { margin-top: 6px; font-size: 0.85em; color: var(--color-text-sub); }
 
-/* ===== 再生リストタブ ===== */
+/* ===== 検索タブの「再生リスト」表示 ===== */
 .playlist-list {
   background: var(--color-panel);
   border: 1px solid var(--color-border);
+  border-top: none;
   border-radius: 0 0 8px 8px;
 }
+/* display を指定している要素は hidden 属性だけでは隠れないので、明示する */
+.archive-filter[hidden],
+.archive-list[hidden],
+.playlist-list[hidden] { display: none; }
 .playlist-item { border-bottom: 1px solid var(--color-border); }
 .playlist-item:last-child { border-bottom: none; }
 .playlist-summary {
