@@ -1090,8 +1090,11 @@ function renderPlaylists(box, lists) {
   box.innerHTML = lists.map(p => {
     const vids = p.videos.filter(v => v && /^[\w-]{6,}$/.test(String(v.id || '')));
     const title = String(p.title || '（題名なし）');
-    const listUrl = `https://www.youtube.com/playlist?list=${encodeURIComponent(p.id)}`;
     const first = vids[0];
+    // 先頭の動画＋再生リスト指定の形にすると、開いた時点で先頭から再生され、続けて次の動画へ進む
+    const listUrl = first
+      ? `https://www.youtube.com/watch?v=${encodeURIComponent(first.id)}&list=${encodeURIComponent(p.id)}`
+      : `https://www.youtube.com/playlist?list=${encodeURIComponent(p.id)}`;
     const thumb = first ? `https://i.ytimg.com/vi/${encodeURIComponent(first.id)}/mqdefault.jpg` : '';
     const items = vids.map(v => {
       const vTitle = String(v.title || '');
@@ -1112,7 +1115,7 @@ function renderPlaylists(box, lists) {
           <span class="playlist-title">${escapeHtml(title)}</span>
         </summary>
         <div class="playlist-body">
-          <a class="archive-link playlist-open" href="${escapeHtml(listUrl)}" target="_blank" rel="noopener">YouTube で再生リストを開く<span class="visually-hidden">：${escapeHtml(title)}</span></a>
+          <a class="archive-link playlist-open" href="${escapeHtml(listUrl)}" target="_blank" rel="noopener">YouTube で再生リストを再生<span class="visually-hidden">：${escapeHtml(title)}</span></a>
           ${items}
         </div>
       </details>`;
