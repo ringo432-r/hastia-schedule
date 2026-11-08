@@ -1513,3 +1513,28 @@ body {
 .subs-line { fill: none; stroke: var(--color-accent); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
 .subs-dot { fill: var(--color-accent); stroke: var(--color-panel); stroke-width: 1.5; }
 .subs-note { margin-top: 6px; font-size: 0.85em; color: var(--color-text-sub); }
+
+/* ===== 再生リストタブ ===== */
+.playlist-list {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 0 0 8px 8px;
+}
+.playlist-item { border-bottom: 1px solid var(--color-border); }
+.playlist-item:last-child { border-bottom: none; }
+.playlist-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  list-style: none;
+}
+.playlist-summary::-webkit-details-marker { display: none; }
+.playlist-summary::before { content: '▶'; flex-shrink: 0; font-size: 0.7rem; color: var(--color-text-sub); }
+.playlist-item[open] > .playlist-summary::before { content: '▼'; }
+.playlist-summary:hover { background: rgba(204,34,34,0.04); }
+.playlist-summary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: -2px; }
+.playlist-title { flex: 1; min-width: 0; font-size: 0.9rem; font-weight: 600; color: var(--color-text); overflow-wrap: anywhere; }
+.playlist-body { border-top: 1px solid var(--color-border); background: var(--color-bg); }
+.playlist-open { display: inline-block; margin: 8px 14px; text-decoration: none; }

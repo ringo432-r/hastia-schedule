@@ -10,6 +10,8 @@ const MEMBERS_FALLBACK_URL = 'https://www.youtube.com/@god_hastia/membership';
 // チャンネル登録者数（毎朝6時ごろに記録。YouTube API の規約で28日を過ぎた数値は保存・表示しない）
 const SUBS_URL = './data/subscribers.json';
 const SUBS_RETENTION_MS = 28 * 24 * 60 * 60 * 1000;
+// 再生リスト（fetch-youtube が1日1回更新する）
+const PLAYLISTS_URL = './data/playlists.json';
 
 // ===== カテゴリ定義 =====
 // 優先順位：上から順に判定し、最初にマッチしたカテゴリを使用
@@ -1062,6 +1064,61 @@ function updateStickyHeads() {
   STICKY_HEADS.forEach(updateStickyHead);
 }
 
+// ===== 再生リストタブ =====
+// 各再生リストを開閉できる一覧にする（開くと中の動画が並ぶ）。動画へのリンクは再生リストの文脈（list=）付き
+async function loadPlaylists() {
+  const box = document.getElementById('playlist-list');
+  if (!box) return;
+  try {
+    const res = await fetch(`${PLAYLISTS_URL}?t=${Date.now()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const lists = (Array.isArray(data.items) ? data.items : [])
+      .filter(p => p && /^[\w-]+$/.test(String(p.id || '')) && Array.isArray(p.videos));
+    renderPlaylists(box, lists);
+  } catch (e) {
+    console.warn('再生リストを読み込めませんでした:', e);
+    box.innerHTML = '<div class="empty-msg">再生リストはまだ取得できていません。</div>';
+  }
+}
+
+function renderPlaylists(box, lists) {
+  if (!lists.length) {
+    box.innerHTML = '<div class="empty-msg">再生リストはまだありません。</div>';
+    return;
+  }
+  box.innerHTML = lists.map(p => {
+    const vids = p.videos.filter(v => v && /^[\w-]{6,}$/.test(String(v.id || '')));
+    const title = String(p.title || '（題名なし）');
+    const listUrl = `https://www.youtube.com/playlist?list=${encodeURIComponent(p.id)}`;
+    const first = vids[0];
+    const thumb = first ? `https://i.ytimg.com/vi/${encodeURIComponent(first.id)}/mqdefault.jpg` : '';
+    const items = vids.map(v => {
+      const vTitle = String(v.title || '');
+      const url = `https://www.youtube.com/watch?v=${encodeURIComponent(v.id)}&list=${encodeURIComponent(p.id)}`;
+      return `
+        <div class="archive-item">
+          <img class="archive-item-thumb" src="https://i.ytimg.com/vi/${encodeURIComponent(v.id)}/mqdefault.jpg" alt="" loading="lazy">
+          <div class="archive-item-info">
+            <div class="archive-item-title" title="${escapeHtml(vTitle)}">${escapeHtml(vTitle)}</div>
+          </div>
+          <a class="archive-link" href="${escapeHtml(url)}" target="_blank" rel="noopener">動画を見る<span class="visually-hidden">：${escapeHtml(vTitle)}</span></a>
+        </div>`;
+    }).join('');
+    return `
+      <details class="playlist-item">
+        <summary class="playlist-summary">
+          ${thumb ? `<img class="archive-item-thumb" src="${escapeHtml(thumb)}" alt="" loading="lazy">` : ''}
+          <span class="playlist-title">${escapeHtml(title)}</span>
+        </summary>
+        <div class="playlist-body">
+          <a class="archive-link playlist-open" href="${escapeHtml(listUrl)}" target="_blank" rel="noopener">YouTube で再生リストを開く<span class="visually-hidden">：${escapeHtml(title)}</span></a>
+          ${items}
+        </div>
+      </details>`;
+  }).join('');
+}
+
 // ===== チャンネル登録者数のグラフ =====
 // 記録された数値をそのまま折れ線で結ぶだけ（増減の計算や予想はしない）
 async function loadSubscribers() {
@@ -1106,15 +1163,20 @@ function renderSubscribers(box, items, hidden) {
   const t0 = toTime(items[0].date);
   const t1 = toTime(last.date);
   const vals = items.map(i => i.subscribers);
-  let vMin = Math.min(...vals), vMax = Math.max(...vals);
-  if (vMin === vMax) { vMin -= 1; vMax += 1; }
-  const pad = (vMax - vMin) * 0.1;
-  const yMin = Math.max(0, Math.floor(vMin - pad));
-  const yMax = Math.ceil(vMax + pad);
+  // 縦軸の上端・下端は 1,000 単位に切り上げ・切り下げる（例：4,560人 → 4,000〜5,000）
+  const STEP = 1000;
+  const yMin = Math.floor(Math.min(...vals) / STEP) * STEP;
+  let yMax = Math.ceil(Math.max(...vals) / STEP) * STEP;
+  if (yMax === yMin) yMax = yMin + STEP; // ちょうど 1,000 の倍数のときも幅を持たせる
   const x = (date) => (t1 === t0 ? (L + (W - R)) / 2 : L + (toTime(date) - t0) / (t1 - t0) * (W - L - R));
   const y = (v) => T + (1 - (v - yMin) / (yMax - yMin)) * (H - T - B);
 
-  const ticks = [yMin, Math.round((yMin + yMax) / 2), yMax];
+  // 目盛りも 1,000 の倍数（区間が多いときは間引く）
+  const spans = (yMax - yMin) / STEP;
+  const tickStep = spans <= 5 ? STEP : Math.ceil(spans / 4) * STEP;
+  const ticks = [];
+  for (let v = yMin; v < yMax; v += tickStep) ticks.push(v);
+  ticks.push(yMax);
   const grid = ticks.map(v =>
     `<line class="subs-grid" x1="${L}" y1="${y(v).toFixed(1)}" x2="${W - R}" y2="${y(v).toFixed(1)}"/>` +
     `<text class="subs-axis" x="${L - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${num(v)}</text>`
@@ -1144,5 +1206,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderXPost();
   initStickyHeights();
   loadData();
+  loadPlaylists();
   loadSubscribers();
 });

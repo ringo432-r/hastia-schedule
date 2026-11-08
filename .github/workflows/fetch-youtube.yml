@@ -330,6 +330,55 @@ jobs:
               json.dump(result, f, ensure_ascii=False, indent=2)
 
           print(f"Total: {len(all_items)} videos saved (upcoming={len(upcoming)}, uploads={len(uploads)}, carried={len(carried)}, kept={kept}, full_refresh={need_full}, removed={removed}).")
+
+          # ===== 再生リスト（1日1回）=====
+          # 再生リスト一覧（playlists.list）と、各リストの動画（playlistItems.list）を取得して data/playlists.json に保存する
+          # 前回の取得から20時間以上たったときだけ取り直す（1回で 1＋リスト数×1〜3 ユニット程度）
+          # 保存するのは題名とIDだけ（動画数などの統計は保存しない）。取り直すたびに全体を置き換えるので、削除・非公開は自然に消える
+          # 失敗しても動画データの更新は止めず、前回の再生リストを残す
+          PL_PATH = 'data/playlists.json'
+          pl_prev_at = None
+          try:
+              with open(PL_PATH, encoding='utf-8') as f:
+                  pl_prev_at = parse_iso(json.load(f).get('fetchedAt'))
+          except (OSError, ValueError, AttributeError):
+              pass
+          if pl_prev_at is None or now - pl_prev_at >= timedelta(hours=20):
+              try:
+                  def paged(endpoint, max_pages=3, **base):
+                      out, token = [], ''
+                      for _ in range(max_pages):
+                          params = dict(base, maxResults=50)
+                          if token:
+                              params['pageToken'] = token
+                          data = api_get(endpoint, **params)
+                          out += data.get('items', [])
+                          token = data.get('nextPageToken', '')
+                          if not token:
+                              break
+                      return out
+
+                  playlists = []
+                  for pl in paged('playlists', part='snippet', channelId=CHANNEL_ID):
+                      pid = pl.get('id', '')
+                      if not pid:
+                          continue
+                      vids = []
+                      for it in paged('playlistItems', part='snippet,contentDetails', playlistId=pid):
+                          sn = it.get('snippet', {})
+                          vid = it.get('contentDetails', {}).get('videoId') or sn.get('resourceId', {}).get('videoId', '')
+                          title = sn.get('title', '')
+                          if not vid or title in ('Private video', 'Deleted video'):
+                              continue
+                          vids.append({'id': vid, 'title': title})
+                      if vids:
+                          playlists.append({'id': pid, 'title': pl.get('snippet', {}).get('title', ''), 'videos': vids})
+
+                  with open(PL_PATH, 'w', encoding='utf-8') as f:
+                      json.dump({'fetchedAt': now.isoformat(), 'items': playlists}, f, ensure_ascii=False, indent=2)
+                  print(f"Playlists: {len(playlists)} saved.")
+              except SystemExit as e:
+                  print(f"::warning::playlists not updated: {e}")
           EOF
 
       - name: Commit and push if changed
@@ -339,6 +388,8 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add data/videos.json
+          # 再生リストは1日1回だけ更新される（まだ作られていないときは何もしない）
+          if [ -f data/playlists.json ]; then git add data/playlists.json; fi
           if git diff --staged --quiet; then
             echo "No changes."
             echo "changed=false" >> "$GITHUB_OUTPUT"
