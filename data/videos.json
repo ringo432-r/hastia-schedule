@@ -1,20 +1,7 @@
 {
-  "updatedAt": "2026-11-09T00:37:14.858273+00:00",
+  "updatedAt": "2026-11-09T01:07:14.831122+00:00",
   "fullRefreshedAt": "2026-11-08T20:37:14.483664+00:00",
   "items": [
-    {
-      "id": "pJy3bfiUEjM",
-      "title": "【あ。あ。あ。】声で操作する健全なアクションゲーム【はすてぃあ / 新人Vtuber】",
-      "publishedAt": "2026-11-08T14:01:15Z",
-      "scheduledStartTime": "2026-11-08T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/pJy3bfiUEjM/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/pJy3bfiUEjM/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=pJy3bfiUEjM",
-      "actualStartTime": "2026-11-08T14:01:15Z",
-      "isShort": false
-    },
     {
       "id": "u23sPngSFmw",
       "title": "Weekly Schedule",
@@ -25,6 +12,19 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
+      "id": "pJy3bfiUEjM",
+      "title": "【あ。あ。あ。】声で操作する健全なアクションゲーム【はすてぃあ / 新人Vtuber】",
+      "publishedAt": "2026-11-08T14:01:15Z",
+      "scheduledStartTime": "2026-11-08T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/pJy3bfiUEjM/mqdefault.jpg?v=6aef4428",
+      "thumbnailHigh": "https://i.ytimg.com/vi/pJy3bfiUEjM/hqdefault.jpg?v=6aef4428",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=pJy3bfiUEjM",
+      "actualStartTime": "2026-11-08T14:01:15Z",
       "isShort": false
     },
     {
