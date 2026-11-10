@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T09:37:14.755879+00:00",
+  "updatedAt": "2026-11-10T10:07:15.227127+00:00",
   "fullRefreshedAt": "2026-11-09T16:37:15.008228+00:00",
   "items": [
     {
@@ -37,6 +37,19 @@
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
       "isShort": false
+    },
+    {
+      "id": "F9WEnBHoXPM",
+      "title": "トランクスの父親が判明してしまった初見反応【ドラゴンボールZ KAKAROT】 #shorts  #vtuber",
+      "publishedAt": "2026-11-10T10:00:34Z",
+      "scheduledStartTime": "",
+      "thumbnail": "https://i.ytimg.com/vi/F9WEnBHoXPM/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/F9WEnBHoXPM/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "video",
+      "url": "https://www.youtube.com/watch?v=F9WEnBHoXPM",
+      "actualStartTime": "",
+      "isShort": true
     },
     {
       "id": "pJy3bfiUEjM",
