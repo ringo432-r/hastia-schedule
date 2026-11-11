@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T20:07:15.484702+00:00",
+  "updatedAt": "2026-11-11T21:07:18.011218+00:00",
   "fullRefreshedAt": "2026-11-11T09:37:14.728513+00:00",
   "items": [
     {
@@ -15,6 +15,18 @@
       "isShort": false
     },
     {
+      "id": "u23sPngSFmw",
+      "title": "Weekly Schedule",
+      "publishedAt": "2027-06-16T17:50:00Z",
+      "scheduledStartTime": "2027-06-16T17:50:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/u23sPngSFmw/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/u23sPngSFmw/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
       "id": "BYyqbjdJFJg",
       "title": "【テストプレイをサボりすぎたＲＰＧ】ツッコミどころ満載な名作ゲーム！？あそんでいくっ【はすてぃあ / 新人Vtuber】",
       "publishedAt": "2026-11-11T14:01:32Z",
@@ -25,18 +37,6 @@
       "category": "archive",
       "url": "https://www.youtube.com/watch?v=BYyqbjdJFJg",
       "actualStartTime": "2026-11-11T14:01:32Z",
-      "isShort": false
-    },
-    {
-      "id": "u23sPngSFmw",
-      "title": "Weekly Schedule",
-      "publishedAt": "2027-06-16T17:50:00Z",
-      "scheduledStartTime": "2027-06-16T17:50:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/u23sPngSFmw/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/u23sPngSFmw/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
       "isShort": false
     },
     {
