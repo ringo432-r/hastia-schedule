@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-11T13:37:14.656487+00:00",
+  "updatedAt": "2026-11-11T14:07:14.649665+00:00",
   "fullRefreshedAt": "2026-11-11T09:37:14.728513+00:00",
   "items": [
     {
@@ -17,13 +17,14 @@
     {
       "id": "BYyqbjdJFJg",
       "title": "【テストプレイをサボりすぎたＲＰＧ】ツッコミどころ満載な名作ゲーム！？あそんでいくっ【はすてぃあ / 新人Vtuber】",
-      "publishedAt": "2026-11-11T14:00:00Z",
+      "publishedAt": "2026-11-11T14:01:32Z",
       "scheduledStartTime": "2026-11-11T14:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/BYyqbjdJFJg/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/BYyqbjdJFJg/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
+      "liveBroadcastContent": "live",
+      "category": "live",
       "url": "https://www.youtube.com/watch?v=BYyqbjdJFJg",
+      "actualStartTime": "2026-11-11T14:01:32Z",
       "isShort": false
     },
     {
