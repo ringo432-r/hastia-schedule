@@ -1,7 +1,19 @@
 {
-  "updatedAt": "2026-11-12T15:07:17.570723+00:00",
+  "updatedAt": "2026-11-12T15:37:16.560607+00:00",
   "fullRefreshedAt": "2026-11-12T06:07:14.672447+00:00",
   "items": [
+    {
+      "id": "cWqESYHdxJk",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　人造人間編　セル編　後編 ※ネタバレ注意 ＃５【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-13T14:00:00Z",
+      "scheduledStartTime": "2026-11-13T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/cWqESYHdxJk/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/cWqESYHdxJk/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=cWqESYHdxJk",
+      "isShort": false
+    },
     {
       "id": "xHYJ5hjFjeI",
       "title": "【ASMR/黒3dio】しっかり眠れるシャンプーで癒します🎶炭酸シャンプー/シャワー/タオル/カット/肩たたき【はすてぃあ】",
@@ -9,8 +21,8 @@
       "scheduledStartTime": "2026-11-12T14:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/xHYJ5hjFjeI/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/xHYJ5hjFjeI/hqdefault.jpg",
-      "liveBroadcastContent": "live",
-      "category": "live",
+      "liveBroadcastContent": "none",
+      "category": "archive",
       "url": "https://www.youtube.com/watch?v=xHYJ5hjFjeI",
       "actualStartTime": "2026-11-12T14:01:27Z",
       "isShort": false
