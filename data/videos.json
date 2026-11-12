@@ -1,17 +1,18 @@
 {
-  "updatedAt": "2026-11-12T13:37:15.821089+00:00",
+  "updatedAt": "2026-11-12T14:07:17.057748+00:00",
   "fullRefreshedAt": "2026-11-12T06:07:14.672447+00:00",
   "items": [
     {
       "id": "xHYJ5hjFjeI",
       "title": "【ASMR/黒3dio】しっかり眠れるシャンプーで癒します🎶炭酸シャンプー/シャワー/タオル/カット/肩たたき【はすてぃあ】",
-      "publishedAt": "2026-11-12T14:00:00Z",
+      "publishedAt": "2026-11-12T14:01:27Z",
       "scheduledStartTime": "2026-11-12T14:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/xHYJ5hjFjeI/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/xHYJ5hjFjeI/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
+      "liveBroadcastContent": "live",
+      "category": "live",
       "url": "https://www.youtube.com/watch?v=xHYJ5hjFjeI",
+      "actualStartTime": "2026-11-12T14:01:27Z",
       "isShort": false
     },
     {
