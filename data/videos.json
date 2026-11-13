@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T18:07:14.581086+00:00",
+  "updatedAt": "2026-11-13T18:37:14.899166+00:00",
   "fullRefreshedAt": "2026-11-13T02:07:14.949179+00:00",
   "items": [
     {
@@ -12,19 +12,6 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=hNM4obbpCqo",
-      "isShort": false
-    },
-    {
-      "id": "cWqESYHdxJk",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　魔人ブウ編　前編 ※ネタバレ注意 ＃６【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-13T14:02:30Z",
-      "scheduledStartTime": "2026-11-13T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/cWqESYHdxJk/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/cWqESYHdxJk/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=cWqESYHdxJk",
-      "actualStartTime": "2026-11-13T14:02:30Z",
       "isShort": false
     },
     {
@@ -46,8 +33,8 @@
       "scheduledStartTime": "2026-11-13T14:05:00Z",
       "thumbnail": "https://i.ytimg.com/vi/WsSaD7A2G5o/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/WsSaD7A2G5o/hqdefault.jpg",
-      "liveBroadcastContent": "live",
-      "category": "live",
+      "liveBroadcastContent": "none",
+      "category": "archive",
       "url": "https://www.youtube.com/watch?v=WsSaD7A2G5o",
       "isShort": false,
       "actualStartTime": "2026-11-13T14:12:50Z"
@@ -1000,6 +987,19 @@
       "url": "https://www.youtube.com/watch?v=jajJm7WrG3w",
       "actualStartTime": "",
       "isShort": true
+    },
+    {
+      "id": "cWqESYHdxJk",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　魔人ブウ編　前編 ※ネタバレ注意 ＃６【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-13T14:02:30Z",
+      "scheduledStartTime": "2026-11-13T14:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/cWqESYHdxJk/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/cWqESYHdxJk/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=cWqESYHdxJk",
+      "actualStartTime": "2026-11-13T14:02:30Z",
+      "isShort": false
     }
   ]
 }
