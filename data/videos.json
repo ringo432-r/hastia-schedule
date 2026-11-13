@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-13T22:07:14.704327+00:00",
-  "fullRefreshedAt": "2026-11-13T02:07:14.949179+00:00",
+  "updatedAt": "2026-11-13T22:37:14.183474+00:00",
+  "fullRefreshedAt": "2026-11-13T22:37:13.835146+00:00",
   "items": [
     {
       "id": "hNM4obbpCqo",
@@ -31,8 +31,8 @@
       "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　魔人ブウ編　前編 ※ネタバレ注意 ＃６【 はすてぃあ / 新人Vtuber 】",
       "publishedAt": "2026-11-13T14:12:50Z",
       "scheduledStartTime": "2026-11-13T14:05:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/WsSaD7A2G5o/mqdefault.jpg?v=6af71951",
-      "thumbnailHigh": "https://i.ytimg.com/vi/WsSaD7A2G5o/hqdefault.jpg?v=6af71951",
+      "thumbnail": "https://i.ytimg.com/vi/WsSaD7A2G5o/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/WsSaD7A2G5o/hqdefault.jpg",
       "liveBroadcastContent": "none",
       "category": "archive",
       "url": "https://www.youtube.com/watch?v=WsSaD7A2G5o",
@@ -987,19 +987,6 @@
       "url": "https://www.youtube.com/watch?v=jajJm7WrG3w",
       "actualStartTime": "",
       "isShort": true
-    },
-    {
-      "id": "cWqESYHdxJk",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　魔人ブウ編　前編 ※ネタバレ注意 ＃６【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-13T14:02:30Z",
-      "scheduledStartTime": "2026-11-13T14:00:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/cWqESYHdxJk/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/cWqESYHdxJk/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=cWqESYHdxJk",
-      "actualStartTime": "2026-11-13T14:02:30Z",
-      "isShort": false
     }
   ]
 }
