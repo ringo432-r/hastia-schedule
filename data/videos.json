@@ -1,19 +1,7 @@
 {
-  "updatedAt": "2026-11-13T14:07:16.012940+00:00",
+  "updatedAt": "2026-11-13T14:37:14.443551+00:00",
   "fullRefreshedAt": "2026-11-13T02:07:14.949179+00:00",
   "items": [
-    {
-      "id": "WsSaD7A2G5o",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　魔人ブウ編　前編 ※ネタバレ注意 ＃６【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-13T14:05:00Z",
-      "scheduledStartTime": "2026-11-13T14:05:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/WsSaD7A2G5o/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/WsSaD7A2G5o/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=WsSaD7A2G5o",
-      "isShort": false
-    },
     {
       "id": "hNM4obbpCqo",
       "title": "【呪ショッピング】なんだか怖いショッピングサイトでお買い物…。【 #はすてぃあ / #新人Vtuber 】",
@@ -50,6 +38,19 @@
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
       "isShort": false
+    },
+    {
+      "id": "WsSaD7A2G5o",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　魔人ブウ編　前編 ※ネタバレ注意 ＃６【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-13T14:12:50Z",
+      "scheduledStartTime": "2026-11-13T14:05:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/WsSaD7A2G5o/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/WsSaD7A2G5o/hqdefault.jpg",
+      "liveBroadcastContent": "live",
+      "category": "live",
+      "url": "https://www.youtube.com/watch?v=WsSaD7A2G5o",
+      "isShort": false,
+      "actualStartTime": "2026-11-13T14:12:50Z"
     },
     {
       "id": "xHYJ5hjFjeI",
