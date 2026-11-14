@@ -1,19 +1,7 @@
 {
-  "updatedAt": "2026-11-14T14:07:14.378110+00:00",
+  "updatedAt": "2026-11-14T14:37:13.203631+00:00",
   "fullRefreshedAt": "2026-11-13T22:37:13.835146+00:00",
   "items": [
-    {
-      "id": "u5zHynzUNx0",
-      "title": "【呪ショッピング】なんだか怖いショッピングサイトでお買い物…。【 #はすてぃあ / #新人Vtuber 】",
-      "publishedAt": "2026-11-14T14:05:00Z",
-      "scheduledStartTime": "2026-11-14T14:05:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/u5zHynzUNx0/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/u5zHynzUNx0/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=u5zHynzUNx0",
-      "isShort": false
-    },
     {
       "id": "hNM4obbpCqo",
       "title": "【呪ショッピング】なんだか怖いショッピングサイトでお買い物…。【 #はすてぃあ / #新人Vtuber 】",
@@ -38,6 +26,19 @@
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
       "isShort": false
+    },
+    {
+      "id": "u5zHynzUNx0",
+      "title": "【呪ショッピング】なんだか怖いショッピングサイトでお買い物…。【 #はすてぃあ / #新人Vtuber 】",
+      "publishedAt": "2026-11-14T14:07:56Z",
+      "scheduledStartTime": "2026-11-14T14:05:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/u5zHynzUNx0/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/u5zHynzUNx0/hqdefault.jpg",
+      "liveBroadcastContent": "live",
+      "category": "live",
+      "url": "https://www.youtube.com/watch?v=u5zHynzUNx0",
+      "isShort": false,
+      "actualStartTime": "2026-11-14T14:07:56Z"
     },
     {
       "id": "WsSaD7A2G5o",
