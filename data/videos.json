@@ -1,17 +1,29 @@
 {
-  "updatedAt": "2026-11-15T20:07:13.241139+00:00",
+  "updatedAt": "2026-11-15T20:37:15.388835+00:00",
   "fullRefreshedAt": "2026-11-15T14:37:14.451030+00:00",
   "items": [
     {
       "id": "mi43Y7sx2jg",
       "title": "【重大告知あり！】1ヵ月記念をわたくしと過ごしませんか…？【はすてぃあ / 新人vtuber 】",
-      "publishedAt": "2026-11-18T14:00:00Z",
-      "scheduledStartTime": "2026-11-18T14:00:00Z",
+      "publishedAt": "2026-11-18T11:30:00Z",
+      "scheduledStartTime": "2026-11-18T11:30:00Z",
       "thumbnail": "https://i.ytimg.com/vi/mi43Y7sx2jg/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/mi43Y7sx2jg/hqdefault.jpg",
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=mi43Y7sx2jg",
+      "isShort": false
+    },
+    {
+      "id": "QDZKjieCLgE",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　魔人ブウ編　後編 ※ネタバレ注意 ＃７【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-17T11:30:00Z",
+      "scheduledStartTime": "2026-11-17T11:30:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/QDZKjieCLgE/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/QDZKjieCLgE/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=QDZKjieCLgE",
       "isShort": false
     },
     {
