@@ -933,11 +933,8 @@ function activateTab(btn, moveFocus) {
   if (moveFocus) btn.focus();
   // 表示中のタブが変わると上部固定の高さも変わる（initStickyHeights より前に呼ばれても問題ない）
   updateStickyHeights();
-  // プロフのグラフは、タブが隠れている間は幅が測れないので、表示したときに最新の日（右端）へ合わせる
-  if (btn.dataset.tab === 'profile') {
-    const subs = document.getElementById('subs-chart');
-    if (subs) subs.scrollLeft = subs.scrollWidth;
-  }
+  // プロフのグラフは、タブが隠れている間は幅が測れないので、表示したときに実際の幅で描き直す
+  if (btn.dataset.tab === 'profile') redrawSubscribers();
   // 番組表タブに切り替えたらスクロール位置を再設定。
   // ほかのタブはページ全体でスクロールするので、前のタブのスクロール位置が残らないよう先頭に戻す
   if (btn.dataset.tab === 'timetable') setTimeout(scrollTimetableToEvent, 50);
@@ -1287,7 +1284,20 @@ async function loadSubscribers() {
   }
 }
 
+// 描き直しのために、最後に描いたデータと幅を覚えておく
+let subsState = null;
+let subsDrawnWidth = 0;
+
+// 画面の幅が変わったとき（回転・リサイズ・タブを開いた直後）に、グラフを描き直す
+function redrawSubscribers() {
+  const box = document.getElementById('subs-chart');
+  if (!box || !subsState) return;
+  if (Math.abs(box.clientWidth - subsDrawnWidth) < 2) return;
+  renderSubscribers(box, subsState.items, subsState.hidden);
+}
+
 function renderSubscribers(box, items, hidden) {
+  subsState = { items, hidden };
   if (hidden) {
     box.textContent = 'チャンネルの登録者数は非公開に設定されているため、表示できません。';
     return;
@@ -1296,54 +1306,79 @@ function renderSubscribers(box, items, hidden) {
     box.textContent = 'まだ記録がありません。毎朝6時ごろに記録します。';
     return;
   }
-  const md = (date) => `${Number(date.slice(5, 7))}/${Number(date.slice(8, 10))}`;
+  const mmdd = (date) => `${date.slice(5, 7)}/${date.slice(8, 10)}`;
   const num = (n) => n.toLocaleString('ja-JP');
   const last = items[items.length - 1];
 
-  // 描画サイズ（viewBox。画面幅に合わせて拡縮する）
-  const W = 640, H = 260, L = 64, R = 20, T = 20, B = 40;
+  // 描画サイズは画面（枠）の実際の幅に合わせる（縮小しないので、文字が小さくならない）。
+  // タブが隠れていて幅が測れないときは 640 で描き、タブを開いたときに描き直す
+  const measured = box.clientWidth;
+  subsDrawnWidth = measured;
+  const W = Math.max(280, Math.min(640, measured || 640));
+  const L = 52, R = 14, T = 16, PLOT_H = 190;
+
   const toTime = (date) => Date.parse(`${date}T00:00:00Z`);
   const t0 = toTime(items[0].date);
   const t1 = toTime(last.date);
-  const vals = items.map(i => i.subscribers);
-  // 縦軸の下端は最小値を 100 単位に切り下げ、上端は最大値を 100 単位に切り上げた値（例：4,560人 → 4,500〜4,600）
-  const STEP = 100;
-  const yMin = Math.floor(Math.min(...vals) / STEP) * STEP;
-  let yMax = Math.ceil(Math.max(...vals) / STEP) * STEP;
-  if (yMax === yMin) yMax = yMin + STEP; // ちょうど 100 の倍数のときも幅を持たせる
-  const x = (date) => (t1 === t0 ? (L + (W - R)) / 2 : L + (toTime(date) - t0) / (t1 - t0) * (W - L - R));
-  const y = (v) => T + (1 - (v - yMin) / (yMax - yMin)) * (H - T - B);
+  const DAY = 24 * 60 * 60 * 1000;
+  const days = [];
+  for (let t = t0; t <= t1; t += DAY) days.push(new Date(t).toISOString().slice(0, 10));
 
-  // 縦軸の目盛り：下端から上端までを 5 等分した 6 本
-  const TICK_INTERVALS = 5;
-  const ticks = Array.from({ length: TICK_INTERVALS + 1 }, (_, k) => Math.round(yMin + (yMax - yMin) * k / TICK_INTERVALS));
+  // ===== 縦軸：目盛りは必ず 50 で割り切れる値（50・100・200・500…刻み。例：4,500 / 4,550 / 4,600 / 4,650）=====
+  // 目盛りが 5 区間以内になる最小の刻みを選び、範囲が狭すぎるときは同じ刻みのまま広げて 4 区間以上にする
+  const vals = items.map(i => i.subscribers);
+  const vMin = Math.min(...vals), vMax = Math.max(...vals);
+  const STEPS = [50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000];
+  let step = STEPS[STEPS.length - 1], yMin = 0, yMax = 0;
+  for (const s of STEPS) {
+    let lo = Math.floor(vMin / s) * s;
+    let hi = Math.ceil(vMax / s) * s;
+    if (hi === lo) hi = lo + s;
+    if ((hi - lo) / s <= 5) { step = s; yMin = lo; yMax = hi; break; }
+  }
+  if (yMax === 0) { yMin = Math.floor(vMin / step) * step; yMax = Math.max(Math.ceil(vMax / step) * step, yMin + step); }
+  for (let down = true; (yMax - yMin) / step < 4; down = !down) {
+    if (down && yMin - step >= 0) yMin -= step; else yMax += step;
+  }
+  const ticks = [];
+  for (let v = yMin; v <= yMax; v += step) ticks.push(v);
+
+  // ===== 横軸：期間内の全日を mm/dd で表示 =====
+  // 横に並べて収まらないとき（日数が多いとき）は、日付を縦書きにする
+  const plotW = W - L - R;
+  const spacing = days.length > 1 ? plotW / (days.length - 1) : plotW;
+  const rotate = spacing < 36;
+  const xFont = spacing < 12 ? 9 : 11;
+  const B = rotate ? 46 : 30;
+  const H = T + PLOT_H + B;
+  const x = (date) => (t1 === t0 ? L + plotW / 2 : L + (toTime(date) - t0) / (t1 - t0) * plotW);
+  const y = (v) => T + (1 - (v - yMin) / (yMax - yMin)) * PLOT_H;
+  const axisY = T + PLOT_H;
+
   const grid = ticks.map(v =>
     `<line class="subs-grid" x1="${L}" y1="${y(v).toFixed(1)}" x2="${W - R}" y2="${y(v).toFixed(1)}"/>` +
-    `<text class="subs-axis" x="${L - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${num(v)}</text>`
+    `<text class="subs-axis" font-size="11" x="${L - 6}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${num(v)}</text>`
   ).join('');
-  // 横軸：記録のない日も含めて、期間内の全日に日付を出す。
-  // 先頭と月の初日は「月/日」、それ以外は日にちだけ（全日を並べても重ならないように）
-  const days = [];
-  for (let t = t0; t <= t1; t += 24 * 60 * 60 * 1000) days.push(new Date(t).toISOString().slice(0, 10));
-  const xLabels = days.map((d, idx) => {
-    const label = (idx === 0 || d.slice(8, 10) === '01') ? md(d) : String(Number(d.slice(8, 10)));
+  const xLabels = days.map(d => {
     const px = x(d).toFixed(1);
-    return `<line class="subs-grid" x1="${px}" y1="${H - B}" x2="${px}" y2="${H - B + 4}"/>` +
-      `<text class="subs-axis" x="${px}" y="${H - 14}" text-anchor="middle">${label}</text>`;
+    const tick = `<line class="subs-grid" x1="${px}" y1="${axisY}" x2="${px}" y2="${axisY + 4}"/>`;
+    const label = rotate
+      ? `<text class="subs-axis" font-size="${xFont}" x="${px}" y="${axisY + 8}" dy=".35em" text-anchor="end" transform="rotate(-90 ${px} ${axisY + 8})">${mmdd(d)}</text>`
+      : `<text class="subs-axis" font-size="${xFont}" x="${px}" y="${axisY + 18}" text-anchor="middle">${mmdd(d)}</text>`;
+    return tick + label;
   }).join('');
+
   const points = items.map(i => `${x(i.date).toFixed(1)},${y(i.subscribers).toFixed(1)}`).join(' ');
   const line = items.length > 1 ? `<polyline class="subs-line" points="${points}"/>` : '';
   const dots = items.map(i =>
-    `<circle class="subs-dot" cx="${x(i.date).toFixed(1)}" cy="${y(i.subscribers).toFixed(1)}" r="4"><title>${md(i.date)}：${num(i.subscribers)}人</title></circle>`
+    `<circle class="subs-dot" cx="${x(i.date).toFixed(1)}" cy="${y(i.subscribers).toFixed(1)}" r="4"><title>${mmdd(i.date)}：${num(i.subscribers)}人</title></circle>`
   ).join('');
 
   box.innerHTML = `
     <div class="subs-latest">最終更新：${escapeHtml(last.date.replace(/-/g, '/'))}　<strong>${escapeHtml(num(last.subscribers))}人</strong></div>
-    <svg class="subs-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="チャンネル登録者数の推移。${escapeHtml(md(items[0].date))}から${escapeHtml(md(last.date))}までの${items.length}日分。最新は${escapeHtml(num(last.subscribers))}人。">
+    <svg class="subs-svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="チャンネル登録者数の推移。${escapeHtml(mmdd(items[0].date))}から${escapeHtml(mmdd(last.date))}までの${days.length}日分。最新は${escapeHtml(num(last.subscribers))}人。">
       ${grid}${line}${dots}${xLabels}
     </svg>`;
-  // 幅の狭い画面では横にスクロールする。最新の日が見えるよう、右端に合わせる
-  box.scrollLeft = box.scrollWidth;
 }
 
 // ===== 初期化 =====
@@ -1354,6 +1389,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initEvents();
   renderXPost();
   initStickyHeights();
+  // 画面の幅が変わったら（回転・ウィンドウの大きさ変更）、登録者数グラフを描き直す
+  let subsResizeTimer = 0;
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(subsResizeTimer);
+    subsResizeTimer = requestAnimationFrame(redrawSubscribers);
+  });
   loadData();
   loadPlaylists();
   loadSubscribers();
