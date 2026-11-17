@@ -1325,25 +1325,27 @@ function renderSubscribers(box, items, hidden) {
   for (let t = t0; t <= t1; t += DAY) days.push(new Date(t).toISOString().slice(0, 10));
 
   // ===== 縦軸：目盛りは必ず 50 で割り切れる値（50・100・200・500…刻み。例：4,500 / 4,550 / 4,600 / 4,650）=====
-  // 軸の下端はデータの最小値を 50 の倍数に切り下げた値。目盛りが 9 区間以内になる最小の刻みを選び、
-  // 上端は下端から刻みを重ねた値（どの目盛りも 50 の倍数。例：150・250 もあり）。
-  // 範囲が狭すぎるときは同じ刻みのまま上下に広げて 4 区間以上にする
+  // 軸の下端・上端は必ず 100 の倍数（下端は最小値を切り下げ、上端は最大値を切り上げ）。
+  // 間の目盛りは 50 の倍数（150・250 もあり）で、4〜9 区間になる最小の刻みを選ぶ。
+  // 範囲が狭いとき・刻みがぴったり合わないときは、100 ずつ上下に広げる
   const vals = items.map(i => i.subscribers);
   const vMin = Math.min(...vals), vMax = Math.max(...vals);
-  const BASE = 50;
-  const STEPS = [50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000];
-  const lo = Math.floor(vMin / BASE) * BASE;
-  let hi = Math.ceil(vMax / BASE) * BASE;
-  if (hi === lo) hi = lo + BASE;
-  let step = STEPS[STEPS.length - 1];
-  for (const s of STEPS) {
-    if (Math.ceil((hi - lo) / s) <= 9) { step = s; break; }
+  const UNIT = 100;
+  const STEPS = [50, 100, 200, 250, 500, 1000, 2000, 2500, 5000, 10000, 20000, 25000, 50000, 100000, 200000, 250000, 500000, 1000000];
+  let yMin = Math.floor(vMin / UNIT) * UNIT;
+  let yMax = Math.ceil(vMax / UNIT) * UNIT;
+  if (yMax === yMin) yMax = yMin + UNIT;
+  let step = 0;
+  let down = true;
+  for (let guard = 0; guard < 100000 && !step; guard++) {
+    const range = yMax - yMin;
+    step = STEPS.find(s => range % s === 0 && range / s >= 4 && range / s <= 9) || 0;
+    if (!step) {
+      if (down && yMin - UNIT >= 0) yMin -= UNIT; else yMax += UNIT;
+      down = !down;
+    }
   }
-  let yMin = lo;
-  let yMax = lo + Math.ceil((hi - lo) / step) * step;
-  for (let down = true; (yMax - yMin) / step < 4; down = !down) {
-    if (down && yMin - step >= 0) yMin -= step; else yMax += step;
-  }
+  if (!step) step = (yMax - yMin) / 4; // 念のための保険（通常は通らない）
   const ticks = [];
   for (let v = yMin; v <= yMax; v += step) ticks.push(v);
 
