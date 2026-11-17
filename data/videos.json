@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-17T14:37:15.784834+00:00",
+  "updatedAt": "2026-11-17T15:07:15.073298+00:00",
   "fullRefreshedAt": "2026-11-17T06:37:15.762236+00:00",
   "items": [
     {
@@ -27,6 +27,18 @@
       "isShort": false
     },
     {
+      "id": "u23sPngSFmw",
+      "title": "Weekly Schedule",
+      "publishedAt": "2027-06-16T17:50:00Z",
+      "scheduledStartTime": "2027-06-16T17:50:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/u23sPngSFmw/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/u23sPngSFmw/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
       "id": "QDZKjieCLgE",
       "title": "【ドラゴンボールZ KAKAROT】ミリしら過ぎてなんにもわからないけどたのしむっ　魔人ブウ編　後編 ※ネタバレ注意 ＃７【 はすてぃあ / 新人Vtuber 】",
       "publishedAt": "2026-11-17T11:39:38Z",
@@ -37,18 +49,6 @@
       "category": "live",
       "url": "https://www.youtube.com/watch?v=QDZKjieCLgE",
       "actualStartTime": "2026-11-17T11:39:38Z",
-      "isShort": false
-    },
-    {
-      "id": "u23sPngSFmw",
-      "title": "Weekly Schedule",
-      "publishedAt": "2027-06-16T17:50:00Z",
-      "scheduledStartTime": "2027-06-16T17:50:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/u23sPngSFmw/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/u23sPngSFmw/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
       "isShort": false
     },
     {
