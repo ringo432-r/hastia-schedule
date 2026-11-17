@@ -1500,6 +1500,9 @@ body {
 /* グラフは枠の実際の幅に合わせて app.js が描く（縮小しないので文字が小さくならない）*/
 .subs-svg { display: block; width: 100%; max-width: 640px; height: auto; }
 .subs-grid { stroke: var(--color-border); stroke-width: 1; }
+/* 日付ごとの縦線は薄く、軸の線（横軸・縦軸・日付の目盛り）は少し濃くする */
+.subs-vgrid { stroke: var(--color-border); stroke-width: 1; opacity: 0.55; }
+.subs-axis-line { stroke: var(--color-text-sub); stroke-width: 1; }
 .subs-axis { fill: var(--color-text-sub); }
 .subs-line { fill: none; stroke: var(--color-accent); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
 .subs-dot { fill: var(--color-accent); stroke: var(--color-panel); stroke-width: 1.5; }

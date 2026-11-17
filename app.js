@@ -1325,18 +1325,22 @@ function renderSubscribers(box, items, hidden) {
   for (let t = t0; t <= t1; t += DAY) days.push(new Date(t).toISOString().slice(0, 10));
 
   // ===== 縦軸：目盛りは必ず 50 で割り切れる値（50・100・200・500…刻み。例：4,500 / 4,550 / 4,600 / 4,650）=====
-  // 目盛りが 5 区間以内になる最小の刻みを選び、範囲が狭すぎるときは同じ刻みのまま広げて 4 区間以上にする
+  // 軸の下端はデータの最小値を 50 の倍数に切り下げた値。目盛りが 9 区間以内になる最小の刻みを選び、
+  // 上端は下端から刻みを重ねた値（どの目盛りも 50 の倍数。例：150・250 もあり）。
+  // 範囲が狭すぎるときは同じ刻みのまま上下に広げて 4 区間以上にする
   const vals = items.map(i => i.subscribers);
   const vMin = Math.min(...vals), vMax = Math.max(...vals);
+  const BASE = 50;
   const STEPS = [50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000];
-  let step = STEPS[STEPS.length - 1], yMin = 0, yMax = 0;
+  const lo = Math.floor(vMin / BASE) * BASE;
+  let hi = Math.ceil(vMax / BASE) * BASE;
+  if (hi === lo) hi = lo + BASE;
+  let step = STEPS[STEPS.length - 1];
   for (const s of STEPS) {
-    let lo = Math.floor(vMin / s) * s;
-    let hi = Math.ceil(vMax / s) * s;
-    if (hi === lo) hi = lo + s;
-    if ((hi - lo) / s <= 5) { step = s; yMin = lo; yMax = hi; break; }
+    if (Math.ceil((hi - lo) / s) <= 9) { step = s; break; }
   }
-  if (yMax === 0) { yMin = Math.floor(vMin / step) * step; yMax = Math.max(Math.ceil(vMax / step) * step, yMin + step); }
+  let yMin = lo;
+  let yMax = lo + Math.ceil((hi - lo) / step) * step;
   for (let down = true; (yMax - yMin) / step < 4; down = !down) {
     if (down && yMin - step >= 0) yMin -= step; else yMax += step;
   }
@@ -1359,9 +1363,14 @@ function renderSubscribers(box, items, hidden) {
     `<line class="subs-grid" x1="${L}" y1="${y(v).toFixed(1)}" x2="${W - R}" y2="${y(v).toFixed(1)}"/>` +
     `<text class="subs-axis" font-size="11" x="${L - 6}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${num(v)}</text>`
   ).join('');
+  // 軸の線：横軸（下）と縦軸（左）
+  const axes = `<line class="subs-axis-line" x1="${L}" y1="${axisY}" x2="${W - R}" y2="${axisY}"/>` +
+    `<line class="subs-axis-line" x1="${L}" y1="${T}" x2="${L}" y2="${axisY}"/>`;
   const xLabels = days.map(d => {
     const px = x(d).toFixed(1);
-    const tick = `<line class="subs-grid" x1="${px}" y1="${axisY}" x2="${px}" y2="${axisY + 4}"/>`;
+    // 日付ごとの縦線（グラフの上端から軸まで）と、軸の下の目盛り
+    const tick = `<line class="subs-vgrid" x1="${px}" y1="${T}" x2="${px}" y2="${axisY}"/>` +
+      `<line class="subs-axis-line" x1="${px}" y1="${axisY}" x2="${px}" y2="${axisY + 4}"/>`;
     const label = rotate
       ? `<text class="subs-axis" font-size="${xFont}" x="${px}" y="${axisY + 8}" dy=".35em" text-anchor="end" transform="rotate(-90 ${px} ${axisY + 8})">${mmdd(d)}</text>`
       : `<text class="subs-axis" font-size="${xFont}" x="${px}" y="${axisY + 18}" text-anchor="middle">${mmdd(d)}</text>`;
@@ -1377,7 +1386,7 @@ function renderSubscribers(box, items, hidden) {
   box.innerHTML = `
     <div class="subs-latest">最終更新：${escapeHtml(last.date.replace(/-/g, '/'))}　<strong>${escapeHtml(num(last.subscribers))}人</strong></div>
     <svg class="subs-svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="チャンネル登録者数の推移。${escapeHtml(mmdd(items[0].date))}から${escapeHtml(mmdd(last.date))}までの${days.length}日分。最新は${escapeHtml(num(last.subscribers))}人。">
-      ${grid}${line}${dots}${xLabels}
+      ${grid}${xLabels}${axes}${line}${dots}
     </svg>`;
 }
 
