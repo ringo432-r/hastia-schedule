@@ -933,6 +933,11 @@ function activateTab(btn, moveFocus) {
   if (moveFocus) btn.focus();
   // 表示中のタブが変わると上部固定の高さも変わる（initStickyHeights より前に呼ばれても問題ない）
   updateStickyHeights();
+  // プロフのグラフは、タブが隠れている間は幅が測れないので、表示したときに最新の日（右端）へ合わせる
+  if (btn.dataset.tab === 'profile') {
+    const subs = document.getElementById('subs-chart');
+    if (subs) subs.scrollLeft = subs.scrollWidth;
+  }
   // 番組表タブに切り替えたらスクロール位置を再設定。
   // ほかのタブはページ全体でスクロールするので、前のタブのスクロール位置が残らないよう先頭に戻す
   if (btn.dataset.tab === 'timetable') setTimeout(scrollTimetableToEvent, 50);
@@ -1309,14 +1314,23 @@ function renderSubscribers(box, items, hidden) {
   const x = (date) => (t1 === t0 ? (L + (W - R)) / 2 : L + (toTime(date) - t0) / (t1 - t0) * (W - L - R));
   const y = (v) => T + (1 - (v - yMin) / (yMax - yMin)) * (H - T - B);
 
-  const ticks = [yMin, Math.round((yMin + yMax) / 2), yMax];
+  // 縦軸の目盛り：下端から上端までを 5 等分した 6 本
+  const TICK_INTERVALS = 5;
+  const ticks = Array.from({ length: TICK_INTERVALS + 1 }, (_, k) => Math.round(yMin + (yMax - yMin) * k / TICK_INTERVALS));
   const grid = ticks.map(v =>
     `<line class="subs-grid" x1="${L}" y1="${y(v).toFixed(1)}" x2="${W - R}" y2="${y(v).toFixed(1)}"/>` +
     `<text class="subs-axis" x="${L - 8}" y="${(y(v) + 4).toFixed(1)}" text-anchor="end">${num(v)}</text>`
   ).join('');
-  const xLabels = (items.length === 1 ? [items[0]] : [items[0], last]).map((i, idx, arr) =>
-    `<text class="subs-axis" x="${x(i.date).toFixed(1)}" y="${H - 14}" text-anchor="${arr.length === 1 ? 'middle' : idx === 0 ? 'start' : 'end'}">${md(i.date)}</text>`
-  ).join('');
+  // 横軸：記録のない日も含めて、期間内の全日に日付を出す。
+  // 先頭と月の初日は「月/日」、それ以外は日にちだけ（全日を並べても重ならないように）
+  const days = [];
+  for (let t = t0; t <= t1; t += 24 * 60 * 60 * 1000) days.push(new Date(t).toISOString().slice(0, 10));
+  const xLabels = days.map((d, idx) => {
+    const label = (idx === 0 || d.slice(8, 10) === '01') ? md(d) : String(Number(d.slice(8, 10)));
+    const px = x(d).toFixed(1);
+    return `<line class="subs-grid" x1="${px}" y1="${H - B}" x2="${px}" y2="${H - B + 4}"/>` +
+      `<text class="subs-axis" x="${px}" y="${H - 14}" text-anchor="middle">${label}</text>`;
+  }).join('');
   const points = items.map(i => `${x(i.date).toFixed(1)},${y(i.subscribers).toFixed(1)}`).join(' ');
   const line = items.length > 1 ? `<polyline class="subs-line" points="${points}"/>` : '';
   const dots = items.map(i =>
@@ -1328,6 +1342,8 @@ function renderSubscribers(box, items, hidden) {
     <svg class="subs-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="チャンネル登録者数の推移。${escapeHtml(md(items[0].date))}から${escapeHtml(md(last.date))}までの${items.length}日分。最新は${escapeHtml(num(last.subscribers))}人。">
       ${grid}${line}${dots}${xLabels}
     </svg>`;
+  // 幅の狭い画面では横にスクロールする。最新の日が見えるよう、右端に合わせる
+  box.scrollLeft = box.scrollWidth;
 }
 
 // ===== 初期化 =====
