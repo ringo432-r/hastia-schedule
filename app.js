@@ -1326,7 +1326,7 @@ function renderSubscribers(box, items, hidden) {
 
   // ===== 縦軸：目盛りは必ず 50 で割り切れる値（50・100・200・500…刻み。例：4,500 / 4,550 / 4,600 / 4,650）=====
   // 軸の下端・上端は必ず 100 の倍数（下端は最小値を切り下げ、上端は最大値を切り上げ）。
-  // 間の目盛りは 50 の倍数（150・250 もあり）で、4〜9 区間になる最小の刻みを選ぶ。
+  // 間の目盛りは 50 の倍数（150・250 もあり）で、4〜10 区間になる最小の刻みを選ぶ。
   // 範囲が狭いとき・刻みがぴったり合わないときは、100 ずつ上下に広げる
   const vals = items.map(i => i.subscribers);
   const vMin = Math.min(...vals), vMax = Math.max(...vals);
@@ -1339,7 +1339,7 @@ function renderSubscribers(box, items, hidden) {
   let down = true;
   for (let guard = 0; guard < 100000 && !step; guard++) {
     const range = yMax - yMin;
-    step = STEPS.find(s => range % s === 0 && range / s >= 4 && range / s <= 9) || 0;
+    step = STEPS.find(s => range % s === 0 && range / s >= 4 && range / s <= 10) || 0;
     if (!step) {
       if (down && yMin - UNIT >= 0) yMin -= UNIT; else yMax += UNIT;
       down = !down;
