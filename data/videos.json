@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18T16:37:18.110941+00:00",
+  "updatedAt": "2026-11-18T17:07:22.611230+00:00",
   "fullRefreshedAt": "2026-11-18T02:37:17.514155+00:00",
   "items": [
     {
@@ -15,6 +15,18 @@
       "isShort": false
     },
     {
+      "id": "u23sPngSFmw",
+      "title": "Weekly Schedule",
+      "publishedAt": "2027-06-16T17:50:00Z",
+      "scheduledStartTime": "2027-06-16T17:50:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/u23sPngSFmw/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/u23sPngSFmw/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
       "id": "mi43Y7sx2jg",
       "title": "【1ヵ月記念】重大告知あり！1ヵ月記念をわたくしと過ごしませんか…？【はすてぃあ / 新人vtuber 】",
       "publishedAt": "2026-11-18T11:37:02Z",
@@ -25,18 +37,6 @@
       "category": "archive",
       "url": "https://www.youtube.com/watch?v=mi43Y7sx2jg",
       "actualStartTime": "2026-11-18T11:37:02Z",
-      "isShort": false
-    },
-    {
-      "id": "u23sPngSFmw",
-      "title": "Weekly Schedule",
-      "publishedAt": "2027-06-16T17:50:00Z",
-      "scheduledStartTime": "2027-06-16T17:50:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/u23sPngSFmw/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/u23sPngSFmw/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
       "isShort": false
     },
     {
