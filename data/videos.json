@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T11:07:15.493937+00:00",
+  "updatedAt": "2026-11-19T11:37:18.173197+00:00",
   "fullRefreshedAt": "2026-11-18T23:07:13.060563+00:00",
   "items": [
     {
@@ -17,13 +17,14 @@
     {
       "id": "sk6d3RNjYzk",
       "title": "【雪葬】超絶ビビりがチラズアートのホラゲーやります…。画像の時点でこわすぎる…。【 #はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-19T11:30:00Z",
+      "publishedAt": "2026-11-19T11:34:39Z",
       "scheduledStartTime": "2026-11-19T11:30:00Z",
       "thumbnail": "https://i.ytimg.com/vi/sk6d3RNjYzk/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/sk6d3RNjYzk/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
+      "liveBroadcastContent": "live",
+      "category": "live",
       "url": "https://www.youtube.com/watch?v=sk6d3RNjYzk",
+      "actualStartTime": "2026-11-19T11:34:39Z",
       "isShort": false
     },
     {
