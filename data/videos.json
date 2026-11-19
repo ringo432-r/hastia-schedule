@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T19:37:14.206475+00:00",
+  "updatedAt": "2026-11-19T20:07:25.370662+00:00",
   "fullRefreshedAt": "2026-11-19T19:07:15.660226+00:00",
   "items": [
     {
@@ -15,19 +15,6 @@
       "isShort": false
     },
     {
-      "id": "sk6d3RNjYzk",
-      "title": "【雪葬】超絶ビビりがチラズアートのホラゲーやります…。画像の時点でこわすぎる…。【 #はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-19T11:34:39Z",
-      "scheduledStartTime": "2026-11-19T11:30:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/sk6d3RNjYzk/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/sk6d3RNjYzk/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=sk6d3RNjYzk",
-      "actualStartTime": "2026-11-19T11:34:39Z",
-      "isShort": false
-    },
-    {
       "id": "u23sPngSFmw",
       "title": "Weekly Schedule",
       "publishedAt": "2027-06-16T17:50:00Z",
@@ -37,6 +24,19 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
+      "id": "sk6d3RNjYzk",
+      "title": "【雪葬】超絶ビビりがチラズアートのホラゲーやります…。画像の時点でこわすぎる…。【 #はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-19T11:34:39Z",
+      "scheduledStartTime": "2026-11-19T11:30:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/sk6d3RNjYzk/mqdefault.jpg?v=6afc3a03",
+      "thumbnailHigh": "https://i.ytimg.com/vi/sk6d3RNjYzk/hqdefault.jpg?v=6afc3a03",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=sk6d3RNjYzk",
+      "actualStartTime": "2026-11-19T11:34:39Z",
       "isShort": false
     },
     {
