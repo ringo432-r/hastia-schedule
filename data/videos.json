@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T14:07:15.689602+00:00",
+  "updatedAt": "2026-11-20T14:37:20.286787+00:00",
   "fullRefreshedAt": "2026-11-19T19:07:15.660226+00:00",
   "items": [
     {
@@ -33,8 +33,8 @@
       "scheduledStartTime": "2026-11-20T11:35:00Z",
       "thumbnail": "https://i.ytimg.com/vi/raRip6EcYUw/mqdefault.jpg?v=6b00306a",
       "thumbnailHigh": "https://i.ytimg.com/vi/raRip6EcYUw/hqdefault.jpg?v=6b00306a",
-      "liveBroadcastContent": "live",
-      "category": "live",
+      "liveBroadcastContent": "none",
+      "category": "archive",
       "url": "https://www.youtube.com/watch?v=raRip6EcYUw",
       "actualStartTime": "2026-11-20T11:35:57Z",
       "isShort": false
