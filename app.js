@@ -211,6 +211,63 @@ let playlistFilter   = 'all';    // 再生リスト表示の区分（'all' ま�
 let allPlaylists     = null;     // null = まだ読み込めていない
 let playlistLoadFailed = false;
 
+// ===== 日本の祝日・振替休日（週間・月間の日付を日曜日と同じ赤にする）=====
+// 外部のデータは使わず、規則で計算する（固定日・第◯月曜・春分/秋分・振替休日・国民の休日）。
+// 2000〜2099 年向け。2019〜2021 年の特例（即位の日・東京五輪による移動）も含む
+const jpHolidayCache = {};
+function jpHolidaySet(year) {
+  if (jpHolidayCache[year]) return jpHolidayCache[year];
+  const DAYMS = 24 * 60 * 60 * 1000;
+  const s = new Set();
+  const key = (m, d) => m * 100 + d;
+  const add = (m, d) => s.add(key(m, d));
+  const dowOf = (y, m, d) => new Date(Date.UTC(y, m - 1, d)).getUTCDay(); // 0=日
+  const nthMon = (m, n) => 1 + ((8 - dowOf(year, m, 1)) % 7) + (n - 1) * 7;
+  const equinox = (a) => Math.floor(a + 0.242194 * (year - 1980) - Math.floor((year - 1980) / 4));
+  add(1, 1);                       // 元日
+  add(1, nthMon(1, 2));            // 成人の日
+  add(2, 11);                      // 建国記念の日
+  if (year >= 2020) add(2, 23);                       // 天皇誕生日
+  else if (year >= 1989 && year <= 2018) add(12, 23);
+  add(3, equinox(20.8431));        // 春分の日
+  add(4, 29);                      // 昭和の日
+  add(5, 3); add(5, 4); add(5, 5); // 憲法記念日・みどりの日・こどもの日
+  if (year === 2020) add(7, 23); else if (year === 2021) add(7, 22); else add(7, nthMon(7, 3)); // 海の日
+  if (year >= 2016) {              // 山の日
+    if (year === 2020) add(8, 10); else if (year === 2021) add(8, 8); else add(8, 11);
+  }
+  add(9, nthMon(9, 3));            // 敬老の日
+  add(9, equinox(23.2488));        // 秋分の日
+  if (year === 2020) add(7, 24); else if (year === 2021) add(7, 23); else add(10, nthMon(10, 2)); // スポーツの日
+  add(11, 3);                      // 文化の日
+  add(11, 23);                     // 勤労感謝の日
+  if (year === 2019) { add(5, 1); add(10, 22); } // 天皇の即位の日・即位礼正殿の儀
+  const base = new Set(s);
+  const keyOf = (t) => { const d = new Date(t); return key(d.getUTCMonth() + 1, d.getUTCDate()); };
+  const jan1 = Date.UTC(year, 0, 1);
+  const dec31 = Date.UTC(year, 11, 31);
+  // 国民の休日：前日と翌日がどちらも祝日の平日
+  for (let t = jan1 + DAYMS; t < dec31; t += DAYMS) {
+    const k = keyOf(t);
+    if (!s.has(k) && new Date(t).getUTCDay() !== 0 && base.has(keyOf(t - DAYMS)) && base.has(keyOf(t + DAYMS))) s.add(k);
+  }
+  // 振替休日：祝日が日曜日のとき、次の「祝日でない日」
+  [...base].sort((a, b) => a - b).forEach(k => {
+    const t = Date.UTC(year, Math.floor(k / 100) - 1, k % 100);
+    if (new Date(t).getUTCDay() !== 0) return;
+    let n = t + DAYMS;
+    while (s.has(keyOf(n))) n += DAYMS;
+    if (n <= dec31) s.add(keyOf(n));
+  });
+  jpHolidayCache[year] = s;
+  return s;
+}
+
+// date：UTC の 0 時の Date（週間・月間で使っている日付と同じ形）
+function isJpHoliday(date) {
+  return jpHolidaySet(date.getUTCFullYear()).has((date.getUTCMonth() + 1) * 100 + date.getUTCDate());
+}
+
 // ===== 記念日計算 =====
 // 指定年月に該当する記念日を返す（JST年月で渡す）
 function getAnniversariesForMonth(jstYear, jstMonth) {
@@ -452,8 +509,10 @@ function renderTimetable() {
   days.forEach(d => {
     const isToday = d.getTime() === today.getTime();
     const dow = d.getUTCDay(); // 0=日, 6=土
-    const cls = dow === 0 ? 'sun' : dow === 6 ? 'sat' : '';
-    html += `<th scope="col" class="${cls}${isToday ? ' today-col' : ''}">${fmt(d)}<br>${DOW[dow]}</th>`;
+    // 祝日・振替休日は日曜日と同じ赤（土曜と重なる祝日も赤）
+    const isHol = isJpHoliday(d);
+    const cls = (dow === 0 || isHol) ? 'sun' : dow === 6 ? 'sat' : '';
+    html += `<th scope="col" class="${cls}${isToday ? ' today-col' : ''}">${fmt(d)}${isHol ? '<span class="visually-hidden">（祝日）</span>' : ''}<br>${DOW[dow]}</th>`;
   });
   html += '</tr>';
 
@@ -629,8 +688,11 @@ function renderCalendar() {
 
       html += `<td class="${cls}">`;
       if (!isOther) {
-        const numCls = ['cal-day-num', col === 6 ? 'sat' : '', col === 0 ? 'sun' : '', isToday ? 'today-num' : ''].filter(Boolean).join(' ');
-        html += `<div style="text-align:right;"><span class="${numCls}">${date}</span></div>`;
+        // 祝日・振替休日は日曜日と同じ赤（土曜と重なる祝日も赤）
+        const isHol = isJpHoliday(new Date(Date.UTC(calYear, calMonth, date)));
+        const red = col === 0 || isHol;
+        const numCls = ['cal-day-num', col === 6 && !red ? 'sat' : '', red ? 'sun' : '', isToday ? 'today-num' : ''].filter(Boolean).join(' ');
+        html += `<div style="text-align:right;"><span class="${numCls}">${date}${isHol ? '<span class="visually-hidden">（祝日）</span>' : ''}</span></div>`;
         const list = (byDate[date] || []).sort((a, b) => byItemDate(a.item, b.item));
         html += '<div class="cal-events">';
         monthAnns.filter(a => a.day === date).forEach(ann => { html += annBadgeHtml(ann); });
