@@ -49,7 +49,8 @@ const CATEGORIES = [
   {
     key: 'collab',
     label: 'コラボ',
-    match: (item) => /コラボ|対談|\bcollab(?:oration)?\b/i.test(item.title),
+    // 「コラボガチャ」はゲーム内のイベント名なので、コラボ（他の配信者との共演）とは判定しない
+    match: (item) => /コラボ|対談|\bcollab(?:oration)?\b/i.test(item.title.replace(/コラボガチャ/g, '')),
   },
   {
     key: 'game',
@@ -62,7 +63,7 @@ const CATEGORIES = [
       // 【タイトル名】パターン（配信でよく使われる形式）
       if (/【[^】]+】/.test(t)) return true;
       // 具体的なゲームキーワード（日本語）
-      if (/ゲーム|マイクラ|スプラ|ポケモン|ドラクエ|ドラゴンクエスト|ドラゴンボール|ファイナルファンタジー|モンハン|ゼルダ|大神|バイオハザード|龍が如く|原神|星レイル|パルワールド|あつ森|テトリス|ぷよぷよ|カービィ|マリオ|シミュレーター|カカロット/.test(t)) return true;
+      if (/ゲーム|マイクラ|スプラ|ポケモン|ドラクエ|ドラゴンクエスト|ドラゴンボール|ファイナルファンタジー|モンハン|ゼルダ|大神|バイオハザード|龍が如く|原神|星レイル|パルワールド|雀魂|あつ森|テトリス|ぷよぷよ|カービィ|マリオ|シミュレーター|カカロット/.test(t)) return true;
       // 具体的なゲームキーワード（英語。\b で単語として一致させる）
       return /\b(?:minecraft|apex|valorant|splatoon|pokemon|ff\d{1,2}|zelda|resident evil|sekiro|elden ring|yakuza|genshin|fortnite|overwatch|stardew|animal crossing|fall guys|among us|mario|kirby|simulator|kakarot)\b/i.test(t);
     },
