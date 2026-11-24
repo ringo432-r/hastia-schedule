@@ -1,19 +1,7 @@
 {
-  "updatedAt": "2026-11-24T11:07:16.349514+00:00",
+  "updatedAt": "2026-11-24T11:37:14.405591+00:00",
   "fullRefreshedAt": "2026-11-24T00:07:14.780891+00:00",
   "items": [
-    {
-      "id": "jLJaBP_xGPE",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしらが行く！ドラゴンボールを集めたらいいんですかね…？ -TRUNKS- 希望の戦士　※ネタバレ注意 ＃８【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-24T11:30:00Z",
-      "scheduledStartTime": "2026-11-24T11:30:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/jLJaBP_xGPE/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/jLJaBP_xGPE/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
-      "url": "https://www.youtube.com/watch?v=jLJaBP_xGPE",
-      "isShort": false
-    },
     {
       "id": "u23sPngSFmw",
       "title": "Weekly Schedule",
@@ -24,6 +12,19 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
+      "id": "tD_Afml8ZDQ",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしらが行く！ドラゴンボールを集めたらいいんですかね…？ -TRUNKS- 希望の戦士　※ネタバレ注意 ＃８【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-24T11:34:41Z",
+      "scheduledStartTime": "2026-11-24T11:30:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/tD_Afml8ZDQ/mqdefault.jpg?v=6b0573be",
+      "thumbnailHigh": "https://i.ytimg.com/vi/tD_Afml8ZDQ/hqdefault.jpg?v=6b0573be",
+      "liveBroadcastContent": "live",
+      "category": "live",
+      "url": "https://www.youtube.com/watch?v=tD_Afml8ZDQ",
+      "actualStartTime": "2026-11-24T11:34:41Z",
       "isShort": false
     },
     {
