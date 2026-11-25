@@ -1,7 +1,19 @@
 {
-  "updatedAt": "2026-11-25T15:07:15.254988+00:00",
+  "updatedAt": "2026-11-25T15:37:16.409673+00:00",
   "fullRefreshedAt": "2026-11-24T20:07:15.503384+00:00",
   "items": [
+    {
+      "id": "-mGjKyZNQY4",
+      "title": "【雪葬】超絶ビビりがチラズアートのホラゲーやります…。画像の時点でこわすぎる…。後編【 #はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-26T11:30:00Z",
+      "scheduledStartTime": "2026-11-26T11:30:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/-mGjKyZNQY4/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/-mGjKyZNQY4/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=-mGjKyZNQY4",
+      "isShort": false
+    },
     {
       "id": "-P4gZh9_ZPI",
       "title": "DLsiteにて音声作品発売中！～11/30までに購入＆レビューでアクスタが当たるキャンペーン実施中！",
@@ -21,8 +33,8 @@
       "scheduledStartTime": "2026-11-25T11:30:00Z",
       "thumbnail": "https://i.ytimg.com/vi/OBNB1A1HY0Q/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/OBNB1A1HY0Q/hqdefault.jpg",
-      "liveBroadcastContent": "live",
-      "category": "live",
+      "liveBroadcastContent": "none",
+      "category": "archive",
       "url": "https://www.youtube.com/watch?v=OBNB1A1HY0Q",
       "actualStartTime": "2026-11-25T11:32:54Z",
       "isShort": false
