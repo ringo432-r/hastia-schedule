@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-25T15:37:16.409673+00:00",
-  "fullRefreshedAt": "2026-11-24T20:07:15.503384+00:00",
+  "updatedAt": "2026-11-25T16:37:15.296701+00:00",
+  "fullRefreshedAt": "2026-11-25T16:37:15.045546+00:00",
   "items": [
     {
       "id": "-mGjKyZNQY4",
@@ -27,19 +27,6 @@
       "isShort": false
     },
     {
-      "id": "OBNB1A1HY0Q",
-      "title": "【ドラゴンボールZ KAKAROT】ミリしらが行く！ドラゴンボールを集めたらいいんですかね…？ -TRUNKS- 希望の戦士　※ネタバレ注意 ＃９【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-25T11:32:54Z",
-      "scheduledStartTime": "2026-11-25T11:30:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/OBNB1A1HY0Q/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/OBNB1A1HY0Q/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=OBNB1A1HY0Q",
-      "actualStartTime": "2026-11-25T11:32:54Z",
-      "isShort": false
-    },
-    {
       "id": "u23sPngSFmw",
       "title": "Weekly Schedule",
       "publishedAt": "2027-06-16T17:50:00Z",
@@ -49,6 +36,19 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
+      "id": "OBNB1A1HY0Q",
+      "title": "【ドラゴンボールZ KAKAROT】ミリしらが行く！ドラゴンボールを集めたらいいんですかね…？ -TRUNKS- 希望の戦士　※ネタバレ注意 ＃９【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-25T11:32:54Z",
+      "scheduledStartTime": "2026-11-25T11:30:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/OBNB1A1HY0Q/mqdefault.jpg?v=6b05a411",
+      "thumbnailHigh": "https://i.ytimg.com/vi/OBNB1A1HY0Q/hqdefault.jpg?v=6b05a411",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=OBNB1A1HY0Q",
+      "actualStartTime": "2026-11-25T11:32:54Z",
       "isShort": false
     },
     {
