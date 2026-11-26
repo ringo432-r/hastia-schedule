@@ -1,20 +1,7 @@
 {
-  "updatedAt": "2026-11-26T21:44:07.738409+00:00",
+  "updatedAt": "2026-11-26T22:07:14.344235+00:00",
   "fullRefreshedAt": "2026-11-26T12:37:16.051877+00:00",
   "items": [
-    {
-      "id": "-mGjKyZNQY4",
-      "title": "【雪葬】超絶ビビりがチラズアートのホラゲーやります…。画像の時点でこわすぎる…。後編【 #はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-26T11:31:27Z",
-      "scheduledStartTime": "2026-11-26T11:30:00Z",
-      "thumbnail": "https://i.ytimg.com/vi/-mGjKyZNQY4/mqdefault.jpg",
-      "thumbnailHigh": "https://i.ytimg.com/vi/-mGjKyZNQY4/hqdefault.jpg",
-      "liveBroadcastContent": "none",
-      "category": "archive",
-      "url": "https://www.youtube.com/watch?v=-mGjKyZNQY4",
-      "actualStartTime": "2026-11-26T11:31:27Z",
-      "isShort": false
-    },
     {
       "id": "LUx_Hjl36AU",
       "title": "【ドラゴンボールZ KAKAROT】ドラゴンボールZ カカロット-BARDOCK- たったひとりの最終決戦　完全初見でやる！　前編　※ネタバレ注意 ＃１０【 はすてぃあ / 新人Vtuber 】",
@@ -49,6 +36,19 @@
       "liveBroadcastContent": "upcoming",
       "category": "upcoming",
       "url": "https://www.youtube.com/watch?v=u23sPngSFmw",
+      "isShort": false
+    },
+    {
+      "id": "-mGjKyZNQY4",
+      "title": "【雪葬】超絶ビビりがチラズアートのホラゲーやります…。画像の時点でこわすぎる…。後編【 #はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-26T11:31:27Z",
+      "scheduledStartTime": "2026-11-26T11:30:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/-mGjKyZNQY4/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/-mGjKyZNQY4/hqdefault.jpg",
+      "liveBroadcastContent": "none",
+      "category": "archive",
+      "url": "https://www.youtube.com/watch?v=-mGjKyZNQY4",
+      "actualStartTime": "2026-11-26T11:31:27Z",
       "isShort": false
     },
     {
