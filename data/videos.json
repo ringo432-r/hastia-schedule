@@ -1,17 +1,30 @@
 {
-  "updatedAt": "2026-11-27T11:07:16.260959+00:00",
+  "updatedAt": "2026-11-27T11:37:17.396727+00:00",
   "fullRefreshedAt": "2026-11-27T08:37:19.457329+00:00",
   "items": [
     {
+      "id": "6LY01PtxSh4",
+      "title": "【 朝活 】おはよう×１０円でマクドナルドのグラコロ食べたい！【 はすてぃあ / 新人Vtuber 】",
+      "publishedAt": "2026-11-27T23:00:00Z",
+      "scheduledStartTime": "2026-11-27T23:00:00Z",
+      "thumbnail": "https://i.ytimg.com/vi/6LY01PtxSh4/mqdefault.jpg",
+      "thumbnailHigh": "https://i.ytimg.com/vi/6LY01PtxSh4/hqdefault.jpg",
+      "liveBroadcastContent": "upcoming",
+      "category": "upcoming",
+      "url": "https://www.youtube.com/watch?v=6LY01PtxSh4",
+      "isShort": false
+    },
+    {
       "id": "LUx_Hjl36AU",
       "title": "【ドラゴンボールZ KAKAROT】ドラゴンボールZ カカロット-BARDOCK- たったひとりの最終決戦　完全初見でやる！　前編　※ネタバレ注意 ＃１０【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-27T11:30:00Z",
+      "publishedAt": "2026-11-27T11:33:14Z",
       "scheduledStartTime": "2026-11-27T11:30:00Z",
       "thumbnail": "https://i.ytimg.com/vi/LUx_Hjl36AU/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/LUx_Hjl36AU/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
+      "liveBroadcastContent": "live",
+      "category": "live",
       "url": "https://www.youtube.com/watch?v=LUx_Hjl36AU",
+      "actualStartTime": "2026-11-27T11:33:14Z",
       "isShort": false
     },
     {
