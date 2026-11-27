@@ -1,17 +1,18 @@
 {
-  "updatedAt": "2026-11-27T22:37:13.586896+00:00",
+  "updatedAt": "2026-11-27T23:07:14.757484+00:00",
   "fullRefreshedAt": "2026-11-27T08:37:19.457329+00:00",
   "items": [
     {
       "id": "6LY01PtxSh4",
       "title": "【 朝活 】おはよう×１０円でマクドナルドのグラコロ食べたい！【 はすてぃあ / 新人Vtuber 】",
-      "publishedAt": "2026-11-27T23:00:00Z",
+      "publishedAt": "2026-11-27T23:00:50Z",
       "scheduledStartTime": "2026-11-27T23:00:00Z",
       "thumbnail": "https://i.ytimg.com/vi/6LY01PtxSh4/mqdefault.jpg",
       "thumbnailHigh": "https://i.ytimg.com/vi/6LY01PtxSh4/hqdefault.jpg",
-      "liveBroadcastContent": "upcoming",
-      "category": "upcoming",
+      "liveBroadcastContent": "live",
+      "category": "live",
       "url": "https://www.youtube.com/watch?v=6LY01PtxSh4",
+      "actualStartTime": "2026-11-27T23:00:50Z",
       "isShort": false
     },
     {
